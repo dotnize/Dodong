@@ -1,5 +1,12 @@
-# Noize
+# Noize [![made with love](https://img.shields.io/badge/made_with-love-red.svg)](https://shields.io/)
 A music bot written using [discord.js](https://github.com/discordjs/discord.js) and [discord-player](https://github.com/Androz2091/discord-player)
+
+## To-do list
+- [ ] fastforward command
+- [ ] lyrics
+- [ ] audio filters/effects
+- [ ] command folders/categories
+- [ ] slash commands
 
 ## Commands
 * clear

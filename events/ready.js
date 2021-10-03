@@ -1,0 +1,6 @@
+const Event = require("../structures/event.js");
+
+module.exports = new Event("ready", client => {
+	console.log("--------- Noize is ready! ---------");
+	client.user.setActivity('-help', { type: 'LISTENING' });
+});

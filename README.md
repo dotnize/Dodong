@@ -34,7 +34,7 @@ A music bot written using [discord.js](https://github.com/discordjs/discord.js) 
     ```sh
     npm install
     ```
-4. Enter your bot token in `config.js`
+4. Enter your bot token in `config.json`
     ```json
     "token": "YOUR TOKEN HERE"
     ```

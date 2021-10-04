@@ -1,17 +1,14 @@
 # Noize [![made with love](https://img.shields.io/badge/made_with-love-red.svg)](https://shields.io/)
 A music bot written using [discord.js](https://github.com/discordjs/discord.js) and [discord-player](https://github.com/Androz2091/discord-player)
 
-## To-do list
-- [ ] fastforward command
-- [ ] lyrics
-- [ ] audio filters/effects
-- [ ] command folders/categories
-- [ ] slash commands
+## Bug reports and feature requests
+View the list of issues [here](https://github.com/nizeic/Noize)
 
 ## Commands
 * clear
 * disconnect
 * loop
+* lyrics
 * move
 * nowplaying
 * pause
@@ -34,9 +31,10 @@ A music bot written using [discord.js](https://github.com/discordjs/discord.js) 
     ```sh
     npm install
     ```
-4. Enter your bot token in `config.json`
+4. Enter your [bot token](https://discord.com/developers/applications) and [Genius API Token](https://genius.com/api-clients) in `config.json`
     ```json
-    "token": "YOUR TOKEN HERE"
+    "bottoken": "BOT TOKEN HERE",
+    "geniusAPItoken": "GENIUS.COM CLIENT ACCESS TOKEN HERE"
     ```
 5. Run the bot
     ```sh

@@ -11,6 +11,7 @@ module.exports = new Command({
         - clear
         - disconnect / dc
         - loop
+        - lyrics / l
         - move / m
         - nowplaying / np
         - pause
@@ -22,8 +23,7 @@ module.exports = new Command({
         - resume
         - seek / s
         - shuffle
-        - skip / next / n
-        \npuhon: fastforward/ff, lyrics, filters/effects`);
+        - skip / next / n`);
         return message.channel.send({ embeds: [embed] });
 	}
 });

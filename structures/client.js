@@ -6,6 +6,7 @@ const { musicEvents } = require("./music.js")
 const config = require("../config.json");
 const fs = require("fs");
 const downloader = require("@discord-player/downloader").Downloader;
+const { Lyrics } = require("@discord-player/extractor");
 
 class Client extends Discord.Client {
 	constructor() {
@@ -17,19 +18,20 @@ class Client extends Discord.Client {
 			//Discord.Intents.FLAGS.GUILD_MEMBERS // for guildMemberAdd and guildMemberRemove
 		]});
 		this.commands = new Discord.Collection();
+		this.prefix = config.prefix;
 		this.player = new Player(this, {
 			leaveOnEnd: false,
 			leaveOnStop: false,
 			leaveOnEmpty: true,
 			leaveOnEmptyCooldown: 120000
 		});
-		this.prefix = config.prefix;
 	}
 
 	init(token) {
 		// discord-player
 		musicEvents(this.player);
 		this.player.use("YOUTUBE_DL", downloader);
+		this.lyrics = Lyrics.init(config.geniusAPItoken);
 
 		// command handler
 		const commandFiles = fs.readdirSync("./commands")

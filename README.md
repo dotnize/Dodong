@@ -38,12 +38,7 @@ A music bot written using [discord.js](https://github.com/discordjs/discord.js) 
     ```json
     "token": "YOUR TOKEN HERE"
     ```
-5. Uncomment line 5 and comment out line 6 in `index.js`
-    ```js
-    client.init(config.token);
-    //client.init(process.env.BOT_TOKEN) // for heroku
-    ```
-6. Run the bot
+5. Run the bot
     ```sh
-    node .
+    node index.js
     ```

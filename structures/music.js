@@ -1,10 +1,10 @@
 module.exports.musicEvents = (player) => {
 
     player.on("error", (queue, error) => {
-        console.log(`error: ${error.message}`);
+        console.log(`(${queue.guild.name}) error: ${error.message}`);
     });
     player.on("connectionError", (queue, error) => {
-        console.log(`connectionError: ${error.message}`);
+        console.log(`(${queue.guild.name}) connectionError: ${error.message}`);
     });
     player.on("trackEnd", (queue, track) => {
         if(!isObjEmpty(queue.oldnpmessage)) {

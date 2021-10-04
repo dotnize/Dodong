@@ -2,7 +2,7 @@
 A music bot written using [discord.js](https://github.com/discordjs/discord.js) and [discord-player](https://github.com/Androz2091/discord-player)
 
 ## Bug reports and feature requests
-View the list of issues [here](https://github.com/nizeic/Noize)
+View the list of issues [here](https://github.com/nizeic/Noize/issues)
 
 ## Commands
 * clear

@@ -17,7 +17,7 @@ module.exports = new Command({
         return message.channel.send({
             embeds: [
                 {
-                    title: '🎵 | Now Playing',
+                    title: 'Now Playing',
                     description: `**[${queue.current.title}](${queue.current.url})**`,
                     thumbnail: {
                         url: `${queue.current.thumbnail}`

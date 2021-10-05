@@ -15,7 +15,7 @@ module.exports.musicEvents = (player) => {
         queue.metadata.channel.send({
             embeds: [
                 {
-                    title: `🎵 | Now playing`,
+                    title: `Now playing`,
                     description: `[${track.title}](${track.url})`,
                     footer: {
                         text: `queued by ${track.requestedBy.tag}`

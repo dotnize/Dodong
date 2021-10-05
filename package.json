@@ -3,10 +3,11 @@
     "@discord-player/downloader": "^3.0.1",
     "@discord-player/extractor": "^3.0.2",
     "@discordjs/opus": "^0.5.3",
-    "discord-player": "^5.1.0",
+    "discord-player": "^5.1.0-dev.1633392756.44b30ad",
     "discord.js": "^13.1.0",
     "discordjs-button-pagination": "^1.0.7",
-    "ffmpeg-static": "^4.4.0"
+    "ffmpeg-static": "^4.4.0",
+    "play-dl": "^1.0.6"
   },
   "engines": {
     "node": "16.x"

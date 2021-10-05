@@ -3,7 +3,7 @@ const Command = require("./command.js");
 const Event = require("./event.js");
 const { Player } = require("discord-player");
 const { musicEvents } = require("./music.js")
-const config = require("../config.json");
+const config = require("../config.js");
 const fs = require("fs");
 const downloader = require("@discord-player/downloader").Downloader;
 const { Lyrics } = require("@discord-player/extractor");
@@ -28,10 +28,8 @@ class Client extends Discord.Client {
 	}
 
 	init(token) {
-		// discord-player
-		musicEvents(this.player);
-		this.player.use("YOUTUBE_DL", downloader);
-		this.lyrics = Lyrics.init(config.geniusAPItoken);
+		if(config.bottoken === "BOT TOKEN HERE" || config.bottoken === "" || !config.bottoken)
+			return console.error("--- ERROR: Bot token is empty! Make sure to fill this out in config.js");
 
 		// command handler
 		const commandFiles = fs.readdirSync("./commands")
@@ -55,6 +53,14 @@ class Client extends Discord.Client {
 				this.on(event.event, event.run.bind(null, this));
 			});
 		console.log(`${count} events loaded.`);
+
+		// discord-player
+		musicEvents(this.player);
+		this.player.use("YOUTUBE_DL", downloader);
+		this.lyrics = Lyrics.init(config.geniusAPItoken);
+		if(config.geniusAPItoken === "GENIUS.COM CLIENT ACCESS TOKEN HERE" || config.geniusAPItoken === "" || !config.geniusAPItoken)
+			console.log("Genius API Key is empty. Lyrics feature might not work properly.");
+
 		this.login(token);
 	}
 }

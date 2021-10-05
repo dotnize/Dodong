@@ -31,10 +31,10 @@ View the list of issues [here](https://github.com/nizeic/Noize/issues)
     ```sh
     npm install
     ```
-4. Enter your [bot token](https://discord.com/developers/applications) and [Genius API Token](https://genius.com/api-clients) in `config.json`
-    ```json
-    "bottoken": "BOT TOKEN HERE",
-    "geniusAPItoken": "GENIUS.COM CLIENT ACCESS TOKEN HERE"
+4. Enter your [bot token](https://discord.com/developers/applications) and [Genius API Token](https://genius.com/api-clients) in `config.js`
+    ```js
+    bottoken: "BOT TOKEN HERE",
+    geniusAPItoken: "GENIUS.COM CLIENT ACCESS TOKEN HERE"
     ```
 5. Run the bot
     ```sh

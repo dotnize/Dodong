@@ -1,0 +1,26 @@
+{
+    "name": "Noize",
+    "description": "A Discord music bot written using discord.js and discord-player.js",
+    "repository": "https://github.com/nizeic/Noize",
+    "keywords": ["discord", "music", "bot", "discordjs"],
+    "image": "heroku/nodejs",
+    "buildpacks": [
+        {
+            "url": "heroku/nodejs"
+        }
+    ],
+  "env": {
+        "BotToken": {
+            "description": "Bot token (https://discordjs.guide/preparations/setting-up-a-bot-application.html#your-token)",
+            "required": "true"
+        },
+        "Prefix": {
+            "description": "Command prefix for the bot (default: -)",
+            "required": "false"
+        },
+        "GeniusAPItoken": {
+            "description": "Genius.com Client Access Token (https://genius.com/api-clients)",
+            "required": "false"
+        }
+    }
+}

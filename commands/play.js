@@ -39,14 +39,13 @@ module.exports = new Command({
         if (!searchResult || !searchResult.tracks.length)
             return message.channel.send({ embeds: [{ description: `No results found!`, color: 0xff0000 }] });
 
-        const queue = await client.player.createQueue(message.guild,{ metadata: { channel: message.channel } });
-        if(!queue.createStream) {
-            queue.createStream = async (track, source, _queue) => {
+        const queue = await client.player.createQueue(message.guild,{ metadata: { channel: message.channel },
+            async onBeforeCreateStream(track, source, _queue) {
                 if (source === "youtube") {
-                       return (await playdl.stream(track.url)).stream;
+                    return (await playdl.stream(track.url)).stream;
                 }
-            };
-        }
+            }
+        });
 
         try {
             if (!queue.connection) await queue.connect(message.member.voice.channel);

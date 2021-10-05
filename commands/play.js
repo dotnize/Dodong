@@ -23,6 +23,11 @@ module.exports = new Command({
 
         let query = args.slice(1).join(" ");
         message.channel.send({ content: '🎵  Searching 🔎 `'+query+'`' })
+
+        if(query.includes("spotify.com")) {
+            return message.channel.send({ embeds: [{ description: `Spotify tracks are temporarily disabled due to a bug.\nhttps://github.com/nizeic/Noize/issues/2`, color: 0xff0000 }] });
+        }
+        
         let queryType;
         if(query.includes("youtube.com/playlist")) {
             queryType = QueryType.YOUTUBE_PLAYLIST;

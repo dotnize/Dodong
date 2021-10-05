@@ -1,4 +1,5 @@
 {
+  "name": "noize",
   "dependencies": {
     "@discord-player/extractor": "^3.0.2",
     "@discordjs/opus": "^0.5.3",
@@ -7,6 +8,9 @@
     "discordjs-button-pagination": "^1.0.7",
     "ffmpeg-static": "^4.4.0",
     "play-dl": "^1.0.6"
+  },
+  "scripts": {
+    "start": "node index.js"
   },
   "engines": {
     "node": "16.x"

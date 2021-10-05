@@ -12,9 +12,7 @@ class Client extends Discord.Client {
 		super({	intents: [
 			Discord.Intents.FLAGS.GUILDS,
 			Discord.Intents.FLAGS.GUILD_MESSAGES,
-			Discord.Intents.FLAGS.GUILD_MESSAGE_REACTIONS,
-			Discord.Intents.FLAGS.GUILD_VOICE_STATES,
-			//Discord.Intents.FLAGS.GUILD_MEMBERS // for guildMemberAdd and guildMemberRemove
+			Discord.Intents.FLAGS.GUILD_VOICE_STATES
 		]});
 		this.commands = new Discord.Collection();
 		this.prefix = config.prefix;

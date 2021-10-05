@@ -22,6 +22,7 @@ View the list of issues [here](https://github.com/nizeic/Noize/issues)
 * skip
 
 ## Installation
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy) or manually install:
 1. Install [Node.js v16](https://nodejs.org/en/download/current)
 2. Clone this repository
     ```sh

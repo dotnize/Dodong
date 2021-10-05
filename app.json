@@ -12,15 +12,15 @@
   "env": {
         "BotToken": {
             "description": "Bot token (https://discordjs.guide/preparations/setting-up-a-bot-application.html#your-token)",
-            "required": "true"
+            "required": true
         },
         "Prefix": {
             "description": "Command prefix for the bot (default: -)",
-            "required": "false"
+            "required": false
         },
         "GeniusAPItoken": {
             "description": "Genius.com Client Access Token (https://genius.com/api-clients)",
-            "required": "false"
+            "required": false
         }
     }
 }

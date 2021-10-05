@@ -5,7 +5,6 @@ const { Player } = require("discord-player");
 const { musicEvents } = require("./music.js")
 const config = require("../config.js");
 const fs = require("fs");
-const downloader = require("@discord-player/downloader").Downloader;
 const { Lyrics } = require("@discord-player/extractor");
 
 class Client extends Discord.Client {
@@ -56,7 +55,6 @@ class Client extends Discord.Client {
 
 		// discord-player
 		musicEvents(this.player);
-		this.player.use("YOUTUBE_DL", downloader);
 		this.lyrics = Lyrics.init(config.geniusAPItoken);
 		if(config.geniusAPItoken === "GENIUS.COM CLIENT ACCESS TOKEN HERE" || config.geniusAPItoken === "" || !config.geniusAPItoken)
 			console.log("Genius API Key is empty. Lyrics feature might not work properly.");

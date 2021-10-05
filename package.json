@@ -1,6 +1,5 @@
 {
   "dependencies": {
-    "@discord-player/downloader": "^3.0.1",
     "@discord-player/extractor": "^3.0.2",
     "@discordjs/opus": "^0.5.3",
     "discord-player": "^5.1.0-dev.1633392756.44b30ad",

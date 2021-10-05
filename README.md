@@ -1,27 +1,12 @@
 # Noize [![made with love](https://img.shields.io/badge/made_with-love-red.svg)](https://shields.io/)
 A music bot written using [discord.js](https://github.com/discordjs/discord.js) and [discord-player](https://github.com/Androz2091/discord-player)
 
-## Bug reports and feature requests
-View the list of issues [here](https://github.com/nizeic/Noize/issues)
+![Screenshot of the bot in action](https://i.imgur.com/egGecyj.png)
 
-## Commands
-* clear
-* disconnect
-* loop
-* lyrics
-* move
-* nowplaying
-* pause
-* play
-* previous
-* queue
-* remove
-* resume
-* seek
-* shuffle
-* skip
+## Contribute
+View the list of bug reports and feature requests [here](https://github.com/nizeic/Noize/issues).
 
-## Installation
+## Install
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy) or manually install:
 1. Install [Node.js v16](https://nodejs.org/en/download/current)
 2. Clone this repository

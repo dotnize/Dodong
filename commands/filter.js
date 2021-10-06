@@ -17,6 +17,7 @@ module.exports = new Command({
         return message.reply({ content: "You are not in my voice channel!" });
     const queue = client.player.getQueue(message.guild);
     const embed = new MessageEmbed();
+    if(!queue || !queue.playing) return;
     if(!args[1]) {
         if(queue && queue.playing)
           display_status(queue, embed, message);
@@ -58,20 +59,22 @@ module.exports = new Command({
     disabledFilters = await queue.getFiltersDisabled();
 
     let count = 0, isTypo = false;
-
+    let typofilters = "";
     for(let i of filterType){
       // If typo or filter is not found or filter is already enabled
       if(!disabledFilters.includes(i)){
         isTypo = true;
-        await message.reply(`There are no ${i} type of filter or filter is already enabled.`);
         filterType[count] = "";
+        count++;
+        typofilters = typofilters.concat(i+", ");
         continue;
       }
       filter[`${i}`] = true;
       count++;
     }
     if(isTypo){
-      await message.reply(` Use **help** to display a list of available filters and use **status** to display enabled filters`);
+      typofilters = typofilters.substring(0, typofilters.length-2); // to remove the commas
+      await message.reply("The filter(s) `"+typofilters+"` is/are unavailable or already enabled.");
     }
     // If no valid filter 
     if(Object.keys(filter).length == 0){
@@ -81,6 +84,7 @@ module.exports = new Command({
     if(enabledFilters.length > 0){
       message.channel.send(`Removing Filters: **${enabledFilters.join(", ")}**`);
     }
+    filterType = filterType.filter(s => s !== "");
     message.channel.send(`Adding Filters: **${filterType.join(", ")}**`);
     queue.setFilters(filter);
     return;
@@ -132,8 +136,8 @@ message.channel.send({ embeds: [embed] });
 return;
 }
 
-const display_status = (queue, embed, message) => {
-  let enabledFilters = queue.getFiltersEnabled();
+const display_status = async (queue, embed, message) => {
+  let enabledFilters = await queue.getFiltersEnabled();
 
   if(enabledFilters.length == 0){
     embed.setDescription(`There are currently no active filters. Use **${prefix}f help** to view all available filters.`);
@@ -145,9 +149,9 @@ const display_status = (queue, embed, message) => {
   return message.channel.send({ embeds: [embed] });
 }
 
-const filters_off = (queue, embed, message) => {
+const filters_off = async (queue, embed, message) => {
   let filter = {};
-  let enabledFilters = queue.getFiltersEnabled();
+  let enabledFilters = await queue.getFiltersEnabled();
 
   if(enabledFilters.length == 0){
     message.channel.send(`There are no filters enabled! Hmmph :triumph: `);

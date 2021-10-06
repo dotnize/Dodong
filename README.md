@@ -1,4 +1,4 @@
-# Noize [![made with love](https://img.shields.io/badge/made_with-love-red.svg)](https://shields.io/)
+# Noize ![node.js CI](https://github.com/nizeic/Noize/actions/workflows/node.js.yml/badge.svg)
 A music bot written using [discord.js](https://github.com/discordjs/discord.js) and [discord-player](https://github.com/Androz2091/discord-player)
 
 ![Screenshot of the bot in action](https://i.imgur.com/egGecyj.png)

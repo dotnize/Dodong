@@ -10,6 +10,7 @@ module.exports = new Command({
         embed.setDescription(`**Commands:**\n
         - clear
         - disconnect / dc
+	- filter / f
         - loop
         - lyrics / l
         - move / m

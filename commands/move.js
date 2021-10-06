@@ -8,8 +8,8 @@ module.exports = new Command({
 	async run(message, args, client) {
         const queue = client.player.getQueue(message.guild);
         if (!queue || !args[1] || !args[2]) return;
-        if(args[1] < 1 || args[2] < 1) return;
         const trackIndex = args[1] - 1;
+        if(!queue.tracks[trackIndex]) return;
         const trackName = queue.tracks[trackIndex].title;
         const trackUrl = queue.tracks[trackIndex].url;
         const track = queue.remove(trackIndex);

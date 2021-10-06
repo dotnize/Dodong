@@ -1,6 +1,9 @@
+const Command = require("../structures/command.js");
 const { MessageEmbed } = require('discord.js');
+const { prefix } = require("../config.js");
 
-module.exports = {
+
+module.exports = new Command({
   name: "filter",
   description: "Enables bass boosting audio effect",
   usage: "<none|low|medium|high>",
@@ -12,12 +15,11 @@ module.exports = {
         return message.reply({ content: "You are not in a voice channel!" });
     if(message.guild.me.voice.channelId && message.member.voice.channelId !== message.guild.me.voice.channelId)
         return message.reply({ content: "You are not in my voice channel!" });
+    const queue = client.player.getQueue(message.guild);
+    const embed = new MessageEmbed();
     if(!args[1]) {
-        const queue = client.player.getQueue(message.guild);
-        if(queue && queue.playing) { // resume
-            const paused = queue.setPaused(false);
-            if(paused) message.react('▶️');
-        }
+        if(queue && queue.playing)
+          display_status(queue, embed, message);
         return;
     }
 
@@ -26,8 +28,6 @@ module.exports = {
 
       - Returns if there is no music playing
     */
-
-    const queue = client.player.getQueue(message.guild);
 
     let filterType = [args[1]];
 
@@ -41,7 +41,6 @@ module.exports = {
 
     // filter is the container for valid filters
     let enabledFilters, disabledFilters, filter = {};
-    const embed = new MessageEmbed();
 
     switch(filterType[0]){
       case "help":
@@ -86,7 +85,7 @@ module.exports = {
     queue.setFilters(filter);
     return;
   }
-}
+});
 
 const display_help = (queue, embed, message) => {
 embed.setDescription(`**Available Parameters:**\n
@@ -137,7 +136,7 @@ const display_status = (queue, embed, message) => {
   let enabledFilters = queue.getFiltersEnabled();
 
   if(enabledFilters.length == 0){
-    embed.setDescription(`There are currently no active filters`);
+    embed.setDescription(`There are currently no active filters. Use **${prefix}f help** to view all available filters.`);
   }else{
     embed.setDescription(`**Active Filters:**\n
     ${enabledFilters.join("\n")}`);

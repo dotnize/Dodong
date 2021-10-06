@@ -24,12 +24,6 @@ module.exports = new Command({
         return;
     }
 
-    /* 
-      Things I did not do (for error handling)
-
-      - Returns if there is no music playing
-    */
-
     let filterType = [args[1]];
 
     if(args.length > 2){
@@ -82,10 +76,12 @@ module.exports = new Command({
     }
     // if there are already enabled/active filters
     if(enabledFilters.length > 0){
-      message.channel.send(`Removing Filters: **${enabledFilters.join(", ")}**`);
+      embed.setDescription(`Removing Filters: **${enabledFilters.join(", ")}**`);
+      await message.channel.send({ embeds: [embed] });
     }
     filterType = filterType.filter(s => s !== "");
-    message.channel.send(`Adding Filters: **${filterType.join(", ")}**`);
+    embed.setDescription(`Adding Filters: **${filterType.join(", ")}**`);
+    message.channel.send({ embeds: [embed] });
     queue.setFilters(filter);
     return;
   }
@@ -154,7 +150,8 @@ const filters_off = async (queue, embed, message) => {
   let enabledFilters = await queue.getFiltersEnabled();
 
   if(enabledFilters.length == 0){
-    message.channel.send(`There are no filters enabled! Hmmph :triumph: `);
+    embed.setDescription(`There are no filters enabled.`);
+    message.channel.send({ embeds: [embed] });
     return;
   }
   for(let i of enabledFilters){

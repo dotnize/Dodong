@@ -5,8 +5,7 @@ const { prefix } = require("../config.js");
 
 module.exports = new Command({
   name: "filter",
-  description: "Enables bass boosting audio effect",
-  usage: "<none|low|medium|high>",
+  description: "View and set audio filters",
   permissions: "SEND_MESSAGES",
   aliases: ["f"],
   async run (message, args, client) {
@@ -38,15 +37,13 @@ module.exports = new Command({
     let enabledFilters, disabledFilters, filter = {};
 
     switch(filterType[0]){
+      case "list":
       case "help":
         return display_help(queue, embed, message);
-        break;
       case "off":
         return filters_off(queue, embed, message);
-        break;
       case "status":
         return display_status(queue, embed, message);
-        break;
     }
 
     enabledFilters = await queue.getFiltersEnabled();
@@ -88,48 +85,11 @@ module.exports = new Command({
 });
 
 const display_help = (queue, embed, message) => {
-embed.setDescription(`**Available Parameters:**\n
-- off
-- status
-- help
-
-**Filters:**
-
-- bassboost_low     
-- vibrato
-- bassboost	        
-- reverse
-- bassboost_high	  
-- treble
-- 8D                
-- normalizer
-- vaporwave         
-- normalizer2
-- nightcore         
-- surrounding
-- phaser            
-- pulsator
-- tremolo           
-- subboost
-- kakaoke           
-- expander
-- flanger           
-- softlimiter
-- haas              
-- chorus
-- mcompand          
-- chorus2d
-- mono              
-- chorus3d
-- mstlr             
-- fadein
-- mstrr             
-- dim
-- compressor        
-- earrape`);
-
-message.channel.send({ embeds: [embed] });
-return;
+  embed.setDescription(`**Available Parameters:** off, status, help`);
+  embed.addField('Filters:', 'bassboost_low\nvibrato\nbassboost\nreverse\nbassboost_high\ntreble\n8D\nnormalizer\nvaporwave\nnormalizer2\nnightcore\nsurrounding\nphaser\npulsator\ntremolo\nsubboost', true);
+  embed.addField('\u200B', 'kakaoke\nexpander\nflanger\nsoftlimiter\nhaas\nchorus\nmcompand\nchorus2d\nmono\nchorus3d\nmstlr\nfadein\nmstrr\ndim\ncompressor\nearrape', true);
+  message.channel.send({ embeds: [embed] });
+  return;
 }
 
 const display_status = async (queue, embed, message) => {

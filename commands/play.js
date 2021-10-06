@@ -45,7 +45,7 @@ module.exports = new Command({
 
         const queue = await client.player.createQueue(message.guild,{ metadata: { channel: message.channel },
             async onBeforeCreateStream(track, source, _queue) {
-                if (source === "youtube") {
+                if (track.url.includes("youtube.com")) {
                     return (await playdl.stream(track.url)).stream;
                 }
             }

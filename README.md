@@ -3,6 +3,8 @@ A music bot written using [discord.js](https://github.com/discordjs/discord.js) 
 
 ![Screenshot of the bot in action](https://i.imgur.com/egGecyj.png)
 
+**NOTE: This project is still under development and could contain bugs & unfinished features. Please use at your own risk.**
+
 ## Contribute
 View the list of bug reports and feature requests [here](https://github.com/nizeic/Noize/issues).
 

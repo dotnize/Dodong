@@ -5,12 +5,10 @@ module.exports = new Command({
 	aliases: [],
 	description: "Resumes the queue if it is paused",
 	permission: "SEND_MESSAGES",
-	async run(message, args, client, _fromButton = false) {
+	async run(message, args, client) {
         const queue = client.player.getQueue(message.guild);
         if (!queue || !queue.playing) return;
         const paused = queue.setPaused(false);
-
-		if(_fromButton) return;
 		return paused ? message.react('▶️') : message.react('❌');
 	}
 });

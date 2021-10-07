@@ -1,47 +1,85 @@
 const Event = require("../structures/event.js");
-const Pause = require("../commands/pause.js");
-const Resume = require("../commands/resume.js")
-const Next = require("../commands/skip.js");
-const DC = require("../commands/disconnect.js");
 const Queue = require("../commands/queue.js");
+const {MessageActionRow, MessageButton, MessageEmbed} = require('discord.js');
 
-module.exports = new Event("interactionCreate", async (client, button) => {
+module.exports = new Event("interactionCreate", async (client, interaction) => {
 
-    // button works like "message" here except that it has some restrictions like it can't be reacted to
+    // interaction works like "message" here except that it has some restrictions like it can't be reacted to
     // so if ever you want to customize the send calls or even turn them to reply you can safely do it
     // you can also get who pressed the button just like who send the message in messageCreate
 
     // apparently interactionCreate is also called when messaging so this is to verify if the interaction is a button press
-    if(button.componentType != "BUTTON") return;   
-
-    let queue = client.player.getQueue(button.guild);
-    if(!queue) return button.channel.send("Error, No queue");
-    let _isPaused = queue.connection.paused;
-
-    switch(button.customId){
-        case "play":
-            if(!_isPaused){
-                Pause.run(button, ["pause"], client, true);
-                // button.channel.send("Pausing queue");
-            }else{
-                Resume.run(button, ["resume"], client, true);
-                // button.channel.send("Resuming queue");
-            }
-            break;
-        case "stop":
-            // button.channel.send("Disconnecting...");
-            DC.run(button, ["dc"], client, true);
-            break;
-        case "skip":
-            // button.channel.send("Skipping...");
-            Next.run(button, ["skip"], client, true);
-            break;
-        case "queue":
-            Queue.run(button, ["queue"], client, true);
-            break;
+    if(interaction.componentType === "BUTTON") {   
+        const queue = client.player.getQueue(interaction.guild);
+        if(!queue || !queue.playing) return;
+        const _isPaused = queue.connection.paused;
+        const embed = new MessageEmbed();
+        switch(interaction.customId){
+            case "play":
+                let row = new MessageActionRow()
+                .addComponents(
+                    new MessageButton()
+                        .setCustomId('play')
+                        .setLabel(_isPaused ? 'Pause' : 'Play')
+                        .setStyle('SUCCESS'),
+                    new MessageButton()
+                        .setCustomId('skip')
+                        .setLabel('Skip')
+                        .setStyle('PRIMARY'),
+                    new MessageButton()
+                        .setCustomId('disconnect')
+                        .setLabel('Disconnect')
+                        .setStyle('DANGER'),
+                    new MessageButton()
+                        .setCustomId('queue')
+                        .setLabel('Show queue')
+                        .setStyle('SECONDARY')
+                )
+                let status = "";
+                if(!_isPaused){
+                    queue.setPaused(true);
+                    status = "paused";
+                }else{
+                    queue.setPaused(false);
+                    status = "resumed";
+                }
+                queue.npmessage.edit({
+                    embeds: [
+                        {
+                            title: `Now playing`,
+                            description: `**[${queue.current.title}](${queue.current.url})**\n${status} by ${interaction.user}`,
+                            footer: {
+                                text: `queued by ${queue.current.requestedBy.tag}`
+                            },
+                            thumbnail: {
+                                url: `${queue.current.thumbnail}`
+                            },
+                            color: 0xffffff,
+                        }
+                    ],
+                    components: [row]
+                });
+                await interaction.deferUpdate();
+                break;
+            case "disconnect":
+                embed.setDescription(`👋 Disconnected.`);
+                embed.setFooter(interaction.user.tag, interaction.user.displayAvatarURL());
+                interaction.channel.send({ embeds: [embed] });
+                queue.destroy(true);
+                await interaction.deferUpdate();
+                break;
+            case "skip":
+                embed.setDescription(`Skipped **[${queue.current.title}](${queue.current.url})**`);
+                embed.setFooter(interaction.user.tag, interaction.user.displayAvatarURL());
+                interaction.channel.send({ embeds: [embed] });
+                queue.skip();
+                await interaction.deferUpdate();
+                break;
+            case "queue":
+                Queue.run(interaction, ["queue"], client, true);
+                await interaction.deferUpdate();
+                break;
+        }
     }
 
-    // Supposed to be a way to prevent the "interaction failed" but it doesn't work here because basically, we are not using the interaction but a message
-    // await button.reply.defer();
-    return;
 });

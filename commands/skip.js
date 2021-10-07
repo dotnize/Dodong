@@ -5,12 +5,10 @@ module.exports = new Command({
     aliases: ['n', 'next'],
 	description: "Skips to the next song in the queue",
 	permission: "SEND_MESSAGES",
-	async run(message, args, client, _fromButton = false) {
+	async run(message, args, client) {
         const queue = client.player.getQueue(message.guild);
         if (!queue || !queue.playing) return;
         const success = queue.skip();
-
-		if(_fromButton) return;
         return success ? message.react("⏭️") : message.react('❌');
 	}
 });

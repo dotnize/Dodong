@@ -1,6 +1,7 @@
 const Command = require("../structures/command.js");
 const { QueryType } = require('discord-player');
 const playdl = require("play-dl");
+const ytsearch = require("youtube-sr").default;
 
 module.exports = new Command({
 	name: "play",
@@ -22,10 +23,8 @@ module.exports = new Command({
         }
 
         let query = args.slice(1).join(" ");
-        if(query.includes("spotify.com")) {
-            return message.channel.send({ embeds: [{ description: `Spotify tracks are temporarily disabled due to a [bug](https://github.com/nizeic/Noize/issues/2).`, color: 0xff0000 }] });
-        }
-        message.channel.send({ content: '🎵  Searching 🔎 `'+query+'`' })
+        if(query.includes("soundcloud.com"))
+            return message.channel.send({ embeds: [{ description: `Soundcloud tracks are temporarily disabled due to a bug in discord-player.`, color: 0xff0000 }] });
         
         let queryType;
         if(query.includes("youtube.com/playlist")) {
@@ -47,6 +46,10 @@ module.exports = new Command({
             async onBeforeCreateStream(track, source, _queue) {
                 if (track.url.includes("youtube.com")) {
                     return (await playdl.stream(track.url)).stream;
+                }
+                else if(track.url.includes("spotify.com")){
+                    // temporary since onBeforeCreateStream has a bug which crashes the bot if we return void
+                    return (await playdl.stream((await ytsearch.search(`${track.author} ${track.title}`, { type: "video" }).then((x) => x[0].url)))).stream;
                 }
             }
         });

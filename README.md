@@ -11,8 +11,8 @@ View the list of bug reports and feature requests [here](https://github.com/nize
 ## Deploy automatically
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)<br><br>
 [![Run on Repl.it](https://repl.it/badge/github/nizeic/Noize)](https://repl.it/github/nizeic/Noize)<br>
-**NOTE:** repl.it uses Node.js v14 by default which is unsupported by the bot.<br>
-To install Node.js v16, execute these commands from the **Shell**:
+**NOTE:** repl.it uses Node.js v12 by default which is unsupported by the bot.<br>
+To install Node.js v16, execute this script from the **Shell**:
 ```sh
 npm init -y && npm i --save-dev node@16 && npm config set prefix=$(pwd)/node_modules/node && export PATH=$(pwd)/node_modules/node/bin:$PATH
 ```

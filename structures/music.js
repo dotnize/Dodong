@@ -9,8 +9,8 @@ module.exports.musicEvents = (player) => {
         console.log(`(${queue.guild.name}) connectionError: ${error.message}`);
     });
     player.on("trackEnd", (queue, track) => {
-        if(!isObjEmpty(queue.oldnpmessage)) {
-            queue.oldnpmessage.delete();
+        if(!isObjEmpty(queue.npmessage)) {
+            queue.npmessage.delete();
         }
     });
     player.on("trackStart", (queue, track) => {
@@ -18,15 +18,15 @@ module.exports.musicEvents = (player) => {
             .addComponents(
                 new MessageButton()
                     .setCustomId('play')
-                    .setLabel('Play & Pause')
+                    .setLabel('Pause')
                     .setStyle('SUCCESS'),
                 new MessageButton()
                     .setCustomId('skip')
                     .setLabel('Skip')
                     .setStyle('PRIMARY'),
                 new MessageButton()
-                    .setCustomId('stop')
-                    .setLabel('Stop')
+                    .setCustomId('disconnect')
+                    .setLabel('Disconnect')
                     .setStyle('DANGER'),
                 new MessageButton()
                     .setCustomId('queue')
@@ -38,7 +38,7 @@ module.exports.musicEvents = (player) => {
             embeds: [
                 {
                     title: `Now playing`,
-                    description: `[${track.title}](${track.url})`,
+                    description: `**[${track.title}](${track.url})**`,
                     footer: {
                         text: `queued by ${track.requestedBy.tag}`
                     },
@@ -50,7 +50,7 @@ module.exports.musicEvents = (player) => {
             ],
             components: [row]
         }).then((msg) => {
-			queue.oldnpmessage = msg;
+			queue.npmessage = msg;
         });
     });
 

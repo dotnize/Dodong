@@ -8,8 +8,16 @@ A music bot written using [discord.js](https://github.com/discordjs/discord.js) 
 ## Contribute
 View the list of bug reports and feature requests [here](https://github.com/nizeic/Noize/issues).
 
-## Install
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy) or manually install:
+## Deploy automatically
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)<br><br>
+[![Run on Repl.it](https://repl.it/badge/github/nizeic/Noize)](https://repl.it/github/nizeic/Noize)<br>
+**NOTE:** repl.it uses Node.js v14 by default which is unsupported by the bot.<br>
+To install Node.js v16, execute these commands from the **Shell**:
+```sh
+npm init -y && npm i --save-dev node@16 && npm config set prefix=$(pwd)/node_modules/node && export PATH=$(pwd)/node_modules/node/bin:$PATH
+```
+
+## Manual installation
 1. Install [Node.js v16](https://nodejs.org/en/download/current)
 2. Clone this repository
     ```sh

@@ -3,6 +3,16 @@
   "homepage": "https://github.com/nizeic/Noize#readme",
   "bugs": "https://github.com/nizeic/Noize/issues",
   "license": "MIT",
+  "description": "A music bot written using discord.js and discord-player",
+  "version": "1.0.0",
+  "main": "index.js",
+  "keywords": [
+    "discord",
+    "music",
+    "bot",
+    "discordjs"
+  ],
+  "author": "nizeic",
   "dependencies": {
     "@discord-player/extractor": "^3.0.2",
     "@discordjs/opus": "^0.6.0",
@@ -19,5 +29,8 @@
   "engines": {
     "node": "16.x"
   },
-  "repository": "github:nizeic/Noize"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nizeic/Noize.git"
+  }
 }

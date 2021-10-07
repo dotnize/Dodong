@@ -16,17 +16,16 @@ module.exports = new Command({
             embed.setDescription(`no songs in the queue :<`);
             return message.channel.send({ embeds: [embed] });
         }
-        const previous = new MessageButton()
-                .setCustomId('previousbtn')
-                .setLabel('Previous')
-                .setStyle('DANGER');
-        const next = new MessageButton()
-                .setCustomId('nextbtn')
-                .setLabel('Next')
-                .setStyle('SUCCESS');
         const buttons = [
-            previous,
-            next
+            
+            new MessageButton()
+                .setCustomId('play')
+                .setLabel('Play/Pause')
+                .setStyle('PRIMARY'),
+            new MessageButton()
+                .setCustomId('next')
+                .setLabel('Next')
+                .setStyle('SUCCESS')
         ];
         const pages = [];
         var page = 1;

@@ -1,3 +1,5 @@
+const {MessageActionRow, MessageButton} = require('discord.js');
+
 module.exports.musicEvents = (player) => {
 
     player.on("error", (queue, error) => {
@@ -12,6 +14,26 @@ module.exports.musicEvents = (player) => {
         }
     });
     player.on("trackStart", (queue, track) => {
+        let row = new MessageActionRow()
+            .addComponents(
+                new MessageButton()
+                    .setCustomId('play')
+                    .setLabel('Play & Pause')
+                    .setStyle('SUCCESS'),
+                new MessageButton()
+                    .setCustomId('skip')
+                    .setLabel('Skip')
+                    .setStyle('PRIMARY'),
+                new MessageButton()
+                    .setCustomId('stop')
+                    .setLabel('Stop')
+                    .setStyle('DANGER'),
+                new MessageButton()
+                    .setCustomId('queue')
+                    .setLabel('Show queue')
+                    .setStyle('SECONDARY')
+            )
+
         queue.metadata.channel.send({
             embeds: [
                 {
@@ -23,9 +45,10 @@ module.exports.musicEvents = (player) => {
                     thumbnail: {
                         url: `${track.thumbnail}`
                     },
-                    color: 0xffffff
+                    color: 0xffffff,
                 }
-            ]
+            ],
+            components: [row]
         }).then((msg) => {
 			queue.oldnpmessage = msg;
         });

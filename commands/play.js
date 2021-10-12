@@ -50,14 +50,18 @@ module.exports = new Command({
                 }
             }
         });
+        let justConnected;
         try {
-            if (!queue.connection) queue.connect(message.member.voice.channel);
+            if (!queue.connection) {
+                justConnected = true;
+                await queue.connect(message.member.voice.channel);
+            }
         } catch {
             client.player.deleteQueue(message.guild);
             return message.reply({ content: 'Could not join your voice channel!' });
         }
         client.user.setActivity(`${client.prefix}help in ${client.guilds.cache.size} servers`, { type: 'LISTENING' });
         await searchResult.playlist ? queue.addTracks(searchResult.tracks) : queue.addTrack(searchResult.tracks[0]);
-        if(!queue.playing) await queue.play();
+        if(justConnected) queue.play();
 	}
 });

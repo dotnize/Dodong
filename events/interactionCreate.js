@@ -9,33 +9,34 @@ module.exports = new Event("interactionCreate", async (client, interaction) => {
     // you can also get who pressed the button just like who send the message in messageCreate
 
     // apparently interactionCreate is also called when messaging so this is to verify if the interaction is a button press
-    if(interaction.componentType === "BUTTON") {   
+    if(interaction.componentType === "BUTTON" && interaction.customId.includes("buttoncontrol")) {
         const queue = client.player.getQueue(interaction.guild);
         if(!queue || !queue.playing) return;
         const _isPaused = queue.connection.paused;
         const embed = new MessageEmbed();
         switch(interaction.customId){
-            case "play":
+            case "buttoncontrol_play":
+                await interaction.deferUpdate();
                 let row = new MessageActionRow()
                 .addComponents(
                     new MessageButton()
-                        .setCustomId('play')
-                        .setLabel(_isPaused ? 'Pause' : 'Play')
+                        .setCustomId('buttoncontrol_play')
+                        .setLabel(_isPaused ? 'Pause' : 'Resume')
                         .setStyle('SUCCESS'),
                     new MessageButton()
-                        .setCustomId('skip')
+                        .setCustomId('buttoncontrol_skip')
                         .setLabel('Skip')
                         .setStyle('PRIMARY'),
                     new MessageButton()
-                        .setCustomId('disconnect')
+                        .setCustomId('buttoncontrol_disconnect')
                         .setLabel('Disconnect')
                         .setStyle('DANGER'),
                     new MessageButton()
-                        .setCustomId('queue')
+                        .setCustomId('buttoncontrol_queue')
                         .setLabel('Show queue')
                         .setStyle('SECONDARY')
                 )
-                let status = "";
+                let status;
                 if(!_isPaused){
                     queue.setPaused(true);
                     status = "paused";
@@ -59,25 +60,24 @@ module.exports = new Event("interactionCreate", async (client, interaction) => {
                     ],
                     components: [row]
                 });
-                await interaction.deferUpdate();
                 break;
-            case "disconnect":
+            case "buttoncontrol_disconnect":
+                await interaction.deferUpdate();
                 embed.setDescription(`👋 Disconnected.`);
                 embed.setFooter(interaction.user.tag, interaction.user.displayAvatarURL());
                 interaction.channel.send({ embeds: [embed] });
                 queue.destroy(true);
-                await interaction.deferUpdate();
                 break;
-            case "skip":
+            case "buttoncontrol_skip":
+                await interaction.deferUpdate();
                 embed.setDescription(`Skipped **[${queue.current.title}](${queue.current.url})**`);
                 embed.setFooter(interaction.user.tag, interaction.user.displayAvatarURL());
                 interaction.channel.send({ embeds: [embed] });
                 queue.skip();
-                await interaction.deferUpdate();
                 break;
-            case "queue":
-                Queue.run(interaction, ["queue"], client, true);
+            case "buttoncontrol_queue":
                 await interaction.deferUpdate();
+                Queue.run(interaction, ["queue"], client, true);
                 break;
         }
     }

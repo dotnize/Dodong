@@ -17,19 +17,19 @@ module.exports.musicEvents = (player) => {
         let row = new MessageActionRow()
             .addComponents(
                 new MessageButton()
-                    .setCustomId('play')
+                    .setCustomId('buttoncontrol_play')
                     .setLabel('Pause')
                     .setStyle('SUCCESS'),
                 new MessageButton()
-                    .setCustomId('skip')
+                    .setCustomId('buttoncontrol_skip')
                     .setLabel('Skip')
                     .setStyle('PRIMARY'),
                 new MessageButton()
-                    .setCustomId('disconnect')
+                    .setCustomId('buttoncontrol_disconnect')
                     .setLabel('Disconnect')
                     .setStyle('DANGER'),
                 new MessageButton()
-                    .setCustomId('queue')
+                    .setCustomId('buttoncontrol_queue')
                     .setLabel('Show queue')
                     .setStyle('SECONDARY')
             )

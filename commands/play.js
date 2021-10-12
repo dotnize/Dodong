@@ -23,9 +23,6 @@ module.exports = new Command({
         }
 
         let query = args.slice(1).join(" ");
-        if(query.includes("soundcloud.com"))
-            return message.channel.send({ embeds: [{ description: `Soundcloud tracks are temporarily disabled due to a bug in discord-player.`, color: 0xff0000 }] });
-        
         let queryType;
         if(query.includes("youtube.com/playlist")) {
             queryType = QueryType.YOUTUBE_PLAYLIST;
@@ -47,21 +44,24 @@ module.exports = new Command({
                 if (track.url.includes("youtube.com")) {
                     return (await playdl.stream(track.url)).stream;
                 }
-                else if(track.url.includes("spotify.com")){
+                else {
                     // temporary since onBeforeCreateStream has a bug which crashes the bot if we return void
                     return (await playdl.stream((await ytsearch.search(`${track.author} ${track.title}`, { type: "video" }).then((x) => x[0].url)))).stream;
                 }
             }
         });
-
+        let justConnected;
         try {
-            if (!queue.connection) await queue.connect(message.member.voice.channel);
+            if (!queue.connection) {
+                justConnected = true;
+                await queue.connect(message.member.voice.channel);
+            }
         } catch {
             client.player.deleteQueue(message.guild);
             return message.reply({ content: 'Could not join your voice channel!' });
         }
 
         await searchResult.playlist ? queue.addTracks(searchResult.tracks) : queue.addTrack(searchResult.tracks[0]);
-        if (!queue.playing) queue.play();
+        if(justConnected) queue.play();
 	}
 });

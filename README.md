@@ -1,7 +1,7 @@
 # Noize ![node.js CI](https://github.com/nizeic/Noize/actions/workflows/node.js.yml/badge.svg)
 A music bot written using [discord.js](https://github.com/discordjs/discord.js) and [discord-player](https://github.com/Androz2091/discord-player)
 
-![Screenshot of the bot in action](https://i.imgur.com/egGecyj.png)
+![Screenshot of the bot in action](https://i.imgur.com/YSQl4KK.png)
 
 **NOTE: This project is still under development and could contain bugs & unfinished features. Please use at your own risk.**
 
@@ -25,7 +25,7 @@ npm init -y && npm i --save-dev node@16 && npm config set prefix=$(pwd)/node_mod
     ```
 3. Install dependencies
     ```sh
-    npm install
+    npm ci
     ```
 4. Enter your [bot token](https://discord.com/developers/applications) and [Genius API Token](https://genius.com/api-clients) in `config.js`
     ```js

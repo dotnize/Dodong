@@ -63,6 +63,9 @@ module.exports = new Command({
                     embed.setAuthor(`Now playing: ${queue.current.title}`, null, `${queue.current.url}`);
                     return message.channel.send({ embeds: [embed] });
                 }
+                if(page === 2) {
+                    return message.channel.send({ embeds: [pages[0]] });
+                }
             }
         } while(!emptypage);
         return paginationEmbed(message, pages, buttons, 30000);

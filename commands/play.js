@@ -42,11 +42,11 @@ module.exports = new Command({
         const queue = await client.player.createQueue(message.guild,{ metadata: { channel: message.channel },
             async onBeforeCreateStream(track, source, _queue) {
                 if (track.url.includes("youtube.com")) {
-                    return (await playdl.stream(track.url)).stream;
+                    return (await playdl.stream(track.url, { quality : 0 })).stream;
                 }
                 else {
                     // temporary since onBeforeCreateStream has a bug which crashes the bot if we return void
-                    return (await playdl.stream((await ytsearch.search(`${track.author} ${track.title}`, { type: "video" }).then((x) => x[0].url)))).stream;
+                    return (await playdl.stream((await ytsearch.search(`${track.author} ${track.title}`, { type: "video" }).then((x) => x[0].url)), { quality: 0 })).stream;
                 }
             }
         });

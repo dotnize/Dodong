@@ -9,8 +9,10 @@ module.exports.musicEvents = (player) => {
         console.log(`(${queue.guild.name}) connectionError: ${error.message}`);
     });
     player.on("trackEnd", (queue, track) => {
-        if(!isObjEmpty(queue.npmessage)) {
-            queue.npmessage.delete();
+        try {
+            if(queue.npmessage) queue.npmessage.delete();
+        } catch {
+            console.log(`(${queue.guild.name}) error while attempting to delete npmessage.`);
         }
     });
     player.on("trackStart", (queue, track) => {
@@ -77,10 +79,3 @@ module.exports.musicEvents = (player) => {
     });
 
 };
-function isObjEmpty(obj) {
-    for(var key in obj) {
-        if(obj.hasOwnProperty(key))
-            return false;
-    }
-    return true;
-}

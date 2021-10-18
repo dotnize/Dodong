@@ -1,7 +1,6 @@
 const Command = require("../structures/command.js");
 const { QueryType } = require('discord-player');
 const playdl = require("play-dl");
-const ytsearch = require("youtube-sr").default;
 
 module.exports = new Command({
 	name: "play",
@@ -45,8 +44,8 @@ module.exports = new Command({
                     return (await playdl.stream(track.url, { quality : 0 })).stream;
                 }
                 else {
-                    // temporary since onBeforeCreateStream has a bug which crashes the bot if we return void
-                    return (await playdl.stream((await ytsearch.search(`${track.author} ${track.title}`, { type: "video" }).then((x) => x[0].url)), { quality: 0 })).stream;
+                    // temporary since onBeforeCreateStream crashes the bot if we return void
+                    return (await playdl.stream(await playdl.search(`${track.author} ${track.title}`, { limit : 1, source : { youtube : "video" } }).then(x => x[0].url), { quality: 0 })).stream;
                 }
             }
         });

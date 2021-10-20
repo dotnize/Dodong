@@ -60,6 +60,7 @@ module.exports = new Command({
             client.player.deleteQueue(message.guild);
             return message.reply({ content: 'Could not join your voice channel!' });
         }
+        if(searchResult.playlist) searchResult.tracks[0].playlist = searchResult.playlist;
         client.user.setActivity(`${client.prefix}help in ${client.guilds.cache.size} servers`, { type: 'LISTENING' });
         await searchResult.playlist ? queue.addTracks(searchResult.tracks) : queue.addTrack(searchResult.tracks[0]);
         if(justConnected) queue.play();

@@ -71,7 +71,7 @@ module.exports.musicEvents = (player) => {
         queue.metadata.channel.send({
             embeds: [
                 {
-                    description: `Queued **${tracks.length}** tracks`,
+                    description: `Queued **${tracks.length}** tracks from [${tracks[0].playlist.title}](${tracks[0].playlist.url})`,
                     color: 0xffffff
                 }
             ]

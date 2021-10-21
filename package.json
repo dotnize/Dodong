@@ -16,10 +16,11 @@
   "dependencies": {
     "@discord-player/extractor": "^3.0.2",
     "@discordjs/opus": "^0.6.0",
-    "discord-player": "^5.1.0",
+    "discord-player": "^5.1.0-dev.1634558810.a0badb8",
     "discord.js": "^13.2.0",
     "discordjs-button-pagination": "^1.0.7",
-    "ffmpeg-static": "^4.4.0"
+    "ffmpeg-static": "^4.4.0",
+    "play-dl": "^1.1.8"
   },
   "scripts": {
     "start": "node index.js",

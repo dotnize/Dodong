@@ -1,6 +1,5 @@
 const Command = require("../structures/command.js");
 const { QueryType } = require('discord-player');
-const playdl = require("play-dl");
 
 module.exports = new Command({
 	name: "play",
@@ -38,15 +37,13 @@ module.exports = new Command({
         if (!searchResult || !searchResult.tracks.length)
             return message.channel.send({ embeds: [{ description: `No results found!`, color: 0xff0000 }] });
 
-        const queue = await client.player.createQueue(message.guild,{ metadata: { channel: message.channel },
-            async onBeforeCreateStream(track, source, _queue) {
-                if (track.url.includes("youtube.com")) {
-                    return (await playdl.stream(track.url, { quality : 0 })).stream;
-                }
-                else {
-                    // temporary since onBeforeCreateStream crashes the bot if we return void
-                    return (await playdl.stream(await playdl.search(`${track.author} ${track.title}`, { limit : 1, source : { youtube : "video" } }).then(x => x[0].url), { quality: 0 })).stream;
-                }
+        const queue = await client.player.createQueue(message.guild,{
+            metadata: { channel: message.channel },
+            ytdlOptions: {
+                quality: "highest",
+                filter: "audioonly",
+                highWaterMark: 1 << 25,
+                dlChunkSize: 0,
             }
         });
         let justConnected;

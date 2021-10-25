@@ -10,9 +10,9 @@ module.exports.musicEvents = (player) => {
     });
     player.on("trackEnd", (queue, track) => {
         try {
-            if(queue.npmessage) queue.npmessage.delete();
+            queue.npmessage.channel.messages.cache.fetch(queue.npmessage.id).then(msg => msg.delete());
         } catch {
-            console.log(`(${queue.guild.name}) error while attempting to delete npmessage.`);
+            console.log(`(${queue.guild.name}) error while attempting to fetch npmessage.`);
         }
     });
     player.on("trackStart", (queue, track) => {

@@ -9,11 +9,11 @@ module.exports.musicEvents = (player) => {
         console.log(`(${queue.guild.name}) connectionError: ${error.message}`);
     });
     player.on("trackEnd", (queue, track) => {
-        try {
-            queue.npmessage.channel.messages.cache.fetch(queue.npmessage.id).then(msg => msg.delete());
-        } catch {
-            console.log(`(${queue.guild.name}) error while attempting to fetch npmessage.`);
-        }
+        queue.npmessage.delete().catch(error => {
+            if (error.code === 10008) {
+                console.log(`(${queue.guild.name}) error while attempting to delete npmessage`);
+            }
+        });
     });
     player.on("trackStart", (queue, track) => {
         let row = new MessageActionRow()

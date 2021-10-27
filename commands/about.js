@@ -13,7 +13,7 @@ module.exports = new Command({
         `Type \`${client.prefix}help\` to see all my commands.\n`+
         `Type \`${client.prefix}play\` to start making some Noize!\n`+
         `Click [here](https://nize.ph/Noize) to invite me to your server!\n\n`+
-        `Developers: [**nize**#5846](https://github.com/nizeic), [**Kenshin**#3900](https://github.com/JoshCunningHum)`+
+        `Developers: [nize#5846](https://github.com/nizeic), [Kenshin#3900](https://github.com/JoshCunningHum)`+
         `\`\`\`\n`+
         `Node.js: ${process.version}\n`+
         `discord.js: ${require('../package.json').dependencies["discord.js"]}\n`+

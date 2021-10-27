@@ -48,10 +48,7 @@ module.exports = new Event("interactionCreate", async (client, interaction) => {
                     embeds: [
                         {
                             title: `Now playing`,
-                            description: `**[${queue.current.title}](${queue.current.url})**\n${status} by ${interaction.user}`,
-                            footer: {
-                                text: `queued by ${queue.current.requestedBy.tag}`
-                            },
+                            description: `**[${queue.current.title}](${queue.current.url})** - ${queue.current.requestedBy}\n\n${status} by ${interaction.user}`,
                             thumbnail: {
                                 url: `${queue.current.thumbnail}`
                             },

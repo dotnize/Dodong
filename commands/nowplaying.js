@@ -17,13 +17,9 @@ module.exports = new Command({
         return message.channel.send({
             embeds: [
                 {
-                    title: 'Now Playing',
-                    description: `**[${queue.current.title}](${queue.current.url})**`,
+                    description: `**[${queue.current.title}](${queue.current.url})** - ${queue.current.requestedBy}`,
                     thumbnail: {
                         url: `${queue.current.thumbnail}`
-                    },
-                    footer: {
-                        text: `queued by ${queue.current.requestedBy.tag}`
                     },
                     fields: [
                         {

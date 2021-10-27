@@ -8,9 +8,10 @@ module.exports = new Command({
 	async run(message, args, client) {
         const embed = new MessageEmbed();
         embed.setDescription(`**Commands:**\n
+        - about
         - clear
         - disconnect / dc
-	- filter / f
+        - filter / f *(experimental)*
         - loop
         - lyrics / l
         - move / m
@@ -22,7 +23,7 @@ module.exports = new Command({
         - queue / q
         - remove / r
         - resume
-        - seek / s
+        - seek / s *(experimental)*
         - shuffle
         - skip / next / n`);
         return message.channel.send({ embeds: [embed] });

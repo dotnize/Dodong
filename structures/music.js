@@ -40,10 +40,7 @@ module.exports.musicEvents = (player) => {
             embeds: [
                 {
                     title: `Now playing`,
-                    description: `**[${track.title}](${track.url})**`,
-                    footer: {
-                        text: `queued by ${track.requestedBy.tag}`
-                    },
+                    description: `**[${track.title}](${track.url})** - ${track.requestedBy}`,
                     thumbnail: {
                         url: `${track.thumbnail}`
                     },

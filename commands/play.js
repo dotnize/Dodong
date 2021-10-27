@@ -9,9 +9,9 @@ module.exports = new Command({
 	permission: "SEND_MESSAGES",
 	async run(message, args, client) {
         if(!message.member.voice.channelId)
-            return message.reply({ content: "You are not in a voice channel!" });
+            return message.reply({ embeds: [{ description: `You are not in a voice channel!`, color: 0xff0000 }] });
         if(message.guild.me.voice.channelId && message.member.voice.channelId !== message.guild.me.voice.channelId)
-            return message.reply({ content: "You are not in my voice channel!" });
+            return message.reply({ embeds: [{ description: `You are not in my voice channel!`, color: 0xff0000 }] });
         if(!args[1]) {
             const queue = client.player.getQueue(message.guild);
             if(queue && queue.playing) { // resume
@@ -57,10 +57,9 @@ module.exports = new Command({
             }
         } catch {
             client.player.deleteQueue(message.guild);
-            return message.reply({ content: 'Could not join your voice channel!' });
+            return message.channel.send({ embeds: [{ description: `Could not join your voice channel!`, color: 0xff0000 }] });
         }
         if(searchResult.playlist) searchResult.tracks[0].playlist = searchResult.playlist;
-        client.user.setActivity(`${client.prefix}help in ${client.guilds.cache.size} servers`, { type: 'LISTENING' });
         await searchResult.playlist ? queue.addTracks(searchResult.tracks) : queue.addTrack(searchResult.tracks[0]);
         if(justConnected) queue.play();
 	}

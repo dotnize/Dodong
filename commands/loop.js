@@ -10,21 +10,25 @@ module.exports = new Command({
         const queue = client.player.getQueue(message.guild);
         if (!queue) return;
         if(!args[1]) {
-            const embed = new MessageEmbed()
-            let mode;
-            if(await queue.repeatMode === QueueRepeatMode.OFF) mode = "`Off`";
-            else if(await queue.repeatMode === QueueRepeatMode.TRACK) mode = "`Track`";
-            else if(await queue.repeatMode === QueueRepeatMode.QUEUE) mode = "`Queue`";
-            else if(await queue.repeatMode === QueueRepeatMode.AUTOPLAY) mode = "`Autoplay`";
-			embed.setDescription(`Current loop mode: ${mode}\nOptions: off, track, queue, autoplay`);
-            return message.channel.send({embeds: [embed]});
+            if(await queue.repeatMode === QueueRepeatMode.OFF || await queue.repeatMode === QueueRepeatMode.AUTOPLAY) {
+                queue.setRepeatMode(QueueRepeatMode.QUEUE);
+                return message.channel.send({ embeds: [{ description: `🔄 | Looping the **queue**.`}] });
+            }
+            else if(await queue.repeatMode === QueueRepeatMode.QUEUE) {
+                queue.setRepeatMode(QueueRepeatMode.TRACK);
+                return message.channel.send({ embeds: [{ description: `🔂 | Looping the **current track**.`}] });
+            }
+            else if(await queue.repeatMode === QueueRepeatMode.TRACK) {
+                queue.setRepeatMode(QueueRepeatMode.OFF);
+                return message.channel.send({ embeds: [{ description: `✅ | Looping is now **disabled**.`}] });
+            }
         }
         const option = args[1];
-        if(option.includes("off") || option.includes("disable")) { 
+        if(option.includes("off") || option.includes("disable") || option.includes("none")) { 
             queue.setRepeatMode(QueueRepeatMode.OFF);
             return message.react("✅");
         }
-        else if(option.includes("track") || option.includes("song")) {
+        else if(option.includes("track") || option.includes("song") || option.includes("current")) {
             queue.setRepeatMode(QueueRepeatMode.TRACK);
             return message.react("🔂");
         }

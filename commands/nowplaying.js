@@ -27,7 +27,7 @@ module.exports = new Command({
                             value: progress.replace(/ 0:00/g, ' ◉ LIVE')
                         }
                     ],
-                    color: 0xffffff
+                    color: 0x44b868
                 }
             ]
         });

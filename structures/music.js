@@ -44,7 +44,7 @@ module.exports.musicEvents = (player) => {
                     thumbnail: {
                         url: `${track.thumbnail}`
                     },
-                    color: 0xffffff,
+                    color: 0x44b868,
                 }
             ],
             components: [row]
@@ -58,7 +58,7 @@ module.exports.musicEvents = (player) => {
             embeds: [
                 {
                     description: `Queued **[${track.title}](${track.url})**`,
-                    color: 0xffffff
+                    color: 0x44b868
                 }
             ]
         });
@@ -69,7 +69,7 @@ module.exports.musicEvents = (player) => {
             embeds: [
                 {
                     description: `Queued **${tracks.length}** tracks from [${tracks[0].playlist.title}](${tracks[0].playlist.url})`,
-                    color: 0xffffff
+                    color: 0x44b868
                 }
             ]
         });

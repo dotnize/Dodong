@@ -16,7 +16,6 @@ module.exports = new Event("interactionCreate", async (client, interaction) => {
         const embed = new MessageEmbed();
         switch(interaction.customId){
             case "buttoncontrol_play":
-                await interaction.deferUpdate();
                 let row = new MessageActionRow()
                 .addComponents(
                     new MessageButton()
@@ -52,29 +51,32 @@ module.exports = new Event("interactionCreate", async (client, interaction) => {
                             thumbnail: {
                                 url: `${queue.current.thumbnail}`
                             },
-                            color: 0xffffff,
+                            color: _isPaused ? 0x44b868 : 0xb84e44,
                         }
                     ],
                     components: [row]
                 });
+                await interaction.deferUpdate();
                 break;
             case "buttoncontrol_disconnect":
-                await interaction.deferUpdate();
                 embed.setDescription(`👋 Disconnected.`);
+                embed.setColor('#44b868');
                 embed.setFooter(interaction.user.tag, interaction.user.displayAvatarURL());
                 interaction.channel.send({ embeds: [embed] });
+                await interaction.deferUpdate();
                 queue.destroy(true);
                 break;
             case "buttoncontrol_skip":
-                await interaction.deferUpdate();
                 embed.setDescription(`Skipped **[${queue.current.title}](${queue.current.url})**`);
+                embed.setColor('#44b868');
                 embed.setFooter(interaction.user.tag, interaction.user.displayAvatarURL());
                 interaction.channel.send({ embeds: [embed] });
+                await interaction.deferUpdate();
                 queue.skip();
                 break;
             case "buttoncontrol_queue":
-                await interaction.deferUpdate();
                 Queue.run(interaction, ["queue"], client, true);
+                await interaction.deferUpdate();
                 break;
         }
     }

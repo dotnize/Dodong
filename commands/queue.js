@@ -14,6 +14,7 @@ module.exports = new Command({
             if(_fromButton) return;
             const embed = new MessageEmbed();
             embed.setTitle('Server Queue');
+            embed.setColor('#b84e44');
             embed.setDescription(`no songs in the queue :<`);
             return message.channel.send({ embeds: [embed] });
         }
@@ -50,6 +51,8 @@ module.exports = new Command({
                         ? `\n... ${queue.tracks.length - pageEnd} more track(s)`
                         : ''
                 }`);
+                if(page%2 === 0) embed.setColor('#b84e44');
+                else embed.setColor('#44b868');
                 if(page === 1) embed.setAuthor(`Now playing: ${queue.current.title}`, null, `${queue.current.url}`);
                 pages.push(embed);
                 page++;
@@ -59,6 +62,7 @@ module.exports = new Command({
                 if(page === 1) {
                     const embed = new MessageEmbed();
                     embed.setTitle('Server Queue');
+                    embed.setColor('#44b868');
                     embed.setDescription(`${usedby}\nno songs in the queue :<`);
                     embed.setAuthor(`Now playing: ${queue.current.title}`, null, `${queue.current.url}`);
                     return message.channel.send({ embeds: [embed] });

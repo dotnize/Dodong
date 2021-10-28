@@ -11,9 +11,9 @@ module.exports = new Command({
   async run (message, args, client) {
 
     if(!message.member.voice.channelId)
-        return message.reply({ content: "You are not in a voice channel!" });
+        return message.reply({ embeds: [{ description: `You are not in a voice channel!`, color: 0xb84e44 }] });
     if(message.guild.me.voice.channelId && message.member.voice.channelId !== message.guild.me.voice.channelId)
-        return message.reply({ content: "You are not in my voice channel!" });
+        return message.reply({ embeds: [{ description: `You are not in my voice channel!`, color: 0xb84e44 }] });
     const queue = client.player.getQueue(message.guild);
     const embed = new MessageEmbed();
     if(!queue || !queue.playing) return;
@@ -22,7 +22,7 @@ module.exports = new Command({
           display_status(queue, embed, message);
         return;
     }
-
+    embed.setColor('#44b868');
     let filterType = [args[1]];
 
     if(args.length > 2){
@@ -95,6 +95,7 @@ const display_help = (queue, embed, message) => {
 const display_status = async (queue, embed, message) => {
   let enabledFilters = await queue.getFiltersEnabled();
 
+  embed.setColor('#b84e44');
   if(enabledFilters.length == 0){
     embed.setDescription(`There are currently no active filters. Use **${prefix}f help** to view all available filters.`);
   }else{

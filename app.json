@@ -1,7 +1,7 @@
 {
-    "name": "Noize",
+    "name": "Dodong",
     "description": "A Discord music bot written using discord.js and discord-player.js",
-    "repository": "https://github.com/nizeic/Noize",
+    "repository": "https://github.com/nizeic/Dodong",
     "keywords": ["discord", "music", "bot", "discordjs"],
     "image": "heroku/nodejs",
     "buildpacks": [

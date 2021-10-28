@@ -14,7 +14,7 @@ module.exports = new Command({
 
             const result = await client.lyrics.search(query);
             if(!result) {
-                message.channel.send({ embeds: [{ description: !args[1] ? "No lyrics found for `"+query+"`.\nTry manually searching using `"+client.prefix+"lyrics <songtitle>`" : "No lyrics found for `"+query+"`. Try being more specific with your query!", color: 0xff0000 }] });
+                message.channel.send({ embeds: [{ description: !args[1] ? "No lyrics found for `"+query+"`.\nTry manually searching using `"+client.prefix+"lyrics <songtitle>`" : "No lyrics found for `"+query+"`. Try being more specific with your query!", color: 0xb84e44}] });
             }
             else {
                 let trimmedLyrics = result.lyrics.length > 4095 ? result.lyrics.substring(0, 4092) + "..." : result.lyrics;
@@ -25,6 +25,7 @@ module.exports = new Command({
                         url: result.thumbnail,
                     },
                     description: trimmedLyrics,
+                    color: 0x44b868
                 }] });
             }
         }

@@ -18,7 +18,7 @@ module.exports = new Command({
             embeds: [
                 {
                     description: `Removed [${trackName}](${trackUrl})`,
-                    color: 0xffffff
+                    color: 0x44b868
                 }
             ]
         });

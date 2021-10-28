@@ -12,15 +12,15 @@ module.exports = new Command({
         if(!args[1]) {
             if(await queue.repeatMode === QueueRepeatMode.OFF || await queue.repeatMode === QueueRepeatMode.AUTOPLAY) {
                 queue.setRepeatMode(QueueRepeatMode.QUEUE);
-                return message.channel.send({ embeds: [{ description: `🔄 | Looping the **queue**.`}] });
+                return message.channel.send({ embeds: [{ description: `🔄 | Looping the **queue**.`, color: 0x44b868}] });
             }
             else if(await queue.repeatMode === QueueRepeatMode.QUEUE) {
                 queue.setRepeatMode(QueueRepeatMode.TRACK);
-                return message.channel.send({ embeds: [{ description: `🔂 | Looping the **current track**.`}] });
+                return message.channel.send({ embeds: [{ description: `🔂 | Looping the **current track**.`, color: 0x44b868}] });
             }
             else if(await queue.repeatMode === QueueRepeatMode.TRACK) {
                 queue.setRepeatMode(QueueRepeatMode.OFF);
-                return message.channel.send({ embeds: [{ description: `✅ | Looping is now **disabled**.`}] });
+                return message.channel.send({ embeds: [{ description: `✅ | Looping is now **disabled**.`, color: 0x44b868}] });
             }
         }
         const option = args[1];
@@ -42,6 +42,7 @@ module.exports = new Command({
         }
         else {
             const embed = new MessageEmbed()
+            embed.setColor('#44b868');
             let mode;
             if(await queue.repeatMode === QueueRepeatMode.OFF) mode = "`Off`";
             else if(await queue.repeatMode === QueueRepeatMode.TRACK) mode = "`Track`";

@@ -7,6 +7,7 @@ module.exports = new Command({
 	permission: "SEND_MESSAGES",
 	async run(message, args, client) {
         const embed = new MessageEmbed();
+        embed.setColor('#44b868');
         embed.setDescription(`**Commands:**\n
         - about
         - clear

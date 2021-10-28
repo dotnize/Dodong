@@ -18,7 +18,7 @@ module.exports = new Command({
             embeds: [
                 {
                     description: `Moved [${trackName}](${trackUrl}) to position **${args[2]}**`,
-                    color: 0xffffff
+                    color: 0x44b868
                 }
             ]
         });

@@ -14,7 +14,7 @@
 
 #### A music bot written using [discord.js](https://github.com/discordjs/discord.js) and [discord-player](https://github.com/Androz2091/discord-player)
 
-![Screenshot of the bot in action](https://nize.png/gallery/dodongexample.png)
+![Screenshot of the bot in action](https://nize.ph/gallery/dodongexample.png)
 
 **NOTE: This project is still under development and could contain bugs & unfinished features. Please use at your own risk.**
 

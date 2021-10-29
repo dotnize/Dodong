@@ -16,6 +16,11 @@ module.exports.musicEvents = (player) => {
         });
     });
     player.on("trackStart", (queue, track) => {
+        // I don't know if there's a proper way to check first if a message exists.
+        // If you do, feel free to open a PR/issue!
+        if(queue.npmessage) {
+            queue.npmessage.delete().catch(error=> {});
+        }
         let row = new MessageActionRow()
             .addComponents(
                 new MessageButton()

@@ -9,7 +9,8 @@ module.exports = new Command({
         const queue = client.player.getQueue(message.guild);
         if (!queue || !queue.playing) {
             const embed = new MessageEmbed();
-            embed.setDescription(`no songs are currently playing`);
+            embed.setColor('#b84e44');
+            embed.setDescription(`There's nothing currently playing in the server.`);
             return message.reply({ embeds: [embed] });
         }
         const progress = queue.createProgressBar({ timecodes: true, length: 8 });

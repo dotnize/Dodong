@@ -3,7 +3,7 @@ const { QueueRepeatMode } = require('discord-player');
 const { MessageEmbed } = require('discord.js');
 module.exports = new Command({
 	name: "loop",
-    aliases: [],
+    aliases: ['repeat'],
 	description: "Loops the server queue",
 	permission: "SEND_MESSAGES",
 	async run(message, args, client) {

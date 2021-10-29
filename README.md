@@ -1,18 +1,19 @@
 <div align="center">
   <p>
-    <img src="https://nize.ph/gallery/dodongmedium.png" width="500" alt="discord.js" /></a>
+    <img src="https://nize.ph/gallery/dodongmedium.png" width="500" alt="Dodong" /></a>
   </p>
   <br>
   <p>
-    <a href="https://github.com/nizeic/Dodong/actions"><img src="https://img.shields.io/github/workflow/status/nizeic/Dodong/Node.js%20CI/main" alt="build status"></a> 
-    <a href="https://github.com/nizeic/Dodong/commits/main"><img src="https://img.shields.io/github/last-commit/nizeic/Dodong/main" alt="last commit"></a> 
-    <a href="#"><img src="https://img.shields.io/discord/706460727573217381" alt="last commit"></a>
+    <a href="https://github.com/nizeic/Dodong/actions"><img src="https://img.shields.io/github/workflow/status/nizeic/Dodong/Node.js%20CI?color=44b868&logo=GitHub%20Actions&logoColor=white&style=flat-square" alt="build status"></a> 
+    <a href="https://github.com/nizeic/Dodong/commits/main"><img src="https://img.shields.io/github/last-commit/nizeic/Dodong?color=44b868&logo=GitHub&logoColor=white&style=flat-square" alt="last commit"></a> 
+    <a href="https://nize.ph/discord"><img src="https://img.shields.io/discord/706460727573217381?color=44b868&logo=discord&logoColor=white&style=flat-square" alt="discord server"></a>
+    <a href="https://www.npmjs.com/package/discord.js"><img src="https://img.shields.io/github/package-json/dependency-version/nizeic/Dodong/discord.js?color=44b868&logo=npm&style=flat-square"></a>
     
   </p>
 </div>
 <br>
 
-#### A music bot written using [discord.js](https://github.com/discordjs/discord.js) and [discord-player](https://github.com/Androz2091/discord-player)
+A music bot written using [discord.js](https://github.com/discordjs/discord.js) and [discord-player](https://github.com/Androz2091/discord-player)
 
 ![Screenshot of the bot in action](https://nize.ph/gallery/dodongexample.png)
 

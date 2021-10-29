@@ -20,7 +20,7 @@
     "discord.js": "^13.2.0",
     "discordjs-button-pagination": "^1.0.7",
     "ffmpeg-static": "^4.4.0",
-    "play-dl": "^1.2.3"
+    "play-dl": "^1.2.5"
   },
   "scripts": {
     "start": "node index.js",

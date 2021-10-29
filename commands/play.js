@@ -45,9 +45,7 @@ module.exports = new Command({
                 }
                 else {
                     // temporary since onBeforeCreateStream crashes the bot if we return void
-                    const yt = await playdl.search(`${track.author} ${track.title} lyric`, { limit : 1, source : { youtube : "video" } }).then(x => x[0].url);
-                    console.log(yt);
-                    return (await playdl.stream(yt, { quality: 0 })).stream;
+                    return (await playdl.stream(await playdl.search(`${track.author} ${track.title} lyric`, { limit : 1, source : { youtube : "video" } }).then(x => x[0].url), { quality: 0 })).stream;
                 }
             }
         });

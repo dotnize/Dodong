@@ -45,7 +45,6 @@ module.exports = new Command({
             });
             if(tracks.length) {
                 const embed = new MessageEmbed();
-                embed.setTitle('Server Queue');
                 embed.setDescription(`${usedby}\n${tracks.join('\n')}${
                     queue.tracks.length > pageEnd
                         ? `\n... ${queue.tracks.length - pageEnd} more track(s)`
@@ -61,7 +60,6 @@ module.exports = new Command({
                 emptypage = 1;
                 if(page === 1) {
                     const embed = new MessageEmbed();
-                    embed.setTitle('Server Queue');
                     embed.setColor('#44b868');
                     embed.setDescription(`${usedby}\nno songs in the queue :<`);
                     embed.setAuthor(`Now playing: ${queue.current.title}`, null, `${queue.current.url}`);

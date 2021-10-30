@@ -22,19 +22,7 @@ module.exports = new Command({
         }
 
         let query = args.slice(1).join(" ");
-        let queryType;
-        if(query.includes("youtube.com/playlist")) {
-            queryType = QueryType.YOUTUBE_PLAYLIST;
-            query = query.concat(" a"); // for some reason, youtube playlist links won't work unless there's extra text in the query
-        }
-        else if(query.includes("open.spotify.com/playlist"))
-            queryType = QueryType.SPOTIFY_PLAYLIST;
-        else if(query.includes("open.spotify.com/album"))
-            queryType = QueryType.SPOTIFY_ALBUM;
-        else
-            queryType = QueryType.AUTO;
-
-        const searchResult = await client.player.search(query, { requestedBy: message.author, searchEngine: queryType })
+        const searchResult = await client.player.search(query, { requestedBy: message.author, searchEngine: QueryType.AUTO })
         if (!searchResult || !searchResult.tracks.length)
             return message.channel.send({ embeds: [{ description: `No results found!`, color: 0xb84e44 }] });
 

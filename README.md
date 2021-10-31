@@ -17,7 +17,7 @@ A music bot written using [discord.js](https://github.com/discordjs/discord.js) 
 
 ![Screenshot of the bot in action](https://nize.ph/gallery/dodongexample.png)
 
-**NOTE: This project is still under development and could contain bugs & unfinished features. Please use at your own risk.**
+**NOTE: This project's source code is currently very poorly formatted and documented. Please use at your own risk.**
 
 ## Contribute
 View the list of bug reports and feature requests [here](https://github.com/nizeic/Dodong/issues).
@@ -39,7 +39,7 @@ npm init -y && npm i --save-dev node@16 && npm config set prefix=$(pwd)/node_mod
     ```
 3. Install dependencies
     ```sh
-    npm ci
+    npm install
     ```
 4. Enter your [bot token](https://discord.com/developers/applications) and [Genius API Token](https://genius.com/api-clients) in `config.js`
     ```js

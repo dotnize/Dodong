@@ -26,7 +26,8 @@ module.exports = new Command({
         - resume
         - seek / s *(experimental)*
         - shuffle
-        - skip / next / n`);
+        - skip / next / n
+	- volume / vol`);
         return message.channel.send({ embeds: [embed] });
 	}
 });

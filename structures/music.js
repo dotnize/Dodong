@@ -9,11 +9,13 @@ module.exports.musicEvents = (player) => {
         console.log(`(${queue.guild.name}) connectionError: ${error.message}`);
     });
     player.on("trackEnd", (queue, track) => {
-        queue.npmessage.delete().catch(error => {
-            if (error.code === 10008) {
-                console.log(`(${queue.guild.name}) error while attempting to delete npmessage`);
-            }
-        });
+        if(queue.npmessage) {
+            queue.npmessage.delete().catch(error => {
+                if (error.code === 10008) {
+                    console.log(`(${queue.guild.name}) error while attempting to delete npmessage`);
+                }
+            });
+        }
     });
     player.on("trackStart", (queue, track) => {
         // I don't know if there's a proper way to check first if a message exists.

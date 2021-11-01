@@ -13,7 +13,7 @@ module.exports = new Command({
         `I am currently in **${client.guilds.cache.size}** servers.\n\n`+ 
         `Type \`${client.prefix}help\` to see all my commands.\n`+
         `Type \`${client.prefix}play\` to start listening to music!\n`+
-        `**[Join my server](https://discord.gg/qztcCcpKsr)** or **[invite me](https://discord.com/oauth2/authorize?client_id=834688899476881411&permissions=36785472&scope=bot)** to your server!\n\n`+
+        `**[Join my server](https://discord.gg/qztcCcpKsr)** or **[invite me](https://discord.com/oauth2/authorize?client_id=834688899476881411&permissions=3230784&scope=bot)** to your server!\n\n`+
         `Developers: [nize#5846](https://github.com/nizeic), [Kenshin#3900](https://github.com/JoshCunningHum)`+
         `\`\`\`\n`+
         `Node.js: ${process.version}\n`+

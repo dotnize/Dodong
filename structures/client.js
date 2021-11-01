@@ -6,6 +6,7 @@ const { musicEvents } = require("./music.js")
 const config = require("../config.js");
 const fs = require("fs");
 const { Lyrics } = require("@discord-player/extractor");
+const { DiscordTogether } = require('discord-together');
 
 class Client extends Discord.Client {
 	constructor() {
@@ -22,6 +23,7 @@ class Client extends Discord.Client {
 			leaveOnEmpty: true,
 			leaveOnEmptyCooldown: 120000
 		});
+		this.discordTogether = new DiscordTogether(this);
 	}
 
 	init(token) {

@@ -3,7 +3,7 @@ const { MessageActionRow, MessageSelectMenu } = require('discord.js');
 
 module.exports = new Command({
 	name: "together",
-	aliases: ['t'],
+	aliases: ['t', 'party', 'partygames'],
 	description: "Discord Together!",
 	permission: "SEND_MESSAGES",
 	async run(message, args, client) {
@@ -63,7 +63,7 @@ module.exports = new Command({
 						name: "Discord Together",
 						iconURL: message.guild.iconURL()
 					},
-					description: `Choose an activity below`,
+					description: `Choose an activity below!`,
 					footer: {
 						text: 'You must be in a voice channel and on a desktop to use this feature.'
 					},

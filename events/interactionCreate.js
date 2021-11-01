@@ -84,7 +84,7 @@ module.exports = new Event("interactionCreate", async (client, interaction) => {
     if (interaction.isSelectMenu() && interaction.customId === "together") {
         if(interaction.member.voice.channel) {
             client.discordTogether.createTogetherCode(interaction.member.voice.channel.id, interaction.values[0]).then(async invite => {
-                interaction.channel.send(`${invite.code}`);
+                interaction.channel.send(`${interaction.member} ${invite.code}`);
                 await interaction.deferUpdate();
             });
         }

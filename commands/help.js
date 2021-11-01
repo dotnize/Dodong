@@ -27,7 +27,7 @@ module.exports = new Command({
         - seek / s *(experimental)*
         - shuffle
         - skip / next / n
-        - together / t
+        - together / t / party
 	- volume / vol`);
         return message.channel.send({ embeds: [embed] });
 	}

@@ -4,6 +4,9 @@ const {MessageActionRow, MessageButton, MessageEmbed} = require('discord.js');
 
 module.exports = new Event("interactionCreate", async (client, interaction) => {
 
+
+	if(!interaction.guild.me.permissionsIn(interaction.channel).has(client.requiredTextPermissions)) return;
+
     // interaction works like "message" here except that it has some restrictions like it can't be reacted to
     // so if ever you want to customize the send calls or even turn them to reply you can safely do it
     // you can also get who pressed the button just like who send the message in messageCreate

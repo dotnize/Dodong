@@ -24,6 +24,18 @@ class Client extends Discord.Client {
 			leaveOnEmptyCooldown: 120000
 		});
 		this.discordTogether = new DiscordTogether(this);
+		this.requiredVoicePermissions = [
+            "VIEW_CHANNEL",
+            "CONNECT",
+            "SPEAK"
+        ];
+		this.requiredTextPermissions = [
+			"VIEW_CHANNEL",
+			"SEND_MESSAGES",
+			"READ_MESSAGE_HISTORY",
+			"ADD_REACTIONS",
+			"EMBED_LINKS"
+		];
 	}
 
 	init(token) {

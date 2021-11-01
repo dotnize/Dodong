@@ -10,14 +10,14 @@ module.exports.musicEvents = (player) => {
     });
     player.on("trackEnd", (queue, track) => {
         if(queue.npmessage) {
-            queue.npmessage.delete().catch(error => {
-                if (error.code === 10008) {
-                    console.log(`(${queue.guild.name}) error while attempting to delete npmessage`);
-                }
-            });
+            queue.npmessage.delete().catch(error=> {});
         }
     });
     player.on("trackStart", (queue, track) => {
+        if(!queue.guild.me.permissionsIn(queue.metadata.channel).has(player.client.requiredTextPermissions)) {
+            console.log(`(${queue.guild.name}) destroying queue due to missing text channel permissions`);
+            return queue.destroy();
+        }
         // I don't know if there's a proper way to check first if a message exists.
         // If you do, feel free to open a PR/issue!
         if(queue.npmessage) {

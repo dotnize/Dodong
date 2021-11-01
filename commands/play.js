@@ -8,6 +8,9 @@ module.exports = new Command({
 	description: "Plays the song specified",
 	permission: "SEND_MESSAGES",
 	async run(message, args, client) {
+
+        if(!message.guild.me.permissionsIn(message.member.voice.channel).has(client.requiredVoicePermissions)) return;
+
         if(!message.member.voice.channelId)
             return message.reply({ embeds: [{ description: `You are not in a voice channel!`, color: 0xb84e44 }] });
         if(message.guild.me.voice.channelId && message.member.voice.channelId !== message.guild.me.voice.channelId)

@@ -13,9 +13,8 @@ module.exports = new Event("messageCreate", (client, message) => {
 
 	if (!command) return;
 
-	const permission = message.member.permissions.has(command.permission, true);
-
-	if (!permission) return message.reply(`You do not have the permission \`${command.permission}\` to run this command!`);
+	if(!message.member.permissionsIn(message.channel).has(command.permission))
+		return message.reply(`You do not have the permission \`${command.permission}\` to run this command!`);
 
 	command.run(message, args, client);
 });

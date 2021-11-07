@@ -20,40 +20,48 @@ module.exports = new Command({
 				.addOptions([
 					{
 						label: 'YouTube',
-						value: 'youtube',
+						value: '880218394199220334'
 					},
 					{
 						label: 'Poker',
-						value: 'poker',
+						value: '755827207812677713'
 					},
 					{
 						label: 'Chess',
-						value: 'chess',
+						value: '832012774040141894'
+					},
+					{
+						label: 'Checkers',
+						value: '832013003968348200'
 					},
 					{
 						label: 'Betrayal',
-						value: 'betrayal',
+						value: '773336526917861400'
 					},
 					{
 						label: 'Fishington',
-						value: 'fishing',
+						value: '814288819477020702'
 					},
 					{
 						label: 'Words Snack',
-						value: 'wordsnack',
+						value: '879863976006127627'
 					},
 					{
 						label: 'Doodle Crew',
-						value: 'doodlecrew',
+						value: '878067389634314250'
 					},
 					{
 						label: 'Spellcast',
-						value: 'spellcast',
+						value: '852509694341283871'
 					},
 					{
 						label: 'Awkword',
-						value: 'awkword',
+						value: '879863881349087252'
 					},
+					{
+						label: 'Letter Tile',
+						value: '879863686565621790'
+					}
 				]),
 		);
 		message.channel.send({ 

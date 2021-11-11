@@ -33,12 +33,12 @@ module.exports = new Command({
                 let vid;
                 try {
                     if(track.url.includes("youtube.com"))
-                        vid = await playdl.stream(track.url, { quality : 0 });
+                        vid = await playdl.stream(track.url);
                     else
-                        vid = await playdl.stream(await playdl.search(`${track.author} ${track.title} lyric`, { limit : 1, source : { youtube : "video" } }).then(x => x[0].url), { quality: 0 });
+                        vid = await playdl.stream(await playdl.search(`${track.author} ${track.title} lyric`, { limit : 1, source : { youtube : "video" } }).then(x => x[0].url));
                 } catch {
                     queue.metadata.channel.send({ embeds: [{ description: `An error occurred while attempting to play [${track.title}](${track.url}).`, color: 0xb84e44 }] });
-                    vid = await playdl.stream("https://www.youtube.com/watch?v=Wch3gJG2GJ4"); // a 1 second video. if u have a better way to do this, feel free to open a PR/issue :)
+                    vid = await playdl.stream("https://www.youtube.com/watch?v=Wch3gJG2GJ4", { quality : 0 }); // a 1 second video. if u have a better way to do this, feel free to open a PR/issue :)
                 }
                 return vid.stream;
             }

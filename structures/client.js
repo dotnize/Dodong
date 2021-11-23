@@ -6,16 +6,22 @@ const { musicEvents } = require("./music.js")
 const config = require("../config.js");
 const fs = require("fs");
 const { Lyrics } = require("@discord-player/extractor");
+const Web = require("./web.js");
 
 class Client extends Discord.Client {
 	constructor() {
+		config.prefix = process.env.PREFIX || config.prefix;
+		config.bottoken = process.env.BOTTOKEN || config.bottoken;
+		config.geniusapitoken = process.env.GENIUSAPITOKEN || config.geniusapitoken;
+		config.webserver = process.env.WEBSERVER || config.webserver;
+
 		super({	intents: [
 			Discord.Intents.FLAGS.GUILDS,
 			Discord.Intents.FLAGS.GUILD_MESSAGES,
 			Discord.Intents.FLAGS.GUILD_VOICE_STATES
 		]});
+
 		this.commands = new Discord.Collection();
-		this.prefix = config.prefix;
 		this.player = new Player(this, {
 			leaveOnEnd: false,
 			leaveOnStop: false,
@@ -34,6 +40,7 @@ class Client extends Discord.Client {
 			"ADD_REACTIONS",
 			"EMBED_LINKS"
 		];
+		this.prefix = config.prefix;
 	}
 
 	init(token) {
@@ -65,9 +72,14 @@ class Client extends Discord.Client {
 
 		// discord-player
 		musicEvents(this.player);
-		this.lyrics = Lyrics.init(config.geniusAPItoken);
-		if(config.geniusAPItoken === "GENIUS.COM CLIENT ACCESS TOKEN HERE" || config.geniusAPItoken === "" || !config.geniusAPItoken)
-			console.log("Genius API Key is empty. Lyrics feature might not work properly.");
+		this.lyrics = Lyrics.init(config.geniusapitoken);
+		if(config.geniusapitoken === "GENIUS.COM CLIENT ACCESS TOKEN HERE" || config.geniusapitoken === "" || !config.geniusapitoken)
+			console.log("No Genius API token provided. Lyrics feature might not work properly.");
+		
+		// web player
+		if(config.webserver && !config.webserver.match(/off|disabled|none|false|empty/i)) {
+			this.web = new Web(config.webserver);
+		}
 
 		this.login(token);
 	}

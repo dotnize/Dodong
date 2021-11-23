@@ -10,17 +10,29 @@
         }
     ],
   "env": {
-        "BotToken": {
-            "description": "Bot token (https://discordjs.guide/preparations/setting-up-a-bot-application.html#your-token)",
-            "required": true
-        },
-        "Prefix": {
+        "PREFIX": {
             "description": "Command prefix for the bot (default: -)",
             "required": false
         },
-        "GeniusAPItoken": {
-            "description": "Genius.com Client Access Token (https://genius.com/api-clients)",
+        "BOTTOKEN": {
+            "description": "Bot token (https://discordjs.guide/preparations/setting-up-a-bot-application.html#your-token)",
+            "required": true
+        },
+        "GENIUSAPITOKEN": {
+            "description": "Genius.com Client Access Token (https://genius.com/api-clients) - Optional",
             "required": false
+        },
+        "WEBSERVER": {
+            "description": "Server for the web player - Optional",
+            "required": false
+        }
+    },
+    "formation": {
+        "worker": {
+          "quantity": 1
+        },
+        "web": {
+            "quantity": 0
         }
     }
 }

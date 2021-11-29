@@ -9,7 +9,6 @@ module.exports = new Command({
         const embed = new MessageEmbed();
         embed.setColor('#44b868');
         embed.setDescription(`**Commands:**\n
-        - about
         - clear
         - disconnect / dc
         - filter / f *(experimental)*

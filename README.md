@@ -41,12 +41,12 @@ npm init -y && npm i --save-dev node@16 && npm config set prefix=$(pwd)/node_mod
     ```sh
     npm install
     ```
-4. Enter your [bot token](https://discord.com/developers/applications) and [Genius API Token](https://genius.com/api-clients) in `config.js`
+4. Enter your [bot token](https://discord.com/developers/applications) in `config.js`
     ```js
     bottoken: "BOT TOKEN HERE",
     geniusAPItoken: "GENIUS.COM CLIENT ACCESS TOKEN HERE"
     ```
 5. Run the bot
     ```sh
-    node index.js
+    npm start
     ```

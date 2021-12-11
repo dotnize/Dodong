@@ -20,12 +20,7 @@ class Client extends Discord.Client {
 		]});
 
 		this.commands = new Discord.Collection();
-		this.player = new Player(this, {
-			leaveOnEnd: false,
-			leaveOnStop: false,
-			leaveOnEmpty: true,
-			leaveOnEmptyCooldown: 120000
-		});
+		this.player = new Player(this);
 		this.requiredVoicePermissions = [
             "VIEW_CHANNEL",
             "CONNECT",

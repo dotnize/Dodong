@@ -28,7 +28,15 @@ module.exports = new Command({
         if (!searchResult || !searchResult.tracks.length)
             return message.channel.send({ embeds: [{ description: `No results found!`, color: 0xb84e44 }] });
 
-        const queue = await client.player.createQueue(message.guild,{ metadata: { channel: message.channel }, bufferingTimeout: 1000,
+        const queue = await client.player.createQueue(message.guild,{ metadata: { channel: message.channel },
+
+            bufferingTimeout: 1000,
+            disableVolume: false, // disabling volume controls can improve performance
+            leaveOnEnd: true,
+			leaveOnStop: true,
+			//leaveOnEmpty: true,
+			//leaveOnEmptyCooldown: 300000,
+
             async onBeforeCreateStream(track, source, _queue) {
                 let vid;
                 try {

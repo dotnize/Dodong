@@ -65,7 +65,7 @@ module.exports = new Event("interactionCreate", async (client, interaction) => {
             case "buttoncontrol_disconnect":
                 embed.setDescription(`👋 Disconnected.`);
                 embed.setColor('#44b868');
-                embed.setFooter(interaction.user.tag, interaction.user.displayAvatarURL());
+                embed.setFooter({ text: interaction.user.tag, iconURL: interaction.user.displayAvatarURL() });
                 interaction.channel.send({ embeds: [embed] });
                 await interaction.deferUpdate();
                 queue.destroy(true);
@@ -73,7 +73,7 @@ module.exports = new Event("interactionCreate", async (client, interaction) => {
             case "buttoncontrol_skip":
                 embed.setDescription(`Skipped **[${queue.current.title}](${queue.current.url})**`);
                 embed.setColor('#44b868');
-                embed.setFooter(interaction.user.tag, interaction.user.displayAvatarURL());
+                embed.setFooter({ text: interaction.user.tag, iconURL: interaction.user.displayAvatarURL() });
                 interaction.channel.send({ embeds: [embed] });
                 await interaction.deferUpdate();
                 queue.skip();

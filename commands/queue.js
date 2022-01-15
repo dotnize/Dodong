@@ -52,7 +52,7 @@ module.exports = new Command({
                 }`);
                 if(page%2 === 0) embed.setColor('#b84e44');
                 else embed.setColor('#44b868');
-                if(page === 1) embed.setAuthor(`Now playing: ${queue.current.title}`, null, `${queue.current.url}`);
+                if(page === 1) embed.setAuthor({ name: `Now playing: ${queue.current.title}`, iconURL: null, url: `${queue.current.url}` });
                 pages.push(embed);
                 page++;
             }
@@ -62,7 +62,7 @@ module.exports = new Command({
                     const embed = new MessageEmbed();
                     embed.setColor('#44b868');
                     embed.setDescription(`${usedby}\nno songs in the queue :<`);
-                    embed.setAuthor(`Now playing: ${queue.current.title}`, null, `${queue.current.url}`);
+                    embed.setAuthor({ name: `Now playing: ${queue.current.title}`, iconURL: null, url: `${queue.current.url}` });
                     return message.channel.send({ embeds: [embed] });
                 }
                 if(page === 2) {

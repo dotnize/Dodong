@@ -8,14 +8,11 @@ module.exports = new Event("interactionCreate", async (client, interaction) => {
 
 	if(!interaction.guild.me.permissionsIn(interaction.channel).has(client.requiredTextPermissions)) return;
 
-    // interaction works like "message" here except that it has some restrictions like it can't be reacted to
-    // so if ever you want to customize the send calls or even turn them to reply you can safely do it
-    // you can also get who pressed the button just like who send the message in messageCreate
-
-    // apparently interactionCreate is also called when messaging so this is to verify if the interaction is a button press
+    // Queue button controls
     if(interaction.componentType === "BUTTON" && interaction.customId.includes("buttoncontrol")) {
         const queue = client.player.getQueue(interaction.guild);
-        if(!queue || !queue.playing) return;
+        if(!queue || !queue.playing || !interaction.member.voice.channelId || (interaction.guild.me.voice.channelId && interaction.member.voice.channelId !== interaction.guild.me.voice.channelId))
+            return;
         const _isPaused = queue.connection.paused;
         const embed = new MessageEmbed();
         switch(interaction.customId){

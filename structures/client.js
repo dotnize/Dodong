@@ -6,22 +6,17 @@ const { musicEvents } = require("./music.js")
 const config = require("../config.js");
 const fs = require("fs");
 const { Lyrics } = require("@discord-player/extractor");
-<<<<<<< Updated upstream
-const Web = require("./web.js");
-=======
 const io = require('socket.io')(3000, {
 	cors: {
-		origin: [...config.cors],
+		origin: config.cors,
 	}
 });
->>>>>>> Stashed changes
 
 class Client extends Discord.Client {
 	constructor() {
 		config.prefix = process.env.PREFIX || config.prefix;
 		config.bottoken = process.env.BOTTOKEN || config.bottoken;
 		config.geniusapitoken = process.env.GENIUSAPITOKEN || config.geniusapitoken;
-		config.webserver = process.env.WEBSERVER || config.webserver;
 
 		super({	intents: [
 			Discord.Intents.FLAGS.GUILDS,
@@ -30,12 +25,7 @@ class Client extends Discord.Client {
 		]});
 
 		this.commands = new Discord.Collection();
-		this.player = new Player(this, {
-			leaveOnEnd: false,
-			leaveOnStop: false,
-			leaveOnEmpty: true,
-			leaveOnEmptyCooldown: 120000
-		});
+		this.player = new Player(this);
 		this.requiredVoicePermissions = [
             "VIEW_CHANNEL",
             "CONNECT",
@@ -83,11 +73,6 @@ class Client extends Discord.Client {
 		this.lyrics = Lyrics.init(config.geniusapitoken);
 		if(config.geniusapitoken === "GENIUS.COM CLIENT ACCESS TOKEN HERE" || config.geniusapitoken === "" || !config.geniusapitoken)
 			console.log("No Genius API token provided. Lyrics feature might not work properly.");
-		
-		// web player
-		if(config.webserver && !config.webserver.match(/off|disabled|none|false|empty/i)) {
-			this.web = new Web(config.webserver);
-		}
 
 		this.login(token);
 

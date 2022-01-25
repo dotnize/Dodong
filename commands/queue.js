@@ -41,6 +41,7 @@ module.exports = new Command({
             const pageStart = 10 * (page - 1);
             const pageEnd = pageStart + 10;
             const tracks = queue.tracks.slice(pageStart, pageEnd).map((m, i) => {
+                console.log(m.requestedBy);
                 return `**${i + pageStart + 1}**. [${m.title}](${m.url}) ${m.duration} - ${m.requestedBy}`;
             });
             if(tracks.length) {

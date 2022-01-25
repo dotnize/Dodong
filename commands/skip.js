@@ -1,4 +1,5 @@
 const Command = require("../structures/command.js");
+const config = require("../config");
 
 module.exports = new Command({
 	name: "skip",
@@ -9,6 +10,13 @@ module.exports = new Command({
         const queue = client.player.getQueue(message.guild);
         if (!queue || !queue.playing) return;
         const success = queue.skip();
+        
+        // For webplayers
+
+        if(config.cors && config.cors[0].length != 0){
+            client.io.to(message.guild.id).emit('forceUpdate');
+        }
+
         return success ? message.react("⏭️") : message.react('❌');
 	}
 });

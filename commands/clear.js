@@ -1,4 +1,5 @@
 const Command = require("../structures/command.js");
+const config = require("../config");
 
 module.exports = new Command({
 	name: "clear",
@@ -10,5 +11,10 @@ module.exports = new Command({
         if (queue) queue.clear();
 
         message.react('✅');
+        // For webplayers
+
+        if(config.cors && config.cors[0].length != 0){
+            client.io.to(message.guild.id).emit('forceUpdate');
+        }
 	}
 });

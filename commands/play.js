@@ -1,4 +1,5 @@
 const Command = require("../structures/command.js");
+const config = require('../config');
 const { QueryType } = require('discord-player');
 const playdl = require("play-dl");
 
@@ -56,5 +57,11 @@ module.exports = new Command({
         if(searchResult.playlist) searchResult.tracks[0].playlist = searchResult.playlist;
         await searchResult.playlist ? queue.addTracks(searchResult.tracks) : queue.addTrack(searchResult.tracks[0]);
         if(justConnected) queue.play();
+
+        // For webplayers
+
+        if(config.cors && config.cors[0].length != 0){
+            client.io.to(message.guild.id).emit('forceUpdate');
+        }
 	}
 });

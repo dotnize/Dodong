@@ -1,4 +1,5 @@
 const Command = require("../structures/command.js");
+const config = require("../config");
 
 module.exports = new Command({
 	name: "remove",
@@ -22,5 +23,11 @@ module.exports = new Command({
                 }
             ]
         });
+
+        // For webplayers
+
+        if(config.cors && config.cors[0].length != 0){
+            client.io.to(message.guild.id).emit('forceUpdate');
+        }
 	}
 });

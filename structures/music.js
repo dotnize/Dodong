@@ -1,4 +1,5 @@
 const {MessageActionRow, MessageButton} = require('discord.js');
+const config = require("../config");
 
 module.exports.musicEvents = (player) => {
 
@@ -58,6 +59,12 @@ module.exports.musicEvents = (player) => {
         }).then((msg) => {
 			queue.npmessage = msg;
         });
+
+        // For webplayers
+
+        if(config.cors && config.cors[0].length != 0){
+            player.client.io.to(queue.guild.id).emit('forceUpdate');
+        }
     });
 
     player.on("trackAdd", (queue, track) => {
@@ -69,6 +76,12 @@ module.exports.musicEvents = (player) => {
                 }
             ]
         });
+
+        // For webplayers
+
+        if(config.cors && config.cors[0].length != 0){
+            player.client.io.to(queue.guild.id).emit('forceUpdate');
+        }
     });
 
     player.on("tracksAdd", (queue, tracks) => {
@@ -80,6 +93,12 @@ module.exports.musicEvents = (player) => {
                 }
             ]
         });
+
+        // For webplayers
+
+        if(config.cors && config.cors[0].length != 0){
+            player.client.io.to(queue.guild.id).emit('forceUpdate');
+        }
     });
 
 };

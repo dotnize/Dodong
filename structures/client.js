@@ -6,7 +6,15 @@ const { musicEvents } = require("./music.js")
 const config = require("../config.js");
 const fs = require("fs");
 const { Lyrics } = require("@discord-player/extractor");
+<<<<<<< Updated upstream
 const Web = require("./web.js");
+=======
+const io = require('socket.io')(3000, {
+	cors: {
+		origin: [...config.cors],
+	}
+});
+>>>>>>> Stashed changes
 
 class Client extends Discord.Client {
 	constructor() {
@@ -82,6 +90,26 @@ class Client extends Discord.Client {
 		}
 
 		this.login(token);
+
+		this.io = io;
+
+		// socket
+		io.on('connection', socket => {
+			console.log(`Socket connection detected with socket ID: ${socket.id}`);
+
+			socket.on('joinGuild', (guildID) => {
+				socket.join(guildID);
+			})
+
+			// socket event handler
+            fs.readdirSync("./events/socket_events")
+			.filter(file => file.endsWith(".js"))
+			.forEach(file => {
+				const event = require(`../events/socket_events/${file}`);
+				socket.on(event.event, event.run.bind(null, this, socket, io));
+			});
+
+		})
 	}
 }
 

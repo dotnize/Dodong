@@ -14,7 +14,7 @@ module.exports = new Command({
         Want to contribute?
         https://github.com/nizeic/Dodong
         Online Web Player (NEW)
-        ${config.cors[0]}?guildID=${message.guild.id}
+        ${config.webplayer}?guildID=${message.guild.id}
         `);
         return message.channel.send({ embeds: [embed] });
 	}

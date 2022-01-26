@@ -13,7 +13,7 @@ module.exports = new Command({
         message.react('✅');
         // For webplayers
 
-        if(config.cors && config.cors[0].length != 0){
+        if(config.webplayer && config.webplayer.length != 0){
             client.io.to(message.guild.id).emit('forceUpdate');
         }
 	}

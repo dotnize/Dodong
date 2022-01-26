@@ -6,7 +6,7 @@ const { musicEvents } = require("./music.js")
 const config = require("../config.js");
 const fs = require("fs");
 const { Lyrics } = require("@discord-player/extractor");
-const io = require('socket.io')(3000, {
+const io = require('socket.io')(process.env.PORT || 3000, {
 	cors: {
 		origin: config.cors,
 	}

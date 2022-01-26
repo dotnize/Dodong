@@ -58,13 +58,12 @@ module.exports.musicEvents = (player) => {
             components: [row]
         }).then((msg) => {
 			queue.npmessage = msg;
+        }).then(() => {
+		    // For webplayers
+            if(config.webplayer && config.webplayer.length != 0){
+                player.client.io.to(queue.guild.id).emit('forceUpdate');
+            }
         });
-
-        // For webplayers
-
-        if(config.cors && config.cors[0].length != 0){
-            player.client.io.to(queue.guild.id).emit('forceUpdate');
-        }
     });
 
     player.on("trackAdd", (queue, track) => {
@@ -76,12 +75,6 @@ module.exports.musicEvents = (player) => {
                 }
             ]
         });
-
-        // For webplayers
-
-        if(config.cors && config.cors[0].length != 0){
-            player.client.io.to(queue.guild.id).emit('forceUpdate');
-        }
     });
 
     player.on("tracksAdd", (queue, tracks) => {
@@ -93,12 +86,6 @@ module.exports.musicEvents = (player) => {
                 }
             ]
         });
-
-        // For webplayers
-
-        if(config.cors && config.cors[0].length != 0){
-            player.client.io.to(queue.guild.id).emit('forceUpdate');
-        }
     });
 
 };

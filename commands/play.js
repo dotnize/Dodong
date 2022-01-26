@@ -57,11 +57,8 @@ module.exports = new Command({
         if(searchResult.playlist) searchResult.tracks[0].playlist = searchResult.playlist;
         await searchResult.playlist ? queue.addTracks(searchResult.tracks) : queue.addTrack(searchResult.tracks[0]);
         if(justConnected) queue.play();
-
-        // For webplayers
-
-        if(config.cors && config.cors[0].length != 0){
-            client.io.to(message.guild.id).emit('forceUpdate');
+        if(config.webplayer && config.webplayer.length != 0){
+            await player.client.io.to(queue.guild.id).emit('forceUpdate');
         }
 	}
 });

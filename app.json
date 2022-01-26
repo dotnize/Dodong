@@ -21,18 +21,11 @@
         "GENIUSAPITOKEN": {
             "description": "Genius.com Client Access Token (https://genius.com/api-clients) - Optional",
             "required": false
-        },
-        "WEBSERVER": {
-            "description": "Server for the web player - Optional",
-            "required": false
         }
     },
     "formation": {
         "worker": {
           "quantity": 1
-        },
-        "web": {
-            "quantity": 0
         }
     }
 }

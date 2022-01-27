@@ -61,7 +61,6 @@ module.exports = new Command({
             client.player.deleteQueue(message.guild);
             return message.channel.send({ embeds: [{ description: `Could not join your voice channel!`, color: 0xb84e44 }] });
         }
-        if(searchResult.playlist) searchResult.tracks[0].playlist = searchResult.playlist;
         await searchResult.playlist ? queue.addTracks(searchResult.tracks) : queue.addTrack(searchResult.tracks[0]);
         if(justConnected) queue.play();
 	}

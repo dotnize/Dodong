@@ -1,6 +1,5 @@
 const Command = require("../structures/command.js");
-const paginationEmbed = require('discordjs-button-pagination');
-const { MessageEmbed, MessageButton } = require('discord.js');
+const { MessageActionRow, MessageEmbed, MessageButton } = require('discord.js');
 
 module.exports = new Command({
 	name: "queue",
@@ -8,32 +7,37 @@ module.exports = new Command({
 	description: "Displays the server queue",
 	permission: "SEND_MESSAGES",
 	async run(message, args, client, _fromButton = false) {
-        
         const queue = client.player.getQueue(message.guild);
-        if (!queue) {
+        if (!queue || !queue.current) {
             if(_fromButton) return;
             const embed = new MessageEmbed();
             embed.setTitle('Server Queue');
             embed.setColor('#b84e44');
-            embed.setDescription(`no songs in the queue :<`);
+            embed.setDescription(`No songs in the queue.`);
             return message.channel.send({ embeds: [embed] });
         }
-        let usedby;
-        if(_fromButton)
-            usedby = message.user;
-        else
-            usedby = "";
+        let usedby = _fromButton ? message.user : "";
 
         const buttons = [
             new MessageButton()
-                .setCustomId('previousbtn')
-                .setLabel('Previous')
+                .setCustomId('first')
+                .setLabel('<<')
                 .setStyle('SECONDARY'),
             new MessageButton()
-                .setCustomId('nextbtn')
-                .setLabel('Next')
-                .setStyle('SUCCESS')
+                .setCustomId('previous')
+                .setLabel('<')
+                .setStyle('SECONDARY'),
+            new MessageButton()
+                .setCustomId('next')
+                .setLabel('>')
+                .setStyle('SECONDARY'),
+            new MessageButton()
+                .setCustomId('last')
+                .setLabel('>>')
+                .setStyle('SECONDARY')
         ];
+        const row = new MessageActionRow().addComponents(buttons);
+
         const pages = [];
         let page = 1;
         let emptypage = false;
@@ -57,11 +61,11 @@ module.exports = new Command({
                 page++;
             }
             else  {
-                emptypage = 1;
+                emptypage = true;
                 if(page === 1) {
                     const embed = new MessageEmbed();
                     embed.setColor('#44b868');
-                    embed.setDescription(`${usedby}\nno songs in the queue :<`);
+                    embed.setDescription(`${usedby}\nNo more songs in the queue.`);
                     embed.setAuthor({ name: `Now playing: ${queue.current.title}`, iconURL: null, url: `${queue.current.url}` });
                     return message.channel.send({ embeds: [embed] });
                 }
@@ -70,6 +74,58 @@ module.exports = new Command({
                 }
             }
         } while(!emptypage);
-        return paginationEmbed(message, pages, buttons, 30000);
+
+        let currentPage = 0;
+        const queueList = await message.channel.send({
+            embeds: [pages[currentPage].setFooter({ text: `Page ${currentPage+1}/${pages.length}` })],
+            components: [row]
+        });
+        const filter = (button) => button.customId === 'first' || 'previous' || 'next' || 'last';
+        const collector = await queueList.createMessageComponentCollector({ filter, time: 40000 });
+
+        collector.on("collect", async (button) => {
+            switch(button.customId) {
+                case 'first':
+                    currentPage = 0;
+                    break;
+                case 'previous':
+                    currentPage = currentPage > 0 ? --currentPage : pages.length-1;
+                    break;
+                case 'next':
+                    currentPage = currentPage+1 < pages.length ? ++currentPage : 0;
+                    break;
+                case 'last':
+                    currentPage = pages.length-1;
+                    break;
+            }
+            switch(currentPage) {
+                case 0:
+                    row.setComponents(buttons[0].setDisabled(true), buttons[1].setDisabled(true), buttons[2].setDisabled(false), buttons[3].setDisabled(false));
+                    break;
+                case pages.length-1:
+                    row.setComponents(buttons[0].setDisabled(false), buttons[1].setDisabled(false), buttons[2].setDisabled(true), buttons[3].setDisabled(true));
+                    break;
+                default:
+                    row.setComponents(buttons[0].setDisabled(false), buttons[1].setDisabled(false), buttons[2].setDisabled(false), buttons[3].setDisabled(false));
+                    break;
+            }
+            queueList.edit({
+                embeds: [pages[currentPage].setFooter({ text: `Page ${currentPage+1}/${pages.length}` })],
+                components: [row]
+            });
+            collector.resetTimer();
+            await button.deferUpdate();
+        });
+
+        collector.on("end", (_, reason) => {
+            if(reason === "time") {
+                row.setComponents(buttons[0].setDisabled(true), buttons[1].setDisabled(true), buttons[2].setDisabled(true), buttons[3].setDisabled(true));
+                queueList.edit({
+                    embeds: [pages[currentPage].setFooter({ text: `Page ${currentPage+1}/${pages.length}` })],
+                    components: [row]
+                }).catch(error=> {});
+            }
+        });
+
 	}
 });

@@ -10,8 +10,8 @@ const { Lyrics } = require("@discord-player/extractor");
 class Client extends Discord.Client {
 	constructor() {
 		config.prefix = process.env.PREFIX || config.prefix;
-		config.bottoken = process.env.BOTTOKEN || config.bottoken;
-		config.geniusapitoken = process.env.GENIUSAPITOKEN || config.geniusapitoken;
+		config.botToken = process.env.BOTTOKEN || config.botToken;
+		config.geniusApiToken = process.env.GENIUSAPITOKEN || config.geniusApiToken;
 
 		super({	intents: [
 			Discord.Intents.FLAGS.GUILDS,
@@ -37,7 +37,7 @@ class Client extends Discord.Client {
 	}
 
 	init(token) {
-		if(config.bottoken === "BOT TOKEN HERE" || config.bottoken === "" || !config.bottoken)
+		if(config.botToken === "BOT TOKEN HERE" || config.botToken === "" || !config.botToken)
 			return console.error("--- ERROR: Bot token is empty! Make sure to fill this out in config.js");
 
 		// command handler
@@ -65,8 +65,8 @@ class Client extends Discord.Client {
 
 		// discord-player
 		musicEvents(this.player);
-		this.lyrics = Lyrics.init(config.geniusapitoken);
-		if(config.geniusapitoken === "GENIUS.COM CLIENT ACCESS TOKEN HERE" || config.geniusapitoken === "" || !config.geniusapitoken)
+		this.lyrics = Lyrics.init(config.geniusApiToken);
+		if(config.geniusApiToken === "GENIUS.COM CLIENT ACCESS TOKEN HERE" || config.geniusApiToken === "" || !config.geniusApiToken)
 			console.log("No Genius API token provided. Lyrics feature might not work properly.");
 
 		this.login(token);

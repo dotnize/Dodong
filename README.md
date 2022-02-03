@@ -8,7 +8,6 @@
     <a href="https://nize.ph/discord"><img src="https://img.shields.io/discord/706460727573217381?color=44b868&logo=discord&logoColor=white&style=flat-square" alt="discord server"></a>
     <a href="https://www.npmjs.com/package/discord.js"><img src="https://img.shields.io/github/package-json/dependency-version/nizeic/Dodong/discord.js?color=44b868&logo=npm&style=flat-square"></a>
     <a href="https://www.npmjs.com/package/discord-player"><img src="https://img.shields.io/github/package-json/dependency-version/nizeic/Dodong/discord-player?color=44b868&logo=npm&style=flat-square"></a>
-    
   </p>
 </div>
 <br>
@@ -43,7 +42,7 @@ npm init -y && npm i --save-dev node@16 && npm config set prefix=$(pwd)/node_mod
     ```
 4. Enter your [bot token](https://discord.com/developers/applications) in `config.js`
     ```js
-    bottoken: "BOT TOKEN HERE",
+    botToken: "BOT TOKEN HERE",
     ```
 5. Run the bot
     ```sh

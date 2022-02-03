@@ -2,7 +2,6 @@ const Discord = require("discord.js");
 const Command = require("./command.js");
 const Event = require("./event.js");
 const { Player } = require("discord-player");
-const { musicEvents } = require("./music.js")
 const config = require("../config.js");
 const fs = require("fs");
 const { Lyrics } = require("@discord-player/extractor");
@@ -40,20 +39,21 @@ class Client extends Discord.Client {
 		if(config.botToken === "BOT TOKEN HERE" || config.botToken === "" || !config.botToken)
 			return console.error("--- ERROR: Bot token is empty! Make sure to fill this out in config.js");
 
-		// command handler
+		let count = 0;
+
+		// commands
 		const commandFiles = fs.readdirSync("./commands")
 			.filter(file => file.endsWith(".js"));
 		const commands = commandFiles.map(file => require(`../commands/${file}`));
-		let count = 0;
 		commands.forEach(cmd => {
 			count++;
 			this.commands.set(cmd.name, cmd);
 		});
 		console.log(`${count} commands loaded.`);
-
-		// event handler
-		this.removeAllListeners();
 		count = 0;
+
+		// client events
+		this.removeAllListeners();
 		fs.readdirSync("./events")
 			.filter(file => file.endsWith(".js"))
 			.forEach(file => {
@@ -61,10 +61,20 @@ class Client extends Discord.Client {
 				const event = require(`../events/${file}`);
 				this.on(event.event, event.run.bind(null, this));
 			});
-		console.log(`${count} events loaded.`);
+		console.log(`${count} client events loaded.`);
+		count = 0;
 
-		// discord-player
-		musicEvents(this.player);
+		// discord-player events
+		fs.readdirSync("./events/player_events")
+			.filter(file => file.endsWith(".js"))
+			.forEach(file => {
+				count++;
+				const event = require(`../events/player_events/${file}`);
+				this.player.on(event.event, event.run.bind(null, this.player))
+			});
+		console.log(`${count} player events loaded.`);
+
+		// @discord-player/extractor lyrics
 		this.lyrics = Lyrics.init(config.geniusApiToken);
 		if(config.geniusApiToken === "GENIUS.COM CLIENT ACCESS TOKEN HERE" || config.geniusApiToken === "" || !config.geniusApiToken)
 			console.log("No Genius API token provided. Lyrics feature might not work properly.");

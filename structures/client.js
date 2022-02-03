@@ -5,6 +5,11 @@ const { Player } = require("discord-player");
 const config = require("../config.js");
 const fs = require("fs");
 const { Lyrics } = require("@discord-player/extractor");
+const io = require("socket.io")(process.env.PORT || 3000, {
+	cors: {
+		origin: process.env.CORS || config.cors,
+	}
+})
 
 class Client extends Discord.Client {
 	constructor() {
@@ -80,6 +85,22 @@ class Client extends Discord.Client {
 			console.log("No Genius API token provided. Lyrics feature might not work properly.");
 
 		this.login(token);
+
+		// socket-io events
+		count = 0;
+		io.on('connection', socket => {
+			console.log(`Socket connection detected : ${socket.id}`);
+
+			// socket event handler
+            fs.readdirSync("./events/socket_events")
+			.filter(file => file.endsWith(".js"))
+			.forEach(file => {
+				const event = require(`../events/socket_events/${file}`);
+				socket.on(event.event, event.run.bind(null, this, socket));
+			});
+		})
+		console.log(`${count} socket events loaded.`);
+		this.io = io;
 	}
 }
 

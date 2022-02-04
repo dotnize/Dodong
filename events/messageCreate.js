@@ -19,7 +19,7 @@ module.exports = new Event("messageCreate", (client, message) => {
 
 	command.run(message, args, client).then( () => {
 		// Webplayer Auto-Update
-		if( !(client.isUrl(process.env.WEBPLAYER) || client.isUrl(config.webplayer)) ) return;
+		if( !client.hasWebplayer ) return;
 
 		["disconnect", "loop", "clear", "pause", "play", "remove", "resume", "seek"].forEach( (cn) => {
 			if(cn == command.name){

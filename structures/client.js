@@ -99,6 +99,10 @@ class Client extends Discord.Client {
 			});
 		})
 		console.log(`${count} socket events loaded.`);
+
+		// Webplayer Check
+		this.hasWebplayer = this.isUrl(process.env.WEBPLAYER) || this.isUrl(config.webplayer);
+
 	}
 	isUrl (str){
 		try{

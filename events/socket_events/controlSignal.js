@@ -44,6 +44,10 @@ module.exports = new Event("controlSignal", async (client, socket, io, args) => 
         case "seek":
             await queue.seek(args.prog * 1000);
             break;
+        case "move":
+            const track = queue.remove(args.initialPos);
+            queue.insert(track, args.finalPos);
+            break;
     }
 
 });

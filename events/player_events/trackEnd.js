@@ -7,6 +7,6 @@ module.exports = new Event("trackEnd", async (player, queue, track) => {
     }
 	
     // Webplayer
-    if( (player.client.isUrl(process.env.WEBPLAYER) || player.client.isUrl(config.webplayer)) )
+    if( player.client.hasWebplayer )
     player.client.io.to(queue.guild.id).emit("forceUpdate", {from: "music-trackAdd"});
 });

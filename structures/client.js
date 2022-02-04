@@ -35,6 +35,7 @@ class Client extends Discord.Client {
 		];
 		this.prefix = config.prefix;
 		this.io = require("socket.io")(process.env.PORT || 3000, { cors: { origin: process.env.CORS || config.cors }});
+		this.urlModule = require('url'); // Build-in node module
 	}
 
 	init(token) {
@@ -100,8 +101,12 @@ class Client extends Discord.Client {
 		console.log(`${count} socket events loaded.`);
 	}
 	isUrl (str){
-		try { return Boolean(new URL(string)); }
-		catch(e){ return false; }
+		try{
+			const link = this.urlModule.parse(str);
+			return (link.hostname === null) ? false : true;
+		} catch (err){
+			return false;
+		}
 	}
 }
 

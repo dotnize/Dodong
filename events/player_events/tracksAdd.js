@@ -9,9 +9,9 @@ module.exports = new Event("tracksAdd", async (player, queue, tracks) => {
                 color: 0x44b868
             }
         ]
-    }).then( () => {
-        // Webplayer Auto-Update
-        if(!(player.client.isUrl(process.env.WEBPLAYER) || player.client.isUrl(config.webplayer))) return;
-        player.client.io.to(queue.guild).emit("forceUpdate", {from: "music-tracksAdd"});
     });
+
+    // Webplayer
+    if( (player.client.isUrl(process.env.WEBPLAYER) || player.client.isUrl(config.webplayer)) )
+    player.client.io.to(queue.guild.id).emit("forceUpdate", {from: "music-trackAdd"});
 });

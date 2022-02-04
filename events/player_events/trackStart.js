@@ -1,5 +1,6 @@
 const Event = require("../../structures/event.js");
 const {MessageActionRow, MessageButton} = require('discord.js');
+const config = require("../../config.js");
 
 module.exports = new Event("trackStart", async (player, queue, track) => {
     if(!queue.guild.me.permissionsIn(queue.metadata.channel).has(player.client.requiredTextPermissions)) {
@@ -45,5 +46,8 @@ module.exports = new Event("trackStart", async (player, queue, track) => {
         components: [row]
     }).then((msg) => {
         queue.npmessage = msg;
+    }).then( () => { // Webplayer Auto-Update
+        if(!(player.client.isUrl(process.env.WEBPLAYER) || player.client.isUrl(config.webplayer))) return;
+        player.client.io.to(queue.guild).emit("forceUpdate", {from: "music-trackStart"});
     });
 });

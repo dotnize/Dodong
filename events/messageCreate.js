@@ -1,3 +1,4 @@
+const config = require("../config.js");
 const Event = require("../structures/event.js");
 
 module.exports = new Event("messageCreate", (client, message) => {
@@ -16,5 +17,14 @@ module.exports = new Event("messageCreate", (client, message) => {
 	if(!message.member.permissionsIn(message.channel).has(command.permission))
 		return message.reply(`You do not have the permission \`${command.permission}\` to run this command!`);
 
-	command.run(message, args, client);
+	command.run(message, args, client).then( () => {
+		// Webplayer Auto-Update
+		if( !(client.isUrl(process.env.WEBPLAYER) || client.isUrl(config.webplayer)) ) return;
+
+		["disconnect", "loop", "clear", "pause", "play", "remove", "resume", "seek"].forEach( (cn) => {
+			if(cn == command.name){
+				client.io.to(message.guild.id).emit("forceUpdate", {from: "messageCreate"});
+			}
+		})
+	});
 });

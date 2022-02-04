@@ -6,6 +6,7 @@ const config = require("../config.js");
 const fs = require("fs");
 const { Lyrics } = require("@discord-player/extractor");
 
+
 class Client extends Discord.Client {
 	constructor() {
 		config.prefix = process.env.PREFIX || config.prefix;
@@ -84,7 +85,7 @@ class Client extends Discord.Client {
 
 		// socket-io events
 		count = 0;
-		io.on('connection', socket => {
+		this.io.on('connection', socket => {
 			console.log(`Socket connection detected : ${socket.id}`);
 
 			// socket event handler
@@ -93,9 +94,14 @@ class Client extends Discord.Client {
 			.forEach(file => {
 				const event = require(`../events/socket_events/${file}`);
 				socket.on(event.event, event.run.bind(null, this, socket, this.io));
+				count++;
 			});
 		})
 		console.log(`${count} socket events loaded.`);
+	}
+	isUrl (str){
+		try { return Boolean(new URL(string)); }
+		catch(e){ return false; }
 	}
 }
 

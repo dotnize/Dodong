@@ -5,11 +5,6 @@ const { Player } = require("discord-player");
 const config = require("../config.js");
 const fs = require("fs");
 const { Lyrics } = require("@discord-player/extractor");
-const io = require("socket.io")(process.env.PORT || 3000, {
-	cors: {
-		origin: process.env.CORS || config.cors,
-	}
-})
 
 class Client extends Discord.Client {
 	constructor() {
@@ -38,6 +33,7 @@ class Client extends Discord.Client {
 			"EMBED_LINKS"
 		];
 		this.prefix = config.prefix;
+		this.io = require("socket.io")(process.env.PORT || 3000, { cors: { origin: process.env.CORS || config.cors }});
 	}
 
 	init(token) {
@@ -96,11 +92,10 @@ class Client extends Discord.Client {
 			.filter(file => file.endsWith(".js"))
 			.forEach(file => {
 				const event = require(`../events/socket_events/${file}`);
-				socket.on(event.event, event.run.bind(null, this, socket));
+				socket.on(event.event, event.run.bind(null, this, socket, this.io));
 			});
 		})
 		console.log(`${count} socket events loaded.`);
-		this.io = io;
 	}
 }
 

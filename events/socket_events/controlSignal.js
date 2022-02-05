@@ -48,6 +48,15 @@ module.exports = new Event("controlSignal", async (client, socket, io, args) => 
             const track = queue.remove(args.initialPos);
             queue.insert(track, args.finalPos);
             break;
+        case "shuffle":
+            await queue.shuffle();
+            io.to(args.guild).emit("forceUpdate", {from: "controlSignal-shuffle"})
+            break;
+        case "volume":
+            if(queue.volume === args.volume) return;
+            if(args.volume < 0 && args.volume > 100) return;
+            queue.setVolume(args.volume);
+            break;
     }
 
 });

@@ -23,8 +23,9 @@ module.exports = new Event("getData", async (client, socket, io, args) => {
     }
 
     if(queue){
-        res.playing = queue.playing,
-        res.repeatMode = queue.repeatMode
+        res.playing = queue.playing;
+        res.repeatMode = queue.repeatMode;
+        res.volume = queue.volume;
 
         if(queue.playing){
             res.current = {

@@ -69,7 +69,7 @@ module.exports = new Event("play", async (client, socket, io, args) => {
             description: `Queued **[${searchResult.tracks[0].title}](${searchResult.tracks[0].url})**`,
             color: 0x44b868
         };
-        lastQueueChannel.reply({ embeds: [embed]});
+        lastQueueChannel.send({ embeds: [embed]});
     }
     if(justConnected) queue.play();
 

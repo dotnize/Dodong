@@ -85,20 +85,17 @@ class Client extends Discord.Client {
 		this.login(token);
 
 		// socket-io events
-		count = 0;
 		this.io.on('connection', socket => {
 			console.log(`Socket connection detected : ${socket.id}`);
 
 			// socket event handler
-            fs.readdirSync("./events/socket_events")
-			.filter(file => file.endsWith(".js"))
-			.forEach(file => {
-				const event = require(`../events/socket_events/${file}`);
-				socket.on(event.event, event.run.bind(null, this, socket, this.io));
-				count++;
-			});
+            		fs.readdirSync("./events/socket_events")
+				.filter(file => file.endsWith(".js"))
+				.forEach(file => {
+					const event = require(`../events/socket_events/${file}`);
+					socket.on(event.event, event.run.bind(null, this, socket, this.io));
+				});
 		})
-		console.log(`${count} socket events loaded.`);
 
 		// Webplayer Check
 		this.hasWebplayer = this.isUrl(process.env.WEBPLAYER) || this.isUrl(config.webplayer);

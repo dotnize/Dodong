@@ -7,7 +7,7 @@ module.exports = new Command({
         aliases: ["link"],
         description: "Displays associated links",
         permission: "SEND_MESSAGES",
-        async run(message, args, client) {
+        async run(message, args, client, slash) {
                 const embed = new MessageEmbed();
                 embed.setColor('#44b868');
                 embed.setDescription(`**Links:**\n

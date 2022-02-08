@@ -16,7 +16,7 @@ module.exports = new Command({
             embed.setDescription(`No songs in the queue.`);
             return message.channel.send({ embeds: [embed] });
         }
-        let usedby = _fromButton ? message.user : "";
+        let usedby = _fromButton ? message.member : ""; // should test first
 
         const buttons = [
             new MessageButton()

@@ -5,7 +5,7 @@ module.exports = new Command({
     aliases: ['np'],
 	description: "Displays information about the song currently playing",
 	permission: "SEND_MESSAGES",
-	async run(message, args, client) {
+	async run(message, args, client, slash) {
         const queue = client.player.getQueue(message.guild);
         if (!queue || !queue.playing) {
             const embed = new MessageEmbed();

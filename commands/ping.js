@@ -6,7 +6,7 @@ module.exports = new Command({
 	aliases: [],
 	description: "Shows the ping of the bot!",
 	permission: "SEND_MESSAGES",
-	async run(message, args, client) {
+	async run(message, args, client, slash) {
 		const embed = new MessageEmbed()
 			.setDescription(`Client ping: ${client.ws.ping} ms`).setColor('#b84e44');
 		const m = await message.channel.send({ embeds: [embed] });

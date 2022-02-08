@@ -6,10 +6,10 @@ module.exports = new Command({
     aliases: ['repeat'],
 	description: "Loops the server queue",
 	permission: "SEND_MESSAGES",
-	async run(message, args, client) {
+	async run(message, args, client, slash) {
         const queue = client.player.getQueue(message.guild);
         if (!queue) return;
-        if(!args[1]) {
+        if(!args[0]) {
             if(await queue.repeatMode === QueueRepeatMode.OFF || await queue.repeatMode === QueueRepeatMode.AUTOPLAY) {
                 queue.setRepeatMode(QueueRepeatMode.QUEUE);
                 return message.channel.send({ embeds: [{ description: `🔄 | Looping the **queue**.`, color: 0x44b868}] });
@@ -23,7 +23,7 @@ module.exports = new Command({
                 return message.channel.send({ embeds: [{ description: `✅ | Looping is now **disabled**.`, color: 0x44b868}] });
             }
         }
-        const option = args[1];
+        const option = args[0];
         if(option.includes("off") || option.includes("disable") || option.includes("none")) { 
             queue.setRepeatMode(QueueRepeatMode.OFF);
             return message.react("✅");

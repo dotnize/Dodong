@@ -6,7 +6,7 @@ module.exports = new Command({
 	aliases: ['t', 'party', 'partygames'],
 	description: "Discord Together!",
 	permission: "SEND_MESSAGES",
-	async run(message, args, client) {
+	async run(message, args, client, slash) {
         if(!message.member.voice.channel)
 			return message.channel.send({ embeds: [{ description: `You must be in a voice channel.`, color: 0xb84e44 }] });
 

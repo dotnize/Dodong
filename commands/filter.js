@@ -8,7 +8,7 @@ module.exports = new Command({
   description: "View and set audio filters",
   permission: "SEND_MESSAGES",
   aliases: ["f"],
-  async run (message, args, client) {
+  async run (message, args, client, slash) {
 
     if(!message.member.voice.channelId)
         return message.reply({ embeds: [{ description: `You are not in a voice channel!`, color: 0xb84e44 }] });
@@ -17,18 +17,17 @@ module.exports = new Command({
     const queue = client.player.getQueue(message.guild);
     const embed = new MessageEmbed();
     if(!queue || !queue.playing) return;
-    if(!args[1]) {
+    if(!args[0]) {
         if(queue && queue.playing)
           display_status(queue, embed, message);
         return;
     }
     embed.setColor('#44b868');
-    let filterType = [args[1]];
+    let filterType = [args[0]];
 
     if(args.length > 2){
       filterType = [];
       for(let i in args){
-        if(i == 0) continue;
         filterType.push(args[i]);
       }
     }

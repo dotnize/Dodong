@@ -8,7 +8,7 @@ module.exports = new Command({
     description: "Adjusts the bot volume",
     permission: "SEND_MESSAGES",
 
-    async run(message, args, client) {
+    async run(message, args, client, slash) {
         const queue = client.player.getQueue(message.guild);
         if (!queue || !queue.playing) {
             const embed = new MessageEmbed();
@@ -18,7 +18,7 @@ module.exports = new Command({
         }
 
         // returns the current volume, instructions for adjusting the volume if theres no args
-        const vol = parseInt(args[1]);
+        const vol = parseInt(args[0]);
         if (!vol) {
             const embed = new MessageEmbed();
             embed.setColor('#44b868');

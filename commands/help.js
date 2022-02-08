@@ -5,7 +5,7 @@ module.exports = new Command({
 	aliases: [],
 	description: "Displays all server commands",
 	permission: "SEND_MESSAGES",
-	async run(message, args, client) {
+	async run(message, args, client, slash) {
         const embed = new MessageEmbed();
         embed.setColor('#44b868');
         embed.setDescription(`**Commands:**\n
@@ -28,6 +28,6 @@ module.exports = new Command({
         - skip / next / n
         - together / t / party
 	- volume / vol`);
-        return message.channel.send({ embeds: [embed] });
+        return message.reply({ embeds: [embed] });
 	}
 });

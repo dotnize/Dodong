@@ -8,6 +8,17 @@ module.exports = new Event("interactionCreate", async (client, interaction) => {
 
 	if(!interaction.guild.me.permissionsIn(interaction.channel).has(client.requiredTextPermissions)) return;
 
+    // Slash commands
+    if(interaction.isApplicationCommand() && !interaction.user.bot && interaction.guild) {
+        const command = client.commands.find(cmd => cmd.name.toLowerCase() == interaction.commandName);
+        if (!command) return;
+
+        if (!interaction.member.permissionsIn(interaction.channel).has(command.permission))
+            return interaction.reply("You don't have permission to run this command!");
+    
+        return command.run(interaction, interaction.options._hoistedOptions, client, true);
+    }
+
     // Queue button controls
     if(interaction.componentType === "BUTTON" && interaction.customId.includes("buttoncontrol")) {
         const queue = client.player.getQueue(interaction.guild);

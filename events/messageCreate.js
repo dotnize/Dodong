@@ -17,7 +17,8 @@ module.exports = new Event("messageCreate", (client, message) => {
 	if(!message.member.permissionsIn(message.channel).has(command.permission))
 		return message.reply(`You do not have the permission \`${command.permission}\` to run this command!`);
 
-	command.run(message, args, client).then( () => {
+	args.splice(0, 1);
+	command.run(message, args, client, false).then( () => {
 		// Webplayer Auto-Update
 		if( !client.hasWebplayer ) return;
 

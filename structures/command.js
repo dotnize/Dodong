@@ -1,7 +1,7 @@
 const Client = require("./client.js");
 const Discord = require("discord.js");
 
-function RunFunction(message, args, client) {}
+function RunFunction(message, args, client, slash) {}
 
 class Command {
 	constructor(options) {
@@ -9,6 +9,7 @@ class Command {
 		this.aliases = options.aliases || [];
 		this.description = options.description;
 		this.permission = options.permission;
+		this.options = options.options || [];
 		this.run = options.run;
 	}
 }

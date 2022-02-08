@@ -1,16 +1,17 @@
 const Discord = require("discord.js");
-const Command = require("./command.js");
-const Event = require("./event.js");
 const { Player } = require("discord-player");
 const config = require("../config.js");
 const fs = require("fs");
 const { Lyrics } = require("@discord-player/extractor");
+const { REST } = require('@discordjs/rest');
+const { Routes } = require('discord-api-types/v9');
 
 
 class Client extends Discord.Client {
 	constructor() {
 		config.prefix = process.env.PREFIX || config.prefix;
 		config.botToken = process.env.BOTTOKEN || config.botToken;
+		config.clientId = process.env.CLIENTID || config.clientId;
 		config.geniusApiToken = process.env.GENIUSAPITOKEN || config.geniusApiToken;
 
 		super({	intents: [
@@ -38,7 +39,7 @@ class Client extends Discord.Client {
 		this.urlModule = require('url'); // Build-in node module
 	}
 
-	init(token) {
+	async init(token) {
 		if(config.botToken === "BOT TOKEN HERE" || config.botToken === "" || !config.botToken)
 			return console.error("--- ERROR: Bot token is empty! Make sure to fill this out in config.js");
 
@@ -55,6 +56,20 @@ class Client extends Discord.Client {
 		console.log(`${count} commands loaded.`);
 		count = 0;
 
+		// slash commands
+		if(config.clientId && config.clientId !== "") {
+			const slashCommands = commands.map(cmd => ({
+				name: cmd.name,
+				description: cmd.description,
+				options: cmd.options,
+				defaultPermission: true
+			}));
+			const rest = new REST({ version: '9' }).setToken(config.botToken);
+			await rest.put(Routes.applicationCommands(config.clientId), { body: slashCommands })
+				.then(() => console.log('Global slash commands registered successfully.'))
+				.catch(console.error);
+		}
+		
 		// client events
 		this.removeAllListeners();
 		fs.readdirSync("./events")

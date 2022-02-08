@@ -56,7 +56,21 @@ module.exports = new Event("play", async (client, socket, io, args) => {
         io.to(socket.id).emit("error", "Can't join the voice channel selected");
         return;
     }
-    await searchResult.playlist ? queue.addTracks(searchResult.tracks) : queue.addTrack(searchResult.tracks[0]);
+    if(searchResult.playlist) {
+        queue.addTracks(searchResult.tracks);
+        const embed = {
+            description: `Queued **${searchResult.tracks.length}** tracks from [${searchResult.tracks[0].playlist.title}](${searchResult.tracks[0].playlist.url})`,
+            color: 0x44b868
+        };
+        lastQueueChannel.send({ embeds: [embed]});
+    } else {
+        queue.addTrack(searchResult.tracks[0]);
+        const embed = {
+            description: `Queued **[${searchResult.tracks[0].title}](${searchResult.tracks[0].url})**`,
+            color: 0x44b868
+        };
+        lastQueueChannel.reply({ embeds: [embed]});
+    }
     if(justConnected) queue.play();
 
 });

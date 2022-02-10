@@ -7,8 +7,8 @@ module.exports = new Command({
 	permission: "SEND_MESSAGES",
 	async run(message, args, client, slash) {
         const queue = client.player.getQueue(message.guild);
-        if (queue) queue.destroy(true);
-
-        message.react('👋');
+        if (queue) await queue.destroy(true);
+		message.guild.me.voice.disconnect();
+        slash ? message.reply({embeds: [{ description: `👋 Disconnected.`, color: 0x44b868 }]}) : message.react('👋');
 	}
 });

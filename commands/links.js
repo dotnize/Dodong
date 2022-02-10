@@ -16,6 +16,6 @@ module.exports = new Command({
                 Online Web Player
                 ${process.env.WEBPLAYER || config.webplayer}?guildID=${message.guild.id}\n`);
                 
-                return message.channel.send({embeds: [embed]});
+                return message.reply({embeds: [embed]});
         }
 });

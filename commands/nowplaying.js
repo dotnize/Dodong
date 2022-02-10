@@ -15,7 +15,7 @@ module.exports = new Command({
         }
         const progress = queue.createProgressBar({ timecodes: true, length: 8 });
 
-        return message.channel.send({
+        return message.reply({
             embeds: [
                 {
                     description: `**[${queue.current.title}](${queue.current.url})** - ${queue.current.requestedBy}`,

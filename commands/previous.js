@@ -11,6 +11,6 @@ module.exports = new Command({
         
         await queue.back();
 
-        message.react('⏮️');
+        slash ? message.reply({embeds: [{ description: `⏮️ Playing previous track.`, color: 0x44b868 }]}) : message.react('⏮️');
 	}
 });

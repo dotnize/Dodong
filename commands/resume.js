@@ -9,6 +9,7 @@ module.exports = new Command({
         const queue = client.player.getQueue(message.guild);
         if (!queue || !queue.playing) return;
         const paused = queue.setPaused(false);
-		return paused ? message.react('▶️') : message.react('❌');
+		if(paused)
+			slash ? message.reply({embeds: [{ description: `▶️ Track resumed.`, color: 0x44b868 }]}) : message.react('▶️');
 	}
 });

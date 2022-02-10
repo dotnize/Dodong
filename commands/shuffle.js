@@ -10,6 +10,6 @@ module.exports = new Command({
         if (!queue) return;
         
         await queue.shuffle();
-        message.react('🔀');
+        slash ? message.reply({embeds: [{ description: `🔀 Shuffling the queue.`, color: 0x44b868 }]}) : message.react('🔀');
 	}
 });

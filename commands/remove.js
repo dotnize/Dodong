@@ -5,6 +5,10 @@ module.exports = new Command({
     aliases: ['r'],
 	description: "Removes a song from the queue",
 	permission: "SEND_MESSAGES",
+    options: [
+        { description: 'Position of song to remove', name: 'position', required: true, type: 4 }
+    ],
+    
 	async run(message, args, client, slash) {
         const queue = client.player.getQueue(message.guild);
         if (!queue || !args[0]) return;
@@ -14,7 +18,7 @@ module.exports = new Command({
         const trackUrl = queue.tracks[trackIndex].url;
         queue.remove(trackIndex);
 
-        message.channel.send({
+        message.reply({
             embeds: [
                 {
                     description: `Removed [${trackName}](${trackUrl})`,

@@ -6,39 +6,41 @@ module.exports = new Command({
     aliases: ['repeat'],
 	description: "Loops the server queue",
 	permission: "SEND_MESSAGES",
+    options: [
+        { description: 'Loop mode to set', name: 'mode', type: 3 }
+    ],
 	async run(message, args, client, slash) {
         const queue = client.player.getQueue(message.guild);
         if (!queue) return;
-        if(!args[0]) {
+        if(args.length === 0) {
             if(await queue.repeatMode === QueueRepeatMode.OFF || await queue.repeatMode === QueueRepeatMode.AUTOPLAY) {
                 queue.setRepeatMode(QueueRepeatMode.QUEUE);
-                return message.channel.send({ embeds: [{ description: `🔄 | Looping the **queue**.`, color: 0x44b868}] });
+                return message.reply({ embeds: [{ description: `🔄 | Looping the **queue**.`, color: 0x44b868}] });
             }
             else if(await queue.repeatMode === QueueRepeatMode.QUEUE) {
                 queue.setRepeatMode(QueueRepeatMode.TRACK);
-                return message.channel.send({ embeds: [{ description: `🔂 | Looping the **current track**.`, color: 0x44b868}] });
+                return message.reply({ embeds: [{ description: `🔂 | Looping the **current track**.`, color: 0x44b868}] });
             }
             else if(await queue.repeatMode === QueueRepeatMode.TRACK) {
                 queue.setRepeatMode(QueueRepeatMode.OFF);
-                return message.channel.send({ embeds: [{ description: `✅ | Looping is now **disabled**.`, color: 0x44b868}] });
+                return message.reply({ embeds: [{ description: `✅ | Loop is now **disabled**.`, color: 0x44b868}] });
             }
         }
-        const option = args[0];
-        if(option.includes("off") || option.includes("disable") || option.includes("none")) { 
+        if(args.includes("off") || args.includes("disable") || args.includes("none")) { 
             queue.setRepeatMode(QueueRepeatMode.OFF);
-            return message.react("✅");
+            slash ? message.reply({embeds: [{ description: `✅ Loop is now disabled.`, color: 0x44b868 }]}) : message.react("✅");
         }
-        else if(option.includes("track") || option.includes("song") || option.includes("current")) {
+        else if(args.includes("track") || args.includes("song") || args.includes("current")) {
             queue.setRepeatMode(QueueRepeatMode.TRACK);
-            return message.react("🔂");
+            slash ? message.reply({embeds: [{ description: `🔂 Looping the current track.`, color: 0x44b868 }]}) : message.react("🔂");
         }
-        else if(option.includes("queue") || option.includes("all")) {
+        else if(args.includes("queue") || args.includes("all")) {
             queue.setRepeatMode(QueueRepeatMode.QUEUE);
-            return message.react("🔄");
+            slash ? message.reply({embeds: [{ description: `🔄 Looping the queue.`, color: 0x44b868}] }) : message.react("🔄");
         }
-        else if(option.includes("autoplay")){
+        else if(args.includes("autoplay")){
             queue.setRepeatMode(QueueRepeatMode.AUTOPLAY);
-            return message.react("▶️");
+            slash ? message.reply({embeds: [{ description: `▶️ Autoplay has been enabled.`, color: 0x44b868}] }) : message.react("▶️");
         }
         else {
             const embed = new MessageEmbed()
@@ -49,7 +51,7 @@ module.exports = new Command({
             else if(await queue.repeatMode === QueueRepeatMode.QUEUE) mode = "`Queue`";
             else if(await queue.repeatMode === QueueRepeatMode.AUTOPLAY) mode = "`Autoplay`";
 			embed.setDescription(`Current loop mode: ${mode}\nOptions: off, track, queue, autoplay`);
-            message.channel.send({embeds: [embed]});
+            message.reply({embeds: [embed]});
         }
 	}
 });

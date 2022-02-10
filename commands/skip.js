@@ -9,6 +9,7 @@ module.exports = new Command({
         const queue = client.player.getQueue(message.guild);
         if (!queue || !queue.playing) return;
         const success = queue.skip();
-        return success ? message.react("⏭️") : message.react('❌');
+        if(success)
+            slash ? message.reply({embeds: [{ description: `⏭️ Track skipped.`, color: 0x44b868 }]}) : message.react("⏭️");
 	}
 });

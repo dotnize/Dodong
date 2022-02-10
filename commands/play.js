@@ -20,7 +20,7 @@ module.exports = new Command({
         if(!message.guild.me.permissionsIn(message.member.voice.channel).has(client.requiredVoicePermissions)) return;
 
         if(slash) await message.deferReply();
-        let query = slash ? args[0].value : args.slice(0).join(" ");
+        let query = args.join(" ");
         const searchResult = await client.player.search(query, { requestedBy: slash ? message.user : message.author, searchEngine: QueryType.AUTO })
         if (!searchResult || !searchResult.tracks.length)
             return message.reply({ embeds: [{ description: `No results found!`, color: 0xb84e44 }], ephemeral: true });

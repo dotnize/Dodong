@@ -15,8 +15,10 @@ module.exports = new Event("interactionCreate", async (client, interaction) => {
 
         if (!interaction.member.permissionsIn(interaction.channel).has(command.permission))
             return interaction.reply("You don't have permission to run this command!");
+
+        const args = interaction.options._hoistedOptions.map(option => option.value);
     
-        return command.run(interaction, interaction.options._hoistedOptions, client, true);
+        return command.run(interaction, args, client, true);
     }
 
     // Queue button controls

@@ -6,28 +6,20 @@ module.exports = new Command({
 	description: "Displays all server commands",
 	permission: "SEND_MESSAGES",
 	async run(message, args, client, slash) {
+		let list = "Commands:\n";
+		client.commands.forEach(cmd => {
+			list = list.concat(`\n${client.prefix}${cmd.name}`);
+			if(cmd.options.length > 0) {
+				cmd.options.forEach(option => {
+					list = list.concat(` <${option.name}>`);
+				});
+			}
+			//list = list.concat(`\n${cmd.description}\n`);
+			// todo: add description, split to multiple pages, add buttons for pages
+		});
         const embed = new MessageEmbed();
         embed.setColor('#44b868');
-        embed.setDescription(`**Commands:**\n
-        - clear
-        - disconnect / dc
-        - filter / f *(experimental)*
-        - loop
-        - lyrics / l
-        - move / m
-        - nowplaying / np
-        - pause
-        - ping
-        - play / p
-        - previous / prev / back
-        - queue / q
-        - remove / r
-        - resume
-        - seek / s *(experimental)*
-        - shuffle
-        - skip / next / n
-        - together / t / party
-	- volume / vol`);
+        embed.setDescription(list);
         return message.reply({ embeds: [embed] });
 	}
 });

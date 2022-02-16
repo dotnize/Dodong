@@ -89,7 +89,7 @@ module.exports = new Event("interactionCreate", async (client, interaction) => {
                 queue.skip();
                 break;
             case "buttoncontrol_queue":
-                Queue.run(interaction, ["queue"], client, true);
+                Queue.run(interaction, ["queue"], client, false, true);
                 await interaction.deferUpdate();
                 break;
         }

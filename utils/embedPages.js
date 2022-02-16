@@ -29,10 +29,10 @@ module.exports = async (source, pages, options) => {
     }
     
     const message = options.fromButton ? await source.channel.send(content) : await source.reply(content);
-    const queueList = source instanceof CommandInteraction && !options.fromButton ? await source.fetchReply() : message;
+    const pagedMessage = source instanceof CommandInteraction && !options.fromButton ? await source.fetchReply() : message;
 
     const filter = (button) => button.customId === 'first' || 'previous' || 'next' || 'last';
-    const collector = await queueList.createMessageComponentCollector({ filter, time: options.timeout });
+    const collector = await pagedMessage.createMessageComponentCollector({ filter, time: options.timeout });
 
     collector.on("collect", async (button) => {
         switch(button.customId) {
@@ -60,7 +60,7 @@ module.exports = async (source, pages, options) => {
                 row.setComponents(buttons[0].setDisabled(false), buttons[1].setDisabled(false), buttons[2].setDisabled(false), buttons[3].setDisabled(false));
                 break;
         }
-        queueList.edit({
+        pagedMessage.edit({
             embeds: [pages[currentPage].setFooter({ text: `Page ${currentPage+1}/${pages.length}` })],
             components: [row]
         });
@@ -69,13 +69,13 @@ module.exports = async (source, pages, options) => {
     });
 
     collector.on("end", (_, reason) => {
-        if(reason !== "messageDelete" && queueList.editable) {
+        if(reason !== "messageDelete" && pagedMessage.editable) {
             row.setComponents(buttons[0].setDisabled(true), buttons[1].setDisabled(true), buttons[2].setDisabled(true), buttons[3].setDisabled(true));
-            queueList.edit({
+            pagedMessage.edit({
                 embeds: [pages[currentPage].setFooter({ text: `Page ${currentPage+1}/${pages.length}` })],
                 components: [row]
             }).catch(error=> {});
         }
     });
-    return queueList;
+    return pagedMessage;
 };

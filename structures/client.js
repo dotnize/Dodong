@@ -20,7 +20,7 @@ class Client extends Discord.Client {
 			Discord.Intents.FLAGS.GUILD_VOICE_STATES
 		]});
 
-		this.commands = new Discord.Collection();
+		this.commands = [];
 		this.player = new Player(this);
 		this.requiredVoicePermissions = [
             "VIEW_CHANNEL",
@@ -51,7 +51,7 @@ class Client extends Discord.Client {
 		const commands = commandFiles.map(file => require(`../commands/${file}`));
 		commands.forEach(cmd => {
 			count++;
-			this.commands.set(cmd.name, cmd);
+			this.commands.push(cmd);
 		});
 		console.log(`${count} commands loaded.`);
 		count = 0;

@@ -13,19 +13,21 @@ class Client extends Discord.Client {
 		config.bottoken = process.env.BOTTOKEN || config.bottoken;
 		config.geniusapitoken = process.env.GENIUSAPITOKEN || config.geniusapitoken;
 
-		super({	intents: [
-			Discord.Intents.FLAGS.GUILDS,
-			Discord.Intents.FLAGS.GUILD_MESSAGES,
-			Discord.Intents.FLAGS.GUILD_VOICE_STATES
-		]});
+		super({
+			intents: [
+				Discord.Intents.FLAGS.GUILDS,
+				Discord.Intents.FLAGS.GUILD_MESSAGES,
+				Discord.Intents.FLAGS.GUILD_VOICE_STATES
+			]
+		});
 
 		this.commands = new Discord.Collection();
 		this.player = new Player(this);
 		this.requiredVoicePermissions = [
-            "VIEW_CHANNEL",
-            "CONNECT",
-            "SPEAK"
-        ];
+			"VIEW_CHANNEL",
+			"CONNECT",
+			"SPEAK"
+		];
 		this.requiredTextPermissions = [
 			"VIEW_CHANNEL",
 			"SEND_MESSAGES",
@@ -37,7 +39,7 @@ class Client extends Discord.Client {
 	}
 
 	init(token) {
-		if(config.bottoken === "BOT TOKEN HERE" || config.bottoken === "" || !config.bottoken)
+		if (config.bottoken === "BOT TOKEN HERE" || config.bottoken === "" || !config.bottoken)
 			return console.error("--- ERROR: Bot token is empty! Make sure to fill this out in config.js");
 
 		// command handler
@@ -66,7 +68,7 @@ class Client extends Discord.Client {
 		// discord-player
 		musicEvents(this.player);
 		this.lyrics = Lyrics.init(config.geniusapitoken);
-		if(config.geniusapitoken === "GENIUS.COM CLIENT ACCESS TOKEN HERE" || config.geniusapitoken === "" || !config.geniusapitoken)
+		if (config.geniusapitoken === "GENIUS.COM CLIENT ACCESS TOKEN HERE" || config.geniusapitoken === "" || !config.geniusapitoken)
 			console.log("No Genius API token provided. Lyrics feature might not work properly.");
 
 		this.login(token);

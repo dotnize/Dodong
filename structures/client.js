@@ -14,19 +14,21 @@ class Client extends Discord.Client {
 		config.clientId = process.env.CLIENTID || config.clientId;
 		config.geniusApiToken = process.env.GENIUSAPITOKEN || config.geniusApiToken;
 
-		super({	intents: [
-			Discord.Intents.FLAGS.GUILDS,
-			Discord.Intents.FLAGS.GUILD_MESSAGES,
-			Discord.Intents.FLAGS.GUILD_VOICE_STATES
-		]});
+		super({
+			intents: [
+				Discord.Intents.FLAGS.GUILDS,
+				Discord.Intents.FLAGS.GUILD_MESSAGES,
+				Discord.Intents.FLAGS.GUILD_VOICE_STATES
+			]
+		});
 
 		this.commands = [];
 		this.player = new Player(this);
 		this.requiredVoicePermissions = [
-            "VIEW_CHANNEL",
-            "CONNECT",
-            "SPEAK"
-        ];
+			"VIEW_CHANNEL",
+			"CONNECT",
+			"SPEAK"
+		];
 		this.requiredTextPermissions = [
 			"VIEW_CHANNEL",
 			"SEND_MESSAGES",
@@ -40,7 +42,7 @@ class Client extends Discord.Client {
 	}
 
 	async init(token) {
-		if(config.botToken === "BOT TOKEN HERE" || config.botToken === "" || !config.botToken)
+		if (config.botToken === "BOT TOKEN HERE" || config.botToken === "" || !config.botToken)
 			return console.error("--- ERROR: Bot token is empty! Make sure to fill this out in config.js");
 
 		let count = 0;
@@ -94,7 +96,7 @@ class Client extends Discord.Client {
 
 		// @discord-player/extractor lyrics
 		this.lyrics = Lyrics.init(config.geniusApiToken);
-		if(config.geniusApiToken === "GENIUS.COM CLIENT ACCESS TOKEN HERE" || config.geniusApiToken === "" || !config.geniusApiToken)
+		if (config.geniusApiToken === "GENIUS.COM CLIENT ACCESS TOKEN HERE" || config.geniusApiToken === "" || !config.geniusApiToken)
 			console.log("No Genius API token provided. Lyrics feature might not work properly.");
 
 		this.login(token);
@@ -104,7 +106,7 @@ class Client extends Discord.Client {
 			console.log(`Socket connection detected : ${socket.id}`);
 
 			// socket event handler
-            		fs.readdirSync("./events/socket_events")
+        fs.readdirSync("./events/socket_events")
 				.filter(file => file.endsWith(".js"))
 				.forEach(file => {
 					const event = require(`../events/socket_events/${file}`);

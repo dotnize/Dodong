@@ -6,9 +6,7 @@ module.exports = new Event("trackStart", async (player, queue, track) => {
         console.log(`(${queue.guild.name}) destroying queue due to missing text channel permissions`);
         return queue.destroy();
     }
-    // I don't know if there's a proper way to check first if a message exists.
-    // If you do, feel free to open a PR/issue!
-    if(queue.npmessage) {
+    if(queue.npmessage && queue.npmessage.editable) {
         queue.npmessage.delete().catch(error=> {});
     }
     let row = new MessageActionRow()

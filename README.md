@@ -20,32 +20,54 @@ A music bot written using [discord.js](https://github.com/discordjs/discord.js) 
 **NOTE: This project's source code is currently very poorly formatted and documented. Please use at your own risk.**
 
 ## Contribute
+
 View the list of bug reports and feature requests [here](https://github.com/nizeic/Dodong/issues).
 
 ## Deploy automatically
+
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)<br><br>
 [![Run on Repl.it](https://repl.it/badge/github/nizeic/Dodong)](https://repl.it/github/nizeic/Dodong)<br>
 **NOTE:** repl.it uses Node.js v12 by default which is unsupported by the bot.<br>
 To install Node.js v16, execute this script from the **Shell**:
+
 ```sh
 npm init -y && npm i --save-dev node@16 && npm config set prefix=$(pwd)/node_modules/node && export PATH=$(pwd)/node_modules/node/bin:$PATH
 ```
 
 ## Manual installation
+
 1. Install [Node.js v16](https://nodejs.org/en/download)
 2. Clone this repository
-    ```sh
-    git clone https://github.com/nizeic/Dodong.git
-    ```
+   ```sh
+   git clone https://github.com/nizeic/Dodong.git
+   ```
 3. Install dependencies
-    ```sh
-    npm install
-    ```
+   ```sh
+   npm install
+   ```
 4. Enter your [bot token](https://discord.com/developers/applications) in `config.js`
-    ```js
-    bottoken: "BOT TOKEN HERE",
-    ```
+   ```js
+   bottoken: "BOT TOKEN HERE",
+   ```
 5. Run the bot
-    ```sh
-    npm start
-    ```
+   ```sh
+   npm start
+   ```
+
+## Run by Docker
+
+1.Build the Docker image
+
+```sh
+docker build -t dodong .
+```
+
+2.Run the Docker image
+
+```sh
+docker run -d -it --name dodong -e BOTTOKEN=<your-bot-token> -e PREFIX=<your-prefix> -e GENIUSAPITOKEN=<genius-api-token> --restart unless-stopped dodong
+```
+
+> BotToken is mandatory.
+
+> Genius API Token is optional.

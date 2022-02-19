@@ -1,5 +1,4 @@
 const Event = require("../../structures/event.js");
-const config = require("../../config.js");
 
 module.exports = new Event("trackAdd", async (player, queue, track) => {
     // Webplayer

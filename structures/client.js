@@ -9,11 +9,6 @@ const { Routes } = require('discord-api-types/v9');
 
 class Client extends Discord.Client {
 	constructor() {
-		config.prefix = process.env.PREFIX || config.prefix;
-		config.botToken = process.env.BOTTOKEN || config.botToken;
-		config.clientId = process.env.CLIENTID || config.clientId;
-		config.geniusApiToken = process.env.GENIUSAPITOKEN || config.geniusApiToken;
-
 		super({
 			intents: [
 				Discord.Intents.FLAGS.GUILDS,
@@ -36,14 +31,17 @@ class Client extends Discord.Client {
 			"ADD_REACTIONS",
 			"EMBED_LINKS"
 		];
-		this.prefix = config.prefix;
+		this.prefix = process.env.PREFIX || config.prefix;
 		this.io = require("socket.io")(process.env.PORT || 3000, { cors: { origin: "*", methods: ["GET", "POST"] }});
 		this.urlModule = require('url'); // Build-in node module
 	}
 
 	async init(token) {
-		if (config.botToken === "BOT TOKEN HERE" || config.botToken === "" || !config.botToken)
+		if (token === "BOT TOKEN HERE" || token === "" || !token)
 			return console.error("--- ERROR: Bot token is empty! Make sure to fill this out in config.js");
+
+		config.clientId = process.env.CLIENTID || config.clientId;
+		config.geniusApiToken = process.env.GENIUSAPITOKEN || config.geniusApiToken;
 
 		let count = 0;
 
@@ -66,7 +64,7 @@ class Client extends Discord.Client {
 				options: cmd.options,
 				defaultPermission: true
 			}));
-			const rest = new REST({ version: '9' }).setToken(config.botToken);
+			const rest = new REST({ version: '9' }).setToken(token);
 			await rest.put(Routes.applicationCommands(config.clientId), { body: slashCommands })
 				.then(() => console.log('Global slash commands registered successfully.'))
 				.catch(console.error);
@@ -106,7 +104,7 @@ class Client extends Discord.Client {
 			console.log(`Socket connection detected : ${socket.id}`);
 
 			// socket event handler
-        fs.readdirSync("./events/socket_events")
+        	fs.readdirSync("./events/socket_events")
 				.filter(file => file.endsWith(".js"))
 				.forEach(file => {
 					const event = require(`../events/socket_events/${file}`);

@@ -1,6 +1,5 @@
 const Event = require("../../structures/event.js");
-const {MessageActionRow, MessageButton} = require('discord.js');
-const config = require("../../config.js");
+const { MessageActionRow, MessageButton } = require('discord.js');
 
 module.exports = new Event("trackStart", async (player, queue, track) => {
     if(!queue.guild.me.permissionsIn(queue.metadata.channel).has(player.client.requiredTextPermissions)) {

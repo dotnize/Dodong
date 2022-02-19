@@ -58,23 +58,24 @@ module.exports = new Command({
             client.player.deleteQueue(message.guild);
             return message.reply({ embeds: [{ description: `Could not join your voice channel!`, color: 0xb84e44 }] });
         }
+        
+        let embed = {};
         if(searchResult.playlist) {
-            queue.addTracks(searchResult.tracks);
-            const embed = {
+            embed = {
                 description: `Queued **${searchResult.tracks.length}** tracks from [${searchResult.tracks[0].playlist.title}](${searchResult.tracks[0].playlist.url})`,
                 color: 0x44b868
             };
-            if(slash) message.editReply({ embeds: [embed]});
-            else message.reply({ embeds: [embed]});
+            queue.addTracks(searchResult.tracks);
         } else {
-            queue.addTrack(searchResult.tracks[0]);
-            const embed = {
+            embed = {
                 description: `Queued **[${searchResult.tracks[0].title}](${searchResult.tracks[0].url})**`,
                 color: 0x44b868
             };
-            if(slash) message.editReply({ embeds: [embed]});
-            else message.reply({ embeds: [embed]});
+            queue.addTrack(searchResult.tracks[0]);
         }
+        if(slash) message.editReply({ embeds: [embed] });
+        else message.reply({ embeds: [embed] });
+
         if(justConnected) queue.play();
 	}
 });

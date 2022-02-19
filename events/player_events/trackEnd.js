@@ -1,4 +1,3 @@
-const config = require("../../config.js");
 const Event = require("../../structures/event.js");
 
 module.exports = new Event("trackEnd", async (player, queue, track) => {

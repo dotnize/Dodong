@@ -17,11 +17,9 @@ module.exports = new Command({
             embed.setDescription(`No songs in the queue.`);
             return message.reply({ embeds: [embed] });
         }
-        let usedby = _fromButton ? message.member : ""; // should test first
 
         const pages = [];
-        let page = 1;
-        let emptypage = false;
+        let page = 1, emptypage = false, usedby = _fromButton ? message.member : "";
         do {
             const pageStart = 10 * (page - 1);
             const pageEnd = pageStart + 10;
@@ -30,7 +28,7 @@ module.exports = new Command({
             });
             if(tracks.length) {
                 const embed = new MessageEmbed();
-                embed.setDescription(`${usedby}\n${tracks.join('\n')}${
+                embed.setDescription(`[${usedby}]\n${tracks.join('\n')}${
                     queue.tracks.length > pageEnd
                         ? `\n... ${queue.tracks.length - pageEnd} more track(s)`
                         : ''
@@ -46,7 +44,7 @@ module.exports = new Command({
                 if(page === 1) {
                     const embed = new MessageEmbed();
                     embed.setColor('#44b868');
-                    embed.setDescription(`${usedby}\nNo more songs in the queue.`);
+                    embed.setDescription(`[${usedby}]\nNo more songs in the queue.`);
                     embed.setAuthor({ name: `Now playing: ${queue.current.title}`, iconURL: null, url: `${queue.current.url}` });
                     return message.reply({ embeds: [embed] });
                 }

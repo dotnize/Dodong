@@ -10,7 +10,6 @@ module.exports = new Command({
         { description: 'New position of the track', name: 'newposition', required: true, type: 4 }
     ],
 	async run(message, args, client, slash) {
-        console.log(args);
         const queue = client.player.getQueue(message.guild);
         if (!queue || !args[0] || !args[1]) return;
         const trackIndex = args[0] - 1;

@@ -19,7 +19,7 @@ module.exports = new Command({
         }
 
         const pages = [];
-        let page = 1, emptypage = false, usedby = _fromButton ? message.member : "";
+        let page = 1, emptypage = false, usedby = _fromButton ? `[${message.member}]\n` : "";
         do {
             const pageStart = 10 * (page - 1);
             const pageEnd = pageStart + 10;
@@ -28,7 +28,7 @@ module.exports = new Command({
             });
             if(tracks.length) {
                 const embed = new MessageEmbed();
-                embed.setDescription(`[${usedby}]\n${tracks.join('\n')}${
+                embed.setDescription(`${usedby}${tracks.join('\n')}${
                     queue.tracks.length > pageEnd
                         ? `\n... ${queue.tracks.length - pageEnd} more track(s)`
                         : ''
@@ -44,12 +44,12 @@ module.exports = new Command({
                 if(page === 1) {
                     const embed = new MessageEmbed();
                     embed.setColor('#44b868');
-                    embed.setDescription(`[${usedby}]\nNo more songs in the queue.`);
+                    embed.setDescription(`${usedby}No more songs in the queue.`);
                     embed.setAuthor({ name: `Now playing: ${queue.current.title}`, iconURL: null, url: `${queue.current.url}` });
-                    return message.reply({ embeds: [embed] });
+                    return _fromButton ? message.channel.send({ embeds: [embed] }) : message.reply({ embeds: [embed] });
                 }
                 if(page === 2) {
-                    return message.reply({ embeds: [pages[0]] });
+                    return _fromButton ? message.channel.send({ embeds: [pages[0]] }) : message.reply({ embeds: [pages[0]] });
                 }
             }
         } while(!emptypage);

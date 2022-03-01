@@ -6,11 +6,13 @@ module.exports = async (source, pages, options) => {
         new MessageButton()
             .setCustomId('first')
             .setLabel('<<')
-            .setStyle('SECONDARY'),
+            .setStyle('SECONDARY')
+            .setDisabled(true),
         new MessageButton()
             .setCustomId('previous')
             .setLabel('<')
-            .setStyle('SECONDARY'),
+            .setStyle('SECONDARY')
+            .setDisabled(true),
         new MessageButton()
             .setCustomId('next')
             .setLabel('>')

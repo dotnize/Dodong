@@ -28,7 +28,7 @@ module.exports = new Command({
 		for(let i = 0; i < searchResult.tracks.length; i++) {
 			
 			const button = new MessageButton()
-            .setCustomId(`search_${i+1}`)
+            .setCustomId(`search_${i}`)
             .setLabel(`${i+1}`)
             .setStyle('SECONDARY')
             .setDisabled(false);

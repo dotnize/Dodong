@@ -2,7 +2,7 @@ const Command = require("../structures/command.js");
 
 module.exports = new Command({
 	name: "seek",
-	aliases: ['s'],
+	aliases: [],
 	description: "Clears the server queue",
 	permission: "SEND_MESSAGES",
 	options: [

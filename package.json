@@ -20,7 +20,7 @@
     "discord-player": "^5.2.2",
     "discord.js": "^13.6.0",
     "ffmpeg-static": "^4.4.1",
-    "play-dl": "^1.8.4",
+    "play-dl": "^1.8.9",
     "socket.io": "^4.4.1"
   },
   "scripts": {

@@ -5,6 +5,8 @@ const fs = require("fs");
 const { Lyrics } = require("@discord-player/extractor");
 const { REST } = require('@discordjs/rest');
 const { Routes } = require('discord-api-types/v9');
+const extractor = require("../utils/extractor.js");
+const playdl = require("play-dl");
 
 
 class Client extends Discord.Client {
@@ -19,6 +21,7 @@ class Client extends Discord.Client {
 
 		this.commands = [];
 		this.player = new Player(this);
+		this.player.use("dodong", extractor);
 		this.requiredVoicePermissions = [
 			"VIEW_CHANNEL",
 			"CONNECT",
@@ -42,6 +45,12 @@ class Client extends Discord.Client {
 
 		config.clientId = process.env.CLIENTID || config.clientId;
 		config.geniusApiToken = process.env.GENIUSAPITOKEN || config.geniusApiToken;
+
+		playdl.getFreeClientID().then((clientID) => {
+			playdl.setToken({
+				soundcloud : { client_id : clientID }
+			});
+		});
 
 		let count = 0;
 

@@ -1,4 +1,3 @@
-const { QueryType } = require("discord-player");
 const Event = require("../../structures/event.js");
 
 module.exports = new Event("play", async (client, socket, io, args) => {
@@ -14,7 +13,7 @@ module.exports = new Event("play", async (client, socket, io, args) => {
         return;
     }
 
-    const searchResult = await client.player.search(args.query, { requestedBy: client.user , searchEngine: QueryType.AUTO});
+    const searchResult = await client.player.search(args.query, { requestedBy: client.user , searchEngine: "dodong" });
 
     if(!searchResult || !searchResult.tracks.length){
         io.to(socket.id).emit("error", "No Result Found");
@@ -25,20 +24,7 @@ module.exports = new Event("play", async (client, socket, io, args) => {
         disableVolume: false,
         leaveOnEnd: true,
         leaveOnStop: true,
-
-        async onBeforeCreateStream(track, source, _queue){
-            let vid;
-            try{
-                if(track.url.includes("youtube.com"))
-                    vid = (await playdl.stream(track.url, { discordPlayerCompatibility : true })).stream;
-                else
-                    vid = (await playdl.stream(await playdl.search(`${track.author} ${track.title} lyric`, { limit : 1, source : { youtube : "video" } }).then(x => x[0].url), { discordPlayerCompatibility : true })).stream;
-            } catch {
-                io.to(socket.id).emit("error", "Error occured while attempting to play : [" + track.title + "](" + track.url + ").");
-                vid = (await playdl.stream("https://www.youtube.com/watch?v=Wch3gJG2GJ4", { quality: 0, discordPlayerCompatibility : true })).stream; // the 1 second video
-            }
-            return vid;
-        }
+        spotifyBridge: false
     });
     let justConnected, voiceChannel;
 

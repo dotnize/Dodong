@@ -1,6 +1,4 @@
 const Command = require("../structures/command.js");
-const { QueryType } = require('discord-player');
-const playdl = require("play-dl");
 
 module.exports = new Command({
 	name: "play",
@@ -21,7 +19,7 @@ module.exports = new Command({
 
         if(slash) await message.deferReply();
         let query = args.join(" ");
-        const searchResult = await client.player.search(query, { requestedBy: slash ? message.user : message.author, searchEngine: QueryType.AUTO })
+        const searchResult = await client.player.search(query, { requestedBy: slash ? message.user : message.author, searchEngine: "dodong" })
         if (!searchResult || !searchResult.tracks.length)
             return message.reply({ embeds: [{ description: `No results found!`, color: 0xb84e44 }], ephemeral: true });
         
@@ -31,22 +29,9 @@ module.exports = new Command({
             disableVolume: false, // disabling volume controls can improve performance
             leaveOnEnd: true,
 			leaveOnStop: true,
-			//leaveOnEmpty: true,
+            spotifyBridge: false
+			//leaveOnEmpty: true, // not working for now, discord-player issue
 			//leaveOnEmptyCooldown: 300000,
-
-            async onBeforeCreateStream(track, source, _queue) {
-                let vid;
-                try {
-                    if(track.url.includes("youtube.com"))
-                        vid = (await playdl.stream(track.url, { discordPlayerCompatibility : true })).stream;
-                    else
-                        vid = (await playdl.stream(await playdl.search(`${track.author} ${track.title} lyric`, { limit : 1, source : { youtube : "video" } }).then(x => x[0].url), { discordPlayerCompatibility : true })).stream;
-                } catch {
-                    queue.metadata.channel.send({ embeds: [{ description: `An error occurred while attempting to play [${track.title}](${track.url}).`, color: 0xb84e44 }] });
-                    vid = (await playdl.stream("https://www.youtube.com/watch?v=Wch3gJG2GJ4", { quality: 0, discordPlayerCompatibility : true })).stream; // a 1 second video. if u have a better way to do this, feel free to open a PR/issue :)
-                }
-                return vid;
-            }
         });
         let justConnected;
         try {

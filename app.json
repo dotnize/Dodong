@@ -21,6 +21,10 @@
         "GENIUSAPITOKEN": {
             "description": "Genius.com Client Access Token (https://genius.com/api-clients) - Optional",
             "required": false
+        },
+        "CLIENTID": {
+            "description": "Bot client/application ID - optional, for slash commands",
+            "required": false
         }
     },
     "formation": {

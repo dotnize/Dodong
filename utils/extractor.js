@@ -148,7 +148,7 @@ module.exports = {
                             duration: track.durationInSec * 1000,
                             thumbnail: track.thumbnails ? track.thumbnails[0] ? track.thumbnails[0].url : null : null,
                             async engine() {
-                                return (await playdl.stream(await Youtube.search(track.url, {limit: 1, type: "video", safeSearch: true}).then(x => `https://youtu.be/${x[0].id}`), { discordPlayerCompatibility : true })).stream;
+                                return (await playdl.stream(await Youtube.search(track.url, {limit: 1, type: "video", safeSearch: true}).then(x => x[0] ? `https://youtu.be/${x[0].id}` : `https://youtu.be/Wch3gJG2GJ4`), { discordPlayerCompatibility : true })).stream;
                             },
                             views: track.views,
                             author: track.channel.name,

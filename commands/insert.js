@@ -18,21 +18,25 @@ module.exports = new Command({
 		if(!queue || !args[0]) return;
         
         if(slash) await message.deferReply();
-        let query = args.join(" ");
+        let query = args.join(" "), reply = {};
         const searchResult = await client.player.search(query, { requestedBy: slash ? message.user : message.author, searchEngine: "dodong" })
         if (!searchResult || !searchResult.tracks.length)
-            return message.reply({ embeds: [{ description: `No results found!`, color: 0xb84e44 }], ephemeral: true });
+            reply = { embeds: [{ description: `No results found!`, color: 0xb84e44 }], ephemeral: true };
         
-        if(searchResult.playlist)
-            return message.reply({ embeds: [{ description: `This command does not support playlists.\nUse **${client.prefix}play** instead.`, color: 0xb84e44 }] });
+        else if(searchResult.playlist)
+            reply = { embeds: [{ description: `This command does not support playlists.\nUse **${client.prefix}play** instead.`, color: 0xb84e44 }], ephemeral: true };
 		
-		queue.insert(searchResult.tracks[0], 0);
+		else {
+            queue.insert(searchResult.tracks[0], 0);
 
-		const embed = {
-			description: `Queued **[${searchResult.tracks[0].title}](${searchResult.tracks[0].url})** at position **1**`,
-			color: 0x44b868
-		};
-		if(slash) message.editReply({ embeds: [embed] });
-		else message.reply({ embeds: [embed] });
+            reply = {
+                embeds: [{
+                    description: `Queued **[${searchResult.tracks[0].title}](${searchResult.tracks[0].url})** at position **1**`,
+                    color: 0x44b868
+                }]
+            };
+        }
+		if(slash) message.editReply(reply);
+		else message.reply(reply);
 	}
 });

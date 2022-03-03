@@ -36,14 +36,14 @@ class Client extends Discord.Client {
 		];
 		this.prefix = process.env.PREFIX || config.prefix;
 
-		this.hasWebplayer = (process.env.WEBPLAYER ?? config.webplayer).startsWith("http");
+		this.hasWebplayer = (process.env.WEBPLAYER || config.webplayer).startsWith("http");
 		if(this.hasWebplayer) {
 			this.io = require("socket.io")(process.env.PORT || 3000, { cors: { origin: "*", methods: ["GET", "POST"] }});
 		}
 	}
 
 	async init(token) {
-		if (!token || token === "")
+		if (!token)
 			return console.error("--- ERROR: Bot token is empty! Make sure to fill this out in config.js");
 
 		config.clientId = process.env.CLIENTID || config.clientId;
@@ -106,7 +106,7 @@ class Client extends Discord.Client {
 
 		// @discord-player/extractor lyrics
 		this.lyrics = Lyrics.init(config.geniusApiToken);
-		if (!config.geniusApiToken || config.geniusApiToken === "")
+		if (!config.geniusApiToken)
 			console.log("No Genius API token provided. Lyrics feature might not work properly.");
 
 		this.login(token);

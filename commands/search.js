@@ -20,9 +20,11 @@ module.exports = new Command({
         if(slash) await message.deferReply();
         let query = args.join(" ");
         const searchResult = await client.player.search(query, { requestedBy: slash ? message.user : message.author, searchEngine: "dodong" })
-        if (!searchResult || !searchResult.tracks.length)
-            return message.reply({ embeds: [{ description: `No results found!`, color: 0xb84e44 }], ephemeral: true });
-                
+        if (!searchResult || !searchResult.tracks.length) {
+            const reply = { embeds: [{ description: `No results found!`, color: 0xb84e44 }], ephemeral: true };
+            slash ? message.editReply(reply) : message.reply(reply);
+            return;
+        }     
 		const buttons = [];
 		const embeds = [];
 		for(let i = 0; i < searchResult.tracks.length; i++) {

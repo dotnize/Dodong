@@ -18,11 +18,13 @@ module.exports = new Command({
         if(!message.guild.me.permissionsIn(message.member.voice.channel).has(client.requiredVoicePermissions)) return;
 
         if(slash) await message.deferReply();
-        let query = args.join(" ");
+        let query = args.join(" "), reply = {};
         const searchResult = await client.player.search(query, { requestedBy: slash ? message.user : message.author, searchEngine: "dodong" })
-        if (!searchResult || !searchResult.tracks.length)
-            return message.reply({ embeds: [{ description: `No results found!`, color: 0xb84e44 }], ephemeral: true });
-        
+        if (!searchResult || !searchResult.tracks.length) {
+            reply = { embeds: [{ description: `No results found!`, color: 0xb84e44 }], ephemeral: true };
+            slash ? message.editReply(reply) : message.reply(reply);
+            return;
+        }
         const queue = await client.player.createQueue(message.guild,{ metadata: { channel: message.channel },
 
             bufferingTimeout: 1000,
@@ -41,25 +43,25 @@ module.exports = new Command({
             }
         } catch {
             client.player.deleteQueue(message.guild);
-            return message.reply({ embeds: [{ description: `Could not join your voice channel!`, color: 0xb84e44 }] });
+            reply = { embeds: [{ description: `Could not join your voice channel!`, color: 0xb84e44 }] };
+            slash ? message.editReply(reply) : message.reply(reply);
+            return;
         }
         
-        let embed = {};
         if(searchResult.playlist) {
-            embed = {
+            reply = { embeds: [{
                 description: `Queued **${searchResult.tracks.length}** tracks from [${searchResult.tracks[0].playlist.title}](${searchResult.tracks[0].playlist.url})`,
                 color: 0x44b868
-            };
+            }] };
             queue.addTracks(searchResult.tracks);
         } else {
-            embed = {
+            reply = { embeds: [{
                 description: `Queued **[${searchResult.tracks[0].title}](${searchResult.tracks[0].url})**`,
                 color: 0x44b868
-            };
+            }] };
             queue.addTrack(searchResult.tracks[0]);
         }
-        if(slash) message.editReply({ embeds: [embed] });
-        else message.reply({ embeds: [embed] });
+        slash ? message.editReply(reply) : message.reply(reply);
 
         if(justConnected) queue.play();
 	}

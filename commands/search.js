@@ -51,6 +51,7 @@ module.exports = new Command({
 		const collector = await sMessage.createMessageComponentCollector({ filter, time: 30000 });
 
 		collector.on("collect", async (button) => {
+			if(button.member !== message.member) return;
 			await button.deferUpdate();
 			const queue = await client.player.createQueue(message.guild,{ metadata: { channel: message.channel },
 				bufferingTimeout: 1000,

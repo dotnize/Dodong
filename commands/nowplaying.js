@@ -15,10 +15,13 @@ module.exports = new Command({
         }
         const progress = queue.createProgressBar({ timecodes: true, length: 8 });
 
+        const title = ['spotify-custom', 'soundcloud-custom'].includes(queue.current.source) ?
+             `${queue.current.author} - ${queue.current.title}` : `${queue.current.title}`;
+
         return message.reply({
             embeds: [
                 {
-                    description: `**[${queue.current.title}](${queue.current.url})** - ${queue.current.requestedBy}`,
+                    description: `**[${title}](${queue.current.url})** - ${queue.current.requestedBy}`,
                     thumbnail: {
                         url: `${queue.current.thumbnail}`
                     },

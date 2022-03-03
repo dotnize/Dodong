@@ -24,7 +24,9 @@ module.exports = new Command({
             const pageStart = 10 * (page - 1);
             const pageEnd = pageStart + 10;
             const tracks = queue.tracks.slice(pageStart, pageEnd).map((m, i) => {
-                return `**${i + pageStart + 1}**. [${m.title}](${m.url}) ${m.duration} - ${m.requestedBy}`;
+                const title = ['spotify-custom', 'soundcloud-custom'].includes(m.source) ?
+                    `${m.author} - ${m.title}` : `${m.title}`;
+                return `**${i + pageStart + 1}**. [${title}](${m.url}) ${m.duration} - ${m.requestedBy}`;
             });
             if(tracks.length) {
                 const embed = new MessageEmbed();
@@ -35,7 +37,9 @@ module.exports = new Command({
                 }`);
                 if(page%2 === 0) embed.setColor('#b84e44');
                 else embed.setColor('#44b868');
-                if(page === 1) embed.setAuthor({ name: `Now playing: ${queue.current.title}`, iconURL: null, url: `${queue.current.url}` });
+                const title = ['spotify-custom', 'soundcloud-custom'].includes(queue.current.source) ?
+                    `${queue.current.author} - ${queue.current.title}` : `${queue.current.title}`;
+                if(page === 1) embed.setAuthor({ name: `Now playing: ${title}`, iconURL: null, url: `${queue.current.url}` });
                 pages.push(embed);
                 page++;
             }
@@ -45,7 +49,9 @@ module.exports = new Command({
                     const embed = new MessageEmbed();
                     embed.setColor('#44b868');
                     embed.setDescription(`${usedby}No more songs in the queue.`);
-                    embed.setAuthor({ name: `Now playing: ${queue.current.title}`, iconURL: null, url: `${queue.current.url}` });
+                    const title = ['spotify-custom', 'soundcloud-custom'].includes(queue.current.source) ?
+                        `${queue.current.author} - ${queue.current.title}` : `${queue.current.title}`;
+                    embed.setAuthor({ name: `Now playing: ${title}`, iconURL: null, url: `${queue.current.url}` });
                     return _fromButton ? message.channel.send({ embeds: [embed] }) : message.reply({ embeds: [embed] });
                 }
                 if(page === 2) {

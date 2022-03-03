@@ -28,12 +28,13 @@ module.exports = new Event("trackStart", async (player, queue, track) => {
                 .setLabel('Show queue')
                 .setStyle('SECONDARY')
         )
-
+    const title = ['spotify-custom', 'soundcloud-custom'].includes(track.source) ?
+        `${track.author} - ${track.title}` : `${track.title}`;
     queue.metadata.channel.send({
         embeds: [
             {
                 title: `Now playing`,
-                description: `**[${track.title}](${track.url})** - ${track.requestedBy}`,
+                description: `**[${title}](${track.url})** - ${track.requestedBy}`,
                 thumbnail: {
                     url: `${track.thumbnail}`
                 },

@@ -19,7 +19,6 @@ module.exports = new Command({
 		if(queue.current.playlist)
 			playlist = ` ┃ From: [${queue.current.playlist.title}](${queue.current.playlist.url})`;
 
-		console.log(queue.current);
         return message.author.send({ embeds: [{
 			description: `**[${queue.current.title}](${queue.current.url})**\nby ${queue.current.author}\n\n` +
 						`${queue.current.duration}${playlist}`,

@@ -57,11 +57,13 @@ module.exports = new Event("interactionCreate", async (client, interaction) => {
                     queue.setPaused(false);
                     status = "resumed";
                 }
+                const title = ['spotify-custom', 'soundcloud-custom'].includes(queue.current.source) ?
+                    `${queue.current.author} - ${queue.current.title}` : `${queue.current.title}`;
                 queue.npmessage.edit({
                     embeds: [
                         {
                             title: `Now playing`,
-                            description: `**[${queue.current.title}](${queue.current.url})** - ${queue.current.requestedBy}\n\n${status} by ${interaction.user}`,
+                            description: `**[${title}](${queue.current.url})** - ${queue.current.requestedBy}\n\n${status} by ${interaction.user}`,
                             thumbnail: {
                                 url: `${queue.current.thumbnail}`
                             },

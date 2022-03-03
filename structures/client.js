@@ -35,12 +35,15 @@ class Client extends Discord.Client {
 			"EMBED_LINKS"
 		];
 		this.prefix = process.env.PREFIX || config.prefix;
-		this.io = require("socket.io")(process.env.PORT || 3000, { cors: { origin: "*", methods: ["GET", "POST"] }});
-		this.urlModule = require('url'); // Build-in node module
+
+		this.hasWebplayer = (process.env.WEBPLAYER ?? config.webplayer).startsWith("http");
+		if(this.hasWebplayer) {
+			this.io = require("socket.io")(process.env.PORT || 3000, { cors: { origin: "*", methods: ["GET", "POST"] }});
+		}
 	}
 
 	async init(token) {
-		if (token === "BOT TOKEN HERE" || token === "" || !token)
+		if (!token || token === "")
 			return console.error("--- ERROR: Bot token is empty! Make sure to fill this out in config.js");
 
 		config.clientId = process.env.CLIENTID || config.clientId;
@@ -103,34 +106,24 @@ class Client extends Discord.Client {
 
 		// @discord-player/extractor lyrics
 		this.lyrics = Lyrics.init(config.geniusApiToken);
-		if (config.geniusApiToken === "GENIUS.COM CLIENT ACCESS TOKEN HERE" || config.geniusApiToken === "" || !config.geniusApiToken)
+		if (!config.geniusApiToken || config.geniusApiToken === "")
 			console.log("No Genius API token provided. Lyrics feature might not work properly.");
 
 		this.login(token);
 
-		// socket-io events
-		this.io.on('connection', socket => {
-			console.log(`Socket connection detected : ${socket.id}`);
+		if(this.hasWebplayer) {
+			// socket-io events
+			this.io.on('connection', socket => {
+				console.log(`Socket connection detected : ${socket.id}`);
 
-			// socket event handler
-        	fs.readdirSync("./events/socket_events")
-				.filter(file => file.endsWith(".js"))
-				.forEach(file => {
-					const event = require(`../events/socket_events/${file}`);
-					socket.on(event.event, event.run.bind(null, this, socket, this.io));
-				});
-		})
-
-		// Webplayer Check
-		this.hasWebplayer = this.isUrl(process.env.WEBPLAYER) || this.isUrl(config.webplayer);
-
-	}
-	isUrl (str){
-		try{
-			const link = this.urlModule.parse(str);
-			return (link.hostname === null) ? false : true;
-		} catch (err){
-			return false;
+				// socket event handler
+				fs.readdirSync("./events/socket_events")
+					.filter(file => file.endsWith(".js"))
+					.forEach(file => {
+						const event = require(`../events/socket_events/${file}`);
+						socket.on(event.event, event.run.bind(null, this, socket, this.io));
+					});
+			})
 		}
 	}
 }

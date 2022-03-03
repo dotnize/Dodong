@@ -13,8 +13,14 @@
 <br>
 
 A music bot written using [discord.js](https://github.com/discordjs/discord.js) and [discord-player](https://github.com/Androz2091/discord-player)
+- YouTube, Spotify, and SoundCloud
+- support for both slash & legacy commands
+- audio filters
+- lyrics search
+- web-based player controls (optional, [coming soon](https://github.com/JoshCunningHum/Dodong-webplayer))
+- ... and more! ([see all commands](https://github.com/nizeic/Dodong/tree/main/commands))
 
-![Screenshot of the bot in action](https://nize.ph/gallery/dodongexample.png)
+![Screenshot of the bot in action](https://puersa.com/gallery/dodongexample.png)
 
 ## Contribute
 

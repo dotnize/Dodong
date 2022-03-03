@@ -44,7 +44,7 @@ module.exports = new Command({
 				color: 0x44b868
 			});
 		}
-		const row = new MessageActionRow().addComponents(buttons);3
+		const row = new MessageActionRow().addComponents(buttons);
 
 		const msg = slash ? await message.editReply({ embeds: embeds, components: [row] }) : await message.reply({ embeds: embeds, components: [row] });
 		const sMessage = slash ? await message.fetchReply() : msg;
@@ -74,7 +74,6 @@ module.exports = new Command({
 				return collector.stop("messageDelete");
 			}
 
-			searchResult.tracks[parseInt(button.customId.split("_").pop())].requestedBy = button.user;
 			queue.addTrack(searchResult.tracks[parseInt(button.customId.split("_").pop())]);
 			sMessage.edit({
 				embeds: [{

@@ -5,10 +5,9 @@
   <br>
   <p>
     <a href="https://github.com/nizeic/Dodong/commits/main"><img src="https://img.shields.io/github/last-commit/nizeic/Dodong?color=44b868&logo=GitHub&logoColor=white&style=flat-square" alt="last commit"></a> 
-    <a href="https://nize.ph/discord"><img src="https://img.shields.io/discord/706460727573217381?color=44b868&logo=discord&logoColor=white&style=flat-square" alt="discord server"></a>
+    <a href="https://puersa.com/discord"><img src="https://img.shields.io/discord/706460727573217381?color=44b868&logo=discord&logoColor=white&style=flat-square" alt="discord server"></a>
     <a href="https://www.npmjs.com/package/discord.js"><img src="https://img.shields.io/github/package-json/dependency-version/nizeic/Dodong/discord.js?color=44b868&logo=npm&style=flat-square"></a>
     <a href="https://www.npmjs.com/package/discord-player"><img src="https://img.shields.io/github/package-json/dependency-version/nizeic/Dodong/discord-player?color=44b868&logo=npm&style=flat-square"></a>
-    
   </p>
 </div>
 <br>
@@ -16,8 +15,6 @@
 A music bot written using [discord.js](https://github.com/discordjs/discord.js) and [discord-player](https://github.com/Androz2091/discord-player)
 
 ![Screenshot of the bot in action](https://nize.ph/gallery/dodongexample.png)
-
-**NOTE: This project's source code is currently very poorly formatted and documented. Please use at your own risk.**
 
 ## Contribute
 
@@ -47,27 +44,22 @@ npm init -y && npm i --save-dev node@16 && npm config set prefix=$(pwd)/node_mod
    ```
 4. Enter your [bot token](https://discord.com/developers/applications) in `config.js`
    ```js
-   bottoken: "BOT TOKEN HERE",
+   botToken: "BOT TOKEN HERE",
    ```
 5. Run the bot
    ```sh
    npm start
    ```
 
-## Run by Docker
+## Run with Docker
 
-1.Build the Docker image
+1. Build the Docker image
+   ```sh
+   docker build -t dodong .
+   ```
 
-```sh
-docker build -t dodong .
-```
-
-2.Run the Docker image
-
-```sh
-docker run -d -it --name dodong -e BOTTOKEN=<your-bot-token> -e PREFIX=<your-prefix> -e GENIUSAPITOKEN=<genius-api-token> --restart unless-stopped dodong
-```
-
-> BotToken is mandatory.
-
-> Genius API Token is optional.
+2. Run the Docker image
+   ```sh
+   docker run -d -it --name dodong -e BOTTOKEN=<your-bot-token> -e PREFIX=<your-prefix> -e GENIUSAPITOKEN=<genius-api-token> --restart unless-stopped dodong
+   ```
+   `BOTTOKEN` is required.

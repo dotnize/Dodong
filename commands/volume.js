@@ -7,23 +7,25 @@ module.exports = new Command({
     aliases: ["vol"],
     description: "Adjusts the bot volume",
     permission: "SEND_MESSAGES",
-
-    async run(message, args, client) {
+    options: [
+        { description: 'Volume level from 1 to 100', name: 'level', type: 4 }
+    ],
+    async run(message, args, client, slash) {
         const queue = client.player.getQueue(message.guild);
         if (!queue || !queue.playing) {
             const embed = new MessageEmbed();
             embed.setColor('#b84e44');
             embed.setDescription(`There's nothing currently playing in the server.`);
-            return message.reply({ embeds: [embed] });
+            return message.reply({ embeds: [embed], ephemeral: true });
         }
 
         // returns the current volume, instructions for adjusting the volume if theres no args
-        const vol = parseInt(args[1]);
+        const vol = parseInt(args);
         if (!vol) {
             const embed = new MessageEmbed();
             embed.setColor('#44b868');
             embed.setDescription(`The volume is set on 🔊 ${queue.volume} \n*↳ Please enter between **1** and **${maxVolume}** to change the volume.*`);
-            return message.reply({ embeds: [embed] });
+            return message.reply({ embeds: [embed], ephemeral: true });
         }
 
         // checks if the volume has already set on the requested value
@@ -43,6 +45,7 @@ module.exports = new Command({
         }
 
         const success = queue.setVolume(vol);
-        return message.react(success ? `✅` : `❌`)
+        if(success)
+            slash ? message.reply({embeds: [{ description: `✅ Volume set to ${vol}`, color: 0x44b868 }]}) : message.react(`✅`);
     },
 });

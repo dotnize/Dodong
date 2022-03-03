@@ -5,7 +5,7 @@ module.exports = new Command({
     aliases: ['np'],
 	description: "Displays information about the song currently playing",
 	permission: "SEND_MESSAGES",
-	async run(message, args, client) {
+	async run(message, args, client, slash) {
         const queue = client.player.getQueue(message.guild);
         if (!queue || !queue.playing) {
             const embed = new MessageEmbed();
@@ -15,10 +15,13 @@ module.exports = new Command({
         }
         const progress = queue.createProgressBar({ timecodes: true, length: 8 });
 
-        return message.channel.send({
+        const title = ['spotify-custom', 'soundcloud-custom'].includes(queue.current.source) ?
+             `${queue.current.author} - ${queue.current.title}` : `${queue.current.title}`;
+
+        return message.reply({
             embeds: [
                 {
-                    description: `**[${queue.current.title}](${queue.current.url})** - ${queue.current.requestedBy}`,
+                    description: `**[${title}](${queue.current.url})** - ${queue.current.requestedBy}`,
                     thumbnail: {
                         url: `${queue.current.thumbnail}`
                     },

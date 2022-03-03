@@ -8,6 +8,19 @@ module.exports = new Event("interactionCreate", async (client, interaction) => {
 
 	if(!interaction.guild.me.permissionsIn(interaction.channel).has(client.requiredTextPermissions)) return;
 
+    // Slash commands
+    if(interaction.isApplicationCommand() && !interaction.user.bot && interaction.guild) {
+        const command = client.commands.find(cmd => cmd.name.toLowerCase() == interaction.commandName);
+        if (!command) return;
+
+        if (!interaction.member.permissionsIn(interaction.channel).has(command.permission))
+            return interaction.reply("You don't have permission to run this command!");
+
+        const args = interaction.options._hoistedOptions.map(option => option.value);
+    
+        return command.run(interaction, args, client, true);
+    }
+
     // Queue button controls
     if(interaction.componentType === "BUTTON" && interaction.customId.includes("buttoncontrol")) {
         const queue = client.player.getQueue(interaction.guild);
@@ -44,11 +57,13 @@ module.exports = new Event("interactionCreate", async (client, interaction) => {
                     queue.setPaused(false);
                     status = "resumed";
                 }
+                const title = ['spotify-custom', 'soundcloud-custom'].includes(queue.current.source) ?
+                    `${queue.current.author} - ${queue.current.title}` : `${queue.current.title}`;
                 queue.npmessage.edit({
                     embeds: [
                         {
                             title: `Now playing`,
-                            description: `**[${queue.current.title}](${queue.current.url})** - ${queue.current.requestedBy}\n\n${status} by ${interaction.user}`,
+                            description: `**[${title}](${queue.current.url})** - ${queue.current.requestedBy}\n\n${status} by ${interaction.user}`,
                             thumbnail: {
                                 url: `${queue.current.thumbnail}`
                             },
@@ -76,7 +91,7 @@ module.exports = new Event("interactionCreate", async (client, interaction) => {
                 queue.skip();
                 break;
             case "buttoncontrol_queue":
-                Queue.run(interaction, ["queue"], client, true);
+                Queue.run(interaction, ["queue"], client, false, true);
                 await interaction.deferUpdate();
                 break;
         }

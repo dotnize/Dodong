@@ -5,11 +5,11 @@ module.exports = new Command({
 	aliases: [],
 	description: "Shuffles the server queue",
 	permission: "SEND_MESSAGES",
-	async run(message, args, client) {
+	async run(message, args, client, slash) {
         const queue = client.player.getQueue(message.guild);
         if (!queue) return;
         
         await queue.shuffle();
-        message.react('🔀');
+        slash ? message.reply({embeds: [{ description: `🔀 Shuffling the queue.`, color: 0x44b868 }]}) : message.react('🔀');
 	}
 });

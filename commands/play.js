@@ -1,55 +1,39 @@
 const Command = require("../structures/command.js");
-const { QueryType } = require('discord-player');
-const playdl = require("play-dl");
 
 module.exports = new Command({
 	name: "play",
     aliases: ['p'],
 	description: "Plays the song specified",
 	permission: "SEND_MESSAGES",
-	async run(message, args, client) {
+    options: [
+        { description: 'URL or song name', name: 'song', required: true, type: 3 }
+    ],
+	async run(message, args, client, slash) {
         if(!message.member.voice.channelId)
-            return message.reply({ embeds: [{ description: `You are not in a voice channel!`, color: 0xb84e44 }] });
+            return message.reply({ embeds: [{ description: `You are not in a voice channel!`, color: 0xb84e44 }], ephemeral: true });
         if(message.guild.me.voice.channelId && message.member.voice.channelId !== message.guild.me.voice.channelId)
-            return message.reply({ embeds: [{ description: `You are not in my voice channel!`, color: 0xb84e44 }] });
-        if(!args[1]) {
-            const queue = client.player.getQueue(message.guild);
-            if(queue && queue.playing) { // resume
-                const paused = queue.setPaused(false);
-                if(paused) message.react('▶️');
-            }
-            return;
-        }
+            return message.reply({ embeds: [{ description: `You are not in my voice channel!`, color: 0xb84e44 }], ephemeral: true });
+        if(!args[0]) return;
         
         if(!message.guild.me.permissionsIn(message.member.voice.channel).has(client.requiredVoicePermissions)) return;
 
-        let query = args.slice(1).join(" ");
-        const searchResult = await client.player.search(query, { requestedBy: message.author, searchEngine: QueryType.AUTO })
-        if (!searchResult || !searchResult.tracks.length)
-            return message.channel.send({ embeds: [{ description: `No results found!`, color: 0xb84e44 }] });
-
+        if(slash) await message.deferReply();
+        let query = args.join(" "), reply = {};
+        const searchResult = await client.player.search(query, { requestedBy: slash ? message.user : message.author, searchEngine: "dodong" })
+        if (!searchResult || !searchResult.tracks.length) {
+            reply = { embeds: [{ description: `No results found!`, color: 0xb84e44 }], ephemeral: true };
+            slash ? message.editReply(reply) : message.reply(reply);
+            return;
+        }
         const queue = await client.player.createQueue(message.guild,{ metadata: { channel: message.channel },
 
             bufferingTimeout: 1000,
             disableVolume: false, // disabling volume controls can improve performance
             leaveOnEnd: true,
 			leaveOnStop: true,
-			//leaveOnEmpty: true,
+            spotifyBridge: false
+			//leaveOnEmpty: true, // not working for now, discord-player issue
 			//leaveOnEmptyCooldown: 300000,
-
-            async onBeforeCreateStream(track, source, _queue) {
-                let vid;
-                try {
-                    if(track.url.includes("youtube.com"))
-                        vid = (await playdl.stream(track.url, { discordPlayerCompatibility : true })).stream;
-                    else
-                        vid = (await playdl.stream(await playdl.search(`${track.author} ${track.title} lyric`, { limit : 1, source : { youtube : "video" } }).then(x => x[0].url), { discordPlayerCompatibility : true })).stream;
-                } catch {
-                    queue.metadata.channel.send({ embeds: [{ description: `An error occurred while attempting to play [${track.title}](${track.url}).`, color: 0xb84e44 }] });
-                    vid = (await playdl.stream("https://www.youtube.com/watch?v=Wch3gJG2GJ4", { quality: 0, discordPlayerCompatibility : true })).stream; // a 1 second video. if u have a better way to do this, feel free to open a PR/issue :)
-                }
-                return vid;
-            }
         });
         let justConnected;
         try {
@@ -59,9 +43,26 @@ module.exports = new Command({
             }
         } catch {
             client.player.deleteQueue(message.guild);
-            return message.channel.send({ embeds: [{ description: `Could not join your voice channel!`, color: 0xb84e44 }] });
+            reply = { embeds: [{ description: `Could not join your voice channel!`, color: 0xb84e44 }] };
+            slash ? message.editReply(reply) : message.reply(reply);
+            return;
         }
-        await searchResult.playlist ? queue.addTracks(searchResult.tracks) : queue.addTrack(searchResult.tracks[0]);
+        
+        if(searchResult.playlist) {
+            reply = { embeds: [{
+                description: `Queued **${searchResult.tracks.length}** tracks from [${searchResult.tracks[0].playlist.title}](${searchResult.tracks[0].playlist.url})`,
+                color: 0x44b868
+            }] };
+            queue.addTracks(searchResult.tracks);
+        } else {
+            reply = { embeds: [{
+                description: `Queued **[${searchResult.tracks[0].title}](${searchResult.tracks[0].url})**`,
+                color: 0x44b868
+            }] };
+            queue.addTrack(searchResult.tracks[0]);
+        }
+        slash ? message.editReply(reply) : message.reply(reply);
+
         if(justConnected) queue.play();
 	}
 });

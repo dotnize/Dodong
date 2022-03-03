@@ -1,18 +1,16 @@
 const Discord = require("discord.js");
-const Command = require("./command.js");
-const Event = require("./event.js");
 const { Player } = require("discord-player");
-const { musicEvents } = require("./music.js")
 const config = require("../config.js");
 const fs = require("fs");
 const { Lyrics } = require("@discord-player/extractor");
+const { REST } = require('@discordjs/rest');
+const { Routes } = require('discord-api-types/v9');
+const extractor = require("../utils/extractor.js");
+const playdl = require("play-dl");
+
 
 class Client extends Discord.Client {
 	constructor() {
-		config.prefix = process.env.PREFIX || config.prefix;
-		config.bottoken = process.env.BOTTOKEN || config.bottoken;
-		config.geniusapitoken = process.env.GENIUSAPITOKEN || config.geniusapitoken;
-
 		super({
 			intents: [
 				Discord.Intents.FLAGS.GUILDS,
@@ -21,8 +19,9 @@ class Client extends Discord.Client {
 			]
 		});
 
-		this.commands = new Discord.Collection();
+		this.commands = [];
 		this.player = new Player(this);
+		this.player.use("dodong", extractor);
 		this.requiredVoicePermissions = [
 			"VIEW_CHANNEL",
 			"CONNECT",
@@ -35,27 +34,56 @@ class Client extends Discord.Client {
 			"ADD_REACTIONS",
 			"EMBED_LINKS"
 		];
-		this.prefix = config.prefix;
+		this.prefix = process.env.PREFIX || config.prefix;
+
+		this.hasWebplayer = (process.env.WEBPLAYER || config.webplayer).startsWith("http");
+		if(this.hasWebplayer) {
+			this.io = require("socket.io")(process.env.PORT || 3000, { cors: { origin: "*", methods: ["GET", "POST"] }});
+		}
 	}
 
-	init(token) {
-		if (config.bottoken === "BOT TOKEN HERE" || config.bottoken === "" || !config.bottoken)
+	async init(token) {
+		if (!token)
 			return console.error("--- ERROR: Bot token is empty! Make sure to fill this out in config.js");
 
-		// command handler
+		config.clientId = process.env.CLIENTID || config.clientId;
+		config.geniusApiToken = process.env.GENIUSAPITOKEN || config.geniusApiToken;
+
+		playdl.getFreeClientID().then((clientID) => {
+			playdl.setToken({
+				soundcloud : { client_id : clientID }
+			});
+		});
+
+		let count = 0;
+
+		// commands
 		const commandFiles = fs.readdirSync("./commands")
 			.filter(file => file.endsWith(".js"));
 		const commands = commandFiles.map(file => require(`../commands/${file}`));
-		let count = 0;
 		commands.forEach(cmd => {
 			count++;
-			this.commands.set(cmd.name, cmd);
+			this.commands.push(cmd);
 		});
 		console.log(`${count} commands loaded.`);
-
-		// event handler
-		this.removeAllListeners();
 		count = 0;
+
+		// slash commands
+		if(config.clientId && config.clientId !== "") {
+			const slashCommands = commands.map(cmd => ({
+				name: cmd.name,
+				description: cmd.description,
+				options: cmd.options,
+				defaultPermission: true
+			}));
+			const rest = new REST({ version: '9' }).setToken(token);
+			await rest.put(Routes.applicationCommands(config.clientId), { body: slashCommands })
+				.then(() => console.log('Global slash commands registered successfully.'))
+				.catch(console.error);
+		}
+		
+		// client events
+		this.removeAllListeners();
 		fs.readdirSync("./events")
 			.filter(file => file.endsWith(".js"))
 			.forEach(file => {
@@ -63,15 +91,40 @@ class Client extends Discord.Client {
 				const event = require(`../events/${file}`);
 				this.on(event.event, event.run.bind(null, this));
 			});
-		console.log(`${count} events loaded.`);
+		console.log(`${count} client events loaded.`);
+		count = 0;
 
-		// discord-player
-		musicEvents(this.player);
-		this.lyrics = Lyrics.init(config.geniusapitoken);
-		if (config.geniusapitoken === "GENIUS.COM CLIENT ACCESS TOKEN HERE" || config.geniusapitoken === "" || !config.geniusapitoken)
+		// discord-player events
+		fs.readdirSync("./events/player_events")
+			.filter(file => file.endsWith(".js"))
+			.forEach(file => {
+				count++;
+				const event = require(`../events/player_events/${file}`);
+				this.player.on(event.event, event.run.bind(null, this.player))
+			});
+		console.log(`${count} player events loaded.`);
+
+		// @discord-player/extractor lyrics
+		this.lyrics = Lyrics.init(config.geniusApiToken);
+		if (!config.geniusApiToken)
 			console.log("No Genius API token provided. Lyrics feature might not work properly.");
 
 		this.login(token);
+
+		if(this.hasWebplayer) {
+			// socket-io events
+			this.io.on('connection', socket => {
+				console.log(`Socket connection detected : ${socket.id}`);
+
+				// socket event handler
+				fs.readdirSync("./events/socket_events")
+					.filter(file => file.endsWith(".js"))
+					.forEach(file => {
+						const event = require(`../events/socket_events/${file}`);
+						socket.on(event.event, event.run.bind(null, this, socket, this.io));
+					});
+			})
+		}
 	}
 }
 

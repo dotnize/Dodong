@@ -128,6 +128,9 @@ module.exports = {
                 }
                 if (query.startsWith("https") && playdl.yt_validate(query) === "video") {
                     const info = await Youtube.search(query, {limit: 1, type: "video", safeSearch: true});
+                    if(!info || !info.length) 
+                        return resolve({ playlist: null, info: null });
+                    
                     const track = {
                         title: info[0].title,
                         duration: info[0].duration,

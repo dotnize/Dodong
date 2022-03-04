@@ -25,6 +25,11 @@ module.exports = new Command({
             slash ? message.editReply(reply) : message.reply(reply);
             return;
         }     
+		if (searchResult.playlist) {
+			const reply = { embeds: [{ description: `This command does not support playlists.\nUse **${client.prefix}play** instead.`, color: 0xb84e44 }], ephemeral: true };
+            slash ? message.editReply(reply) : message.reply(reply);
+            return;
+		}
 		const buttons = [];
 		const embeds = [];
 		for(let i = 0; i < searchResult.tracks.length; i++) {
@@ -87,8 +92,8 @@ module.exports = new Command({
 		});
 	
 		collector.on("end", (_, reason) => {
-			if(reason !== "messageDelete" && pagedMessage.editable) {
-				row.setComponents(buttons[0].setDisabled(true), buttons[1].setDisabled(true), buttons[2].setDisabled(true), buttons[3].setDisabled(true), buttons[4].setDisabled(true));
+			if(reason !== "messageDelete" && sMessage.editable) {
+				row.setComponents(buttons.map(b => b.setDisabled(true)));
 				sMessage.edit({
 					embeds: embeds,
 					components: [row]

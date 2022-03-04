@@ -123,6 +123,9 @@ module.exports = {
                 }
                 // ---- end spotify ----
 
+                if (query.startsWith("https")) {
+                    query = query.split("&")[0];
+                }
                 if (query.startsWith("https") && playdl.yt_validate(query) === "video") {
                     const info = await Youtube.search(query, {limit: 1, type: "video", safeSearch: true});
                     const track = {

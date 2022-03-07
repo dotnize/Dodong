@@ -81,7 +81,7 @@ module.exports = {
                             duration: spotifyTrack.duration_ms,
                             thumbnail: info.image,
                             async engine() {
-                                return (await playdl.stream(await Youtube.search(`${info.artist} ${info.title} lyric`, {limit: 1, type: "video", safeSearch: true}).then(x => `https://youtu.be/${x[0].id}`), { discordPlayerCompatibility : true })).stream;
+                                return (await playdl.stream(await Youtube.search(`${info.artist} ${info.title} lyric`, {limit: 1, type: "video", safeSearch: true}).then(x => x[0] ? `https://youtu.be/${x[0].id}` : `https://youtu.be/Wch3gJG2GJ4`), { discordPlayerCompatibility : true })).stream;
                             },
                             views: 0,
                             author: info.artist,
@@ -98,7 +98,7 @@ module.exports = {
                                 duration: track.duration_ms,
                                 thumbnail: track.album && track.album.images.length ? track.album.images[0].url : null,
                                 async engine() {
-                                    return (await playdl.stream(await Youtube.search(`${track.artists[0].name} ${track.name} lyric`, {limit: 1, type: "video", safeSearch: true}).then(x => `https://youtu.be/${x[0].id}`), { discordPlayerCompatibility : true })).stream;
+                                    return (await playdl.stream(await Youtube.search(`${track.artists[0].name} ${track.name} lyric`, {limit: 1, type: "video", safeSearch: true}).then(x => x[0] ? `https://youtu.be/${x[0].id}` : `https://youtu.be/Wch3gJG2GJ4`), { discordPlayerCompatibility : true })).stream;
                                 },
                                 views: 0,
                                 author: track.artists[0].name,

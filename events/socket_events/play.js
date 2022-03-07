@@ -4,8 +4,8 @@ module.exports = new Event("play", async (client, socket, io, args) => {
 	// Arguments should be passed in a single object called arguments for "modularity"
 	if(args.guild == undefined) return;
 	
-
 	const guild = client.guilds.cache.get(args.guild);
+    const requestor = guild.members.cache.get(args.requestor);
     const lastQueueChannel = client.player.getQueue(args.guild).metadata.channel;
 
     if(!lastQueueChannel){
@@ -13,7 +13,7 @@ module.exports = new Event("play", async (client, socket, io, args) => {
         return;
     }
 
-    const searchResult = await client.player.search(args.query, { requestedBy: client.user , searchEngine: "dodong" });
+    const searchResult = await client.player.search(args.query, { requestedBy: requestor , searchEngine: "dodong" });
 
     if(!searchResult || !searchResult.tracks.length){
         io.to(socket.id).emit("error", {

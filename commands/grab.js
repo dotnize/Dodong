@@ -11,7 +11,7 @@ module.exports = new Command({
             return message.reply({ embeds: [{ description: `There's nothing currently playing in the server.`, color: 0xb84e44 }], ephemeral: true });
         }
 		if (slash)
-			message.reply({ embeds: [{ description: `Sent a private message!`, color: 0xb84e44 }], ephemeral: true });
+			message.reply({ embeds: [{ description: `Sent a private message!`, color: 0x44b868 }], ephemeral: true });
 		else
 			message.react('📩');
 	

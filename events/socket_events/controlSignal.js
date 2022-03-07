@@ -39,7 +39,10 @@ module.exports = new Event("controlSignal", async (client, socket, io, args) => 
             break;
         case "remove":
             queue.remove(args.trackIndex);
-            socket.emit("forceUpdate", {from: "controlSignal-remove"});
+            socket.emit("forceUpdate", {
+                guild: args.guild,
+                from: "controlSignal-remove"
+            });
             break;
         case "seek":
             await queue.seek(args.prog * 1000);
@@ -50,7 +53,10 @@ module.exports = new Event("controlSignal", async (client, socket, io, args) => 
             break;
         case "shuffle":
             await queue.shuffle();
-            io.to(args.guild).emit("forceUpdate", {from: "controlSignal-shuffle"})
+            io.to(args.guild).emit("forceUpdate", {
+                guild: args.guild,
+                from: "controlSignal-shuffle"
+            })
             break;
         case "volume":
             if(queue.volume === args.volume) return;

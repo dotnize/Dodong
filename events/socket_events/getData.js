@@ -9,7 +9,7 @@ module.exports = new Event("getData", async (client, socket, io, args) => {
     if(!guild){
         io.to(socket.id).emit("error", {
             type: "NO_GUILD",
-            guildID: args.guild
+            guild: args.guild
         });
         return;
     }
@@ -17,6 +17,7 @@ module.exports = new Event("getData", async (client, socket, io, args) => {
 	const queue = client.player.getQueue(guild);
 
     let res = {
+        guild: args.guild,
         guildName: guild.name,
         tracks: [],
         inVoiceChannel: false
@@ -34,7 +35,8 @@ module.exports = new Event("getData", async (client, socket, io, args) => {
                 requestedBy: queue.current.requestedBy.username,
                 duration: queue.current.duration,
                 durationMS: queue.current.durationMS,
-                progress: queue.streamTime
+                progress: queue.streamTime,
+                thumbnail: queue.current.thumbnail
             }
         }
 

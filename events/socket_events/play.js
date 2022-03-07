@@ -16,7 +16,11 @@ module.exports = new Event("play", async (client, socket, io, args) => {
     const searchResult = await client.player.search(args.query, { requestedBy: client.user , searchEngine: "dodong" });
 
     if(!searchResult || !searchResult.tracks.length){
-        io.to(socket.id).emit("error", "No Result Found");
+        io.to(socket.id).emit("error", {
+            id: args.id,
+            guild: args.guild,
+            text: "No search result found"
+        });
     }
 
     const queue = await client.player.createQueue(guild, { metadata: { channel: lastQueueChannel },
@@ -39,7 +43,9 @@ module.exports = new Event("play", async (client, socket, io, args) => {
         }
     } catch {
         client.player.deleteQueue(guild);
-        io.to(socket.id).emit("error", "Can't join the voice channel selected");
+        io.to(socket.id).emit("error", {
+            text: "Can't join selected voice channel"
+        });
         return;
     }
 

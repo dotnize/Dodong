@@ -24,7 +24,10 @@ module.exports = new Event("messageCreate", (client, message) => {
 
 		["disconnect", "loop", "clear", "pause", "play", "remove", "resume", "seek"].forEach( (cn) => {
 			if(cn == command.name){
-				client.io.to(message.guild.id).emit("forceUpdate", {from: "messageCreate-"+command.name});
+				client.io.to(message.guild.id).emit("forceUpdate", { 
+					guild: message.guild.id, 
+					from: "messageCreate-" + command.name
+				});
 			}
 		})
 	});

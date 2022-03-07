@@ -35,7 +35,7 @@ class Client extends Discord.Client {
 			"EMBED_LINKS"
 		];
 		this.prefix = process.env.PREFIX || config.prefix;
-		this.io = require("socket.io")(process.env.PORT || 3000, { cors: { origin: "*", methods: ["GET", "POST"] }});
+		this.io = require("socket.io")(process.env.PORT || 3000, { cors: { origin: config.cors, methods: ["GET", "POST"] }});
 		this.urlModule = require('url'); // Build-in node module
 	}
 

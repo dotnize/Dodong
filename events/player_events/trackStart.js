@@ -46,6 +46,9 @@ module.exports = new Event("trackStart", async (player, queue, track) => {
         queue.npmessage = msg;
     }).then( () => { // Webplayer Auto-Update
         if( player.client.hasWebplayer )
-        player.client.io.to(queue.guild.id).emit("forceUpdate", {from: "music-trackStart"});
+        player.client.io.to(queue.guild.id).emit("forceUpdate", {
+            guild: queue.guild.id,
+            from: "music-trackStart"
+        });
     });
 });

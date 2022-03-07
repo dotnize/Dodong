@@ -5,7 +5,7 @@ const fetch = require('node-fetch');
 
 module.exports = new Event("interactionCreate", async (client, interaction) => {
 
-
+    if(!interaction.inGuild()) return;
 	if(!interaction.guild.me.permissionsIn(interaction.channel).has(client.requiredTextPermissions)) return;
 
     // Slash commands

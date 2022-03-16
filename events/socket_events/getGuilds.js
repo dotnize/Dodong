@@ -5,8 +5,7 @@ module.exports = new Event("getGuilds", async (client, socket, io, args) => {
     // guild IDs only
 
     // We can't do this now, instead we pass guilds as a property of an object with the details on what connection ID between the browser and the backEnd has
-    io.to(socket.id).emit("recGuilds", {
-        id: args.id,
+    socket.emit("recGuilds", {
         guild: guilds
     });
 });

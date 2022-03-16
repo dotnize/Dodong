@@ -43,7 +43,7 @@ module.exports = new Event("play", async (client, socket, io, args) => {
         }
     } catch {
         client.player.deleteQueue(guild);
-        io.to(socket.id).emit("error", {
+        socket.emit("error", {
             text: "Can't join selected voice channel"
         });
         return;

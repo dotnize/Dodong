@@ -53,7 +53,7 @@ module.exports = new Event("controlSignal", async (client, socket, io, args) => 
             break;
         case "shuffle":
             await queue.shuffle();
-            io.to(args.guild).emit("forceUpdate", {
+            socket.emit("forceUpdate", {
                 guild: args.guild,
                 from: "controlSignal-shuffle"
             })

@@ -7,7 +7,7 @@ module.exports = new Event("getData", async (client, socket, io, args) => {
 	const guild = client.guilds.cache.get(args.guild);
 
     if(!guild){
-        io.to(socket.id).emit("error", {
+        socket.emit("error", {
             type: "NO_GUILD",
             guild: args.guild
         });
@@ -54,5 +54,5 @@ module.exports = new Event("getData", async (client, socket, io, args) => {
         }
     }
 
-    io.to(socket.id).emit("recData", res);
+    socket.emit("recData", res);
 });

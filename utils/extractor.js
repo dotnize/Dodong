@@ -101,7 +101,7 @@ module.exports = {
                                     return (await playdl.stream(await Youtube.search(`${track.artists[0].name} ${track.name} lyric`, {limit: 1, type: "video", safeSearch: true}).then(x => x[0] ? `https://youtu.be/${x[0].id}` : `https://youtu.be/Wch3gJG2GJ4`), { discordPlayerCompatibility : true })).stream;
                                 },
                                 views: 0,
-                                author: track.artists[0].name,
+                                author: track.artists ? track.artists[0].name : null,
                                 description: "",
                                 url: track.external_urls.spotify,
                                 source: "spotify-custom"
@@ -199,8 +199,8 @@ module.exports = {
                 }
 
                 return resolve({ playlist: null, info: null });
-            } catch {
-                console.log(`Extractor: An error occurred while attempting to resolve ${query}`);
+            } catch(error) {
+                console.log(`Extractor: An error occurred while attempting to resolve ${query} :\n${error}`);
                 return resolve({ playlist: null, info: null });
             }
         });

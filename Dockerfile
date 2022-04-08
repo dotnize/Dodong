@@ -1,8 +1,8 @@
 FROM node:16-alpine AS BUILD
 WORKDIR /build
 COPY . /build
+RUN rm -r Procfile LICENSE .dockerignore .github/ readme.md
 RUN npm install --production
-RUN rm -r Procfile LICENSE .dockerignore .github/
 
 FROM node:16-alpine
 LABEL MAINTAINER="Nizeic" DESCRIPTION="A music bot written using discord.js and discord-player"

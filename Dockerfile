@@ -1,13 +1,14 @@
-FROM node:16.11.0
+FROM node:16-alpine AS BUILD
+WORKDIR /build
+COPY . /build
+RUN rm -r Procfile LICENSE .dockerignore .github/ readme.md
+RUN npm install --production
 
-WORKDIR /app
-
-COPY . .
-
-ENV PREFIX=!
-ENV BOTTOKEN=null
-ENV GENIUSAPITOKEN=null
-
-RUN npm install
-
-CMD ["npm" , "start"]
+FROM node:16-alpine
+LABEL MAINTAINER="Nizeic" DESCRIPTION="A music bot written using discord.js and discord-player"
+WORKDIR /bot
+COPY --from=BUILD /usr/lib/ /usr/lib/
+COPY --from=BUILD /lib/ /lib/
+COPY --from=BUILD /build/ /bot
+ENV NODE_ENV production
+CMD ["node", "./index.js"]

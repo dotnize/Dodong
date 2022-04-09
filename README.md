@@ -58,14 +58,17 @@ npm init -y && npm i --save-dev node@16 && npm config set prefix=$(pwd)/node_mod
    ```
 
 ## Run with Docker
+4. Enter your [bot token](https://discord.com/developers/applications) in `config.js`
+   ```js
+   botToken: "BOT TOKEN HERE",
+   ```
 
-1. Build the Docker image
+2. Build the Docker image
    ```sh
    docker build -t dodong .
    ```
 
-2. Run the Docker image
+3. Run the Docker image
    ```sh
-   docker run -d -it --name dodong -e BOTTOKEN=<your-bot-token> -e PREFIX=<your-prefix> -e GENIUSAPITOKEN=<genius-api-token> --restart unless-stopped dodong
+   docker run -d -it --name dodong--restart unless-stopped dodong
    ```
-   `BOTTOKEN` is required.

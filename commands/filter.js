@@ -20,11 +20,9 @@ module.exports = new Command({
     const queue = client.player.getQueue(message.guild);
     const embed = new MessageEmbed();
     if(!queue || !queue.playing)
-      return message.reply({embeds: [{ description: `Nothing is currently playing in this server.`, color: 0xb84e44 }], ephemeral: true });
-    if(!args) {
-        if(queue && queue.playing)
-          display_status(queue, embed, message);
-        return;
+        return message.reply({embeds: [{ description: `Nothing is currently playing in this server.`, color: 0xb84e44 }], ephemeral: true });
+    if(!args || !args.length) {
+        return display_status(queue, embed, message);
     }
     const options = slash ? args[0].split(" ") : args;
 

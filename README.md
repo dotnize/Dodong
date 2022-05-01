@@ -58,7 +58,7 @@ npm init -y && npm i --save-dev node@16 && npm config set prefix=$(pwd)/node_mod
    ```
 
 ## Run with Docker
-4. Enter your [bot token](https://discord.com/developers/applications) in `config.js`
+1. Enter your [bot token](https://discord.com/developers/applications) in `config.js`
    ```js
    botToken: "BOT TOKEN HERE",
    ```
@@ -70,5 +70,5 @@ npm init -y && npm i --save-dev node@16 && npm config set prefix=$(pwd)/node_mod
 
 3. Run the Docker image
    ```sh
-   docker run -d -it --name dodong--restart unless-stopped dodong
+   docker run -d -it --name dodong --restart unless-stopped dodong
    ```

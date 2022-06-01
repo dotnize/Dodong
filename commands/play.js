@@ -10,9 +10,9 @@ module.exports = new Command({
     ],
 	async run(message, args, client, slash) {
         if(!message.member.voice.channelId)
-            return message.reply({ embeds: [{ description: `You are not in a voice channel!`, color: 0xb84e44 }], ephemeral: true });
+            return message.reply({ embeds: [{ description: `You are not in a voice channel!`, color: 0xb84e44 }], ephemeral: true, failIfNotExists: false });
         if(message.guild.me.voice.channelId && message.member.voice.channelId !== message.guild.me.voice.channelId)
-            return message.reply({ embeds: [{ description: `You are not in my voice channel!`, color: 0xb84e44 }], ephemeral: true });
+            return message.reply({ embeds: [{ description: `You are not in my voice channel!`, color: 0xb84e44 }], ephemeral: true, failIfNotExists: false });
         if(!args[0]) return;
         
         if(!message.guild.me.permissionsIn(message.member.voice.channel).has(client.requiredVoicePermissions)) return;
@@ -21,7 +21,7 @@ module.exports = new Command({
         let query = args.join(" "), reply = {};
         const searchResult = await client.player.search(query, { requestedBy: slash ? message.user : message.author, searchEngine: "dodong" })
         if (!searchResult || !searchResult.tracks.length) {
-            reply = { embeds: [{ description: `No results found!`, color: 0xb84e44 }], ephemeral: true };
+            reply = { embeds: [{ description: `No results found!`, color: 0xb84e44 }], ephemeral: true, failIfNotExists: false };
             slash ? message.editReply(reply) : message.reply(reply);
             return;
         }
@@ -43,7 +43,7 @@ module.exports = new Command({
             }
         } catch {
             client.player.deleteQueue(message.guild);
-            reply = { embeds: [{ description: `Could not join your voice channel!`, color: 0xb84e44 }] };
+            reply = { embeds: [{ description: `Could not join your voice channel!`, color: 0xb84e44 }], failIfNotExists: false };
             slash ? message.editReply(reply) : message.reply(reply);
             return;
         }
@@ -52,13 +52,13 @@ module.exports = new Command({
             reply = { embeds: [{
                 description: `Queued **${searchResult.tracks.length}** tracks from [${searchResult.tracks[0].playlist.title}](${searchResult.tracks[0].playlist.url})`,
                 color: 0x44b868
-            }] };
+            }], failIfNotExists: false };
             queue.addTracks(searchResult.tracks);
         } else {
             reply = { embeds: [{
                 description: `Queued **[${searchResult.tracks[0].title}](${searchResult.tracks[0].url})**`,
                 color: 0x44b868
-            }] };
+            }], failIfNotExists: false };
             queue.addTrack(searchResult.tracks[0]);
         }
         slash ? message.editReply(reply) : message.reply(reply);

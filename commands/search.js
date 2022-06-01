@@ -10,9 +10,9 @@ module.exports = new Command({
     ],
 	async run(message, args, client, slash) {
         if(!message.member.voice.channelId)
-            return message.reply({ embeds: [{ description: `You are not in a voice channel!`, color: 0xb84e44 }], ephemeral: true });
+            return message.reply({ embeds: [{ description: `You are not in a voice channel!`, color: 0xb84e44 }], ephemeral: true, failIfNotExists: false });
         if(message.guild.me.voice.channelId && message.member.voice.channelId !== message.guild.me.voice.channelId)
-            return message.reply({ embeds: [{ description: `You are not in my voice channel!`, color: 0xb84e44 }], ephemeral: true });
+            return message.reply({ embeds: [{ description: `You are not in my voice channel!`, color: 0xb84e44 }], ephemeral: true, failIfNotExists: false });
         if(!args[0]) return;
         
         if(!message.guild.me.permissionsIn(message.member.voice.channel).has(client.requiredVoicePermissions)) return;
@@ -21,12 +21,12 @@ module.exports = new Command({
         let query = args.join(" ");
         const searchResult = await client.player.search(query, { requestedBy: slash ? message.user : message.author, searchEngine: "dodong" })
         if (!searchResult || !searchResult.tracks.length) {
-            const reply = { embeds: [{ description: `No results found!`, color: 0xb84e44 }], ephemeral: true };
+            const reply = { embeds: [{ description: `No results found!`, color: 0xb84e44 }], ephemeral: true, failIfNotExists: false };
             slash ? message.editReply(reply) : message.reply(reply);
             return;
         }     
 		if (searchResult.playlist) {
-			const reply = { embeds: [{ description: `This command does not support playlists.\nUse **${client.prefix}play** instead.`, color: 0xb84e44 }], ephemeral: true };
+			const reply = { embeds: [{ description: `This command does not support playlists.\nUse **${client.prefix}play** instead.`, color: 0xb84e44 }], ephemeral: true, failIfNotExists: false };
             slash ? message.editReply(reply) : message.reply(reply);
             return;
 		}
@@ -51,7 +51,7 @@ module.exports = new Command({
 		}
 		const row = new MessageActionRow().addComponents(buttons);
 
-		const msg = slash ? await message.editReply({ embeds: embeds, components: [row] }) : await message.reply({ embeds: embeds, components: [row] });
+		const msg = slash ? await message.editReply({ embeds: embeds, components: [row] }) : await message.reply({ embeds: embeds, components: [row], failIfNotExists: false });
 		const sMessage = slash ? await message.fetchReply() : msg;
 
 		const filter = (button) => button.customId.startsWith('search_');

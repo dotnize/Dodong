@@ -14,13 +14,13 @@ module.exports = new Command({
   async run (message, args, client, slash) {
 
     if(!message.member.voice.channelId)
-        return message.reply({ embeds: [{ description: `You are not in a voice channel!`, color: 0xb84e44 }], ephemeral: true });
+        return message.reply({ embeds: [{ description: `You are not in a voice channel!`, color: 0xb84e44 }], ephemeral: true, failIfNotExists: false });
     if(message.guild.me.voice.channelId && message.member.voice.channelId !== message.guild.me.voice.channelId)
-        return message.reply({ embeds: [{ description: `You are not in my voice channel!`, color: 0xb84e44 }], ephemeral: true });
+        return message.reply({ embeds: [{ description: `You are not in my voice channel!`, color: 0xb84e44 }], ephemeral: true, failIfNotExists: false });
     const queue = client.player.getQueue(message.guild);
     const embed = new MessageEmbed();
     if(!queue || !queue.playing)
-        return message.reply({embeds: [{ description: `Nothing is currently playing in this server.`, color: 0xb84e44 }], ephemeral: true });
+        return message.reply({embeds: [{ description: `Nothing is currently playing in this server.`, color: 0xb84e44 }], ephemeral: true, failIfNotExists: false });
     if(!args || !args.length) {
         return display_status(queue, embed, message);
     }
@@ -82,7 +82,7 @@ module.exports = new Command({
     }
     filterType = filterType.filter(s => s !== "");
     embed.setDescription(`${reply}Adding Filters: **${filterType.join(", ")}**`);
-    message.reply({ embeds: [embed] });
+    message.reply({ embeds: [embed], failIfNotExists: false });
     queue.setFilters(filter);
     return;
   }
@@ -92,7 +92,7 @@ const display_help = (queue, embed, message) => {
   embed.setDescription(`**Available Parameters:** off, status, help`);
   embed.addField('Filters:', 'bassboost_low\nvibrato\nbassboost\nreverse\nbassboost_high\ntreble\n8D\nnormalizer\nvaporwave\nnormalizer2\nnightcore\nsurrounding\nphaser\npulsator\ntremolo\nsubboost', true);
   embed.addField('\u200B', 'kakaoke\nexpander\nflanger\nsoftlimiter\nhaas\nchorus\nmcompand\nchorus2d\nmono\nchorus3d\nmstlr\nfadein\nmstrr\ndim\ncompressor\nearrape', true);
-  message.reply({ embeds: [embed] });
+  message.reply({ embeds: [embed], failIfNotExists: false });
   return;
 }
 
@@ -107,7 +107,7 @@ const display_status = async (queue, embed, message) => {
     ${enabledFilters.join("\n")}`);
   }
 
-  return message.reply({ embeds: [embed] });
+  return message.reply({ embeds: [embed], failIfNotExists: false });
 }
 
 const filters_off = async (queue, embed, message) => {
@@ -116,14 +116,14 @@ const filters_off = async (queue, embed, message) => {
 
   if(enabledFilters.length == 0){
     embed.setDescription(`There are no filters enabled.`);
-    message.reply({ embeds: [embed], ephemeral: true });
+    message.reply({ embeds: [embed], ephemeral: true, failIfNotExists: false });
     return;
   }
   for(let i of enabledFilters){
     filter[`${i}`] = false;
   }
   embed.setDescription(`Disabled all filters.`);
-  message.reply({ embeds: [embed] });
+  message.reply({ embeds: [embed], failIfNotExists: false });
   queue.setFilters(filter);
   return;
 }

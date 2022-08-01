@@ -73,6 +73,10 @@ module.exports = new Command({
 					{
 						label: 'Putt Party',
 						value: '945737671223947305'
+					},
+					{
+						label: 'Bobble League',
+						value: '947957217959759964'
 					}
 				]),
 		);

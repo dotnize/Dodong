@@ -15,20 +15,19 @@
   "author": "nizeic",
   "dependencies": {
     "@discord-player/extractor": "^3.0.2",
-    "@discordjs/opus": "^0.7.0",
-    "@discordjs/rest": "^0.3.0",
+    "@discordjs/opus": "^0.8.0",
+    "@discordjs/rest": "^1.0.1",
     "discord-player": "^5.2.2",
-    "discord.js": "^13.7.0",
-    "ffmpeg-static": "^4.4.1",
-    "play-dl": "^1.9.5",
-    "socket.io": "^4.4.1"
+    "discord.js": "^13.9.2",
+    "ffmpeg-static": "^5.0.2",
+    "play-dl": "^1.9.5"
   },
   "scripts": {
     "start": "node index.js",
     "test": "npm start"
   },
   "engines": {
-    "node": "16.x"
+    "node": "18.x"
   },
   "repository": {
     "type": "git",

@@ -1,6 +1,6 @@
 <div align="center">
   <p>
-    <img src="https://nize.ph/gallery/dodongmedium.png" width="500" alt="Dodong" /></a>
+    <img src="https://puersa.com/gallery/dodongmedium.png" width="500" alt="Dodong" /></a>
   </p>
   <br>
   <p>

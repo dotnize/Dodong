@@ -24,7 +24,7 @@ module.exports = new Event("interactionCreate", async (client, interaction) => {
     // Queue button controls
     if (interaction.componentType === ComponentType.Button && interaction.customId.includes("buttoncontrol")) {
         const queue = client.player.getQueue(interaction.guild);
-        if(!queue || !queue.playing || !interaction.member.voice.channelId || (interaction.guild.me.voice.channelId && interaction.member.voice.channelId !== interaction.guild.me.voice.channelId))
+        if(!queue || !queue.playing || !interaction.member.voice.channelId || (interaction.guild.members.me.voice.channelId && interaction.member.voice.channelId !== interaction.guild.members.me.voice.channelId))
             return;
         const _isPaused = queue.connection.paused;
         const embed = new EmbedBuilder();

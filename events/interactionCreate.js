@@ -1,6 +1,6 @@
 const Event = require("../structures/event.js");
 const Queue = require("../commands/queue.js");
-const { ActionRowBuilder, ButtonBuilder, EmbedBuilder, InteractionType, ButtonStyle } = require('discord.js');
+const { ActionRowBuilder, ButtonBuilder, EmbedBuilder, InteractionType, ButtonStyle, ComponentType } = require('discord.js');
 const fetch = require('node-fetch');
 
 module.exports = new Event("interactionCreate", async (client, interaction) => {
@@ -22,7 +22,7 @@ module.exports = new Event("interactionCreate", async (client, interaction) => {
     }
 
     // Queue button controls
-    if(interaction.componentType === "BUTTON" && interaction.customId.includes("buttoncontrol")) {
+    if (interaction.componentType === ComponentType.Button && interaction.customId.includes("buttoncontrol")) {
         const queue = client.player.getQueue(interaction.guild);
         if(!queue || !queue.playing || !interaction.member.voice.channelId || (interaction.guild.me.voice.channelId && interaction.member.voice.channelId !== interaction.guild.me.voice.channelId))
             return;
@@ -97,7 +97,7 @@ module.exports = new Event("interactionCreate", async (client, interaction) => {
         }
     }
     // Discord Together/Activities
-    if (interaction.isSelectMenu() && interaction.customId === "together") {
+    if (interaction.componentType === ComponentType.SelectMenu && interaction.customId === "together") {
         if(interaction.member.voice.channel) {
             try {
                 await fetch(`https://discord.com/api/v8/channels/${interaction.member.voice.channel.id}/invites`, {

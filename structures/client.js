@@ -1,4 +1,4 @@
-const Discord = require("discord.js");
+const { Client, GatewayIntentBits } = require("discord.js");
 const { Player } = require("discord-player");
 const config = require("../config.js");
 const fs = require("fs");
@@ -9,15 +9,16 @@ const extractor = require("../utils/extractor.js");
 const playdl = require("play-dl");
 
 
-class Client extends Discord.Client {
+class Bot extends Client {
 	constructor() {
 		super({
 			intents: [
-				Discord.Intents.FLAGS.GUILDS,
-				Discord.Intents.FLAGS.GUILD_MESSAGES,
-				Discord.Intents.FLAGS.GUILD_VOICE_STATES,
-                                Discord.Intents.FLAGS.GUILD_INVITES,
-                                Discord.Intents.FLAGS.GUILD_MESSAGE_REACTIONS
+				GatewayIntentBits.Guilds,
+				GatewayIntentBits.GuildMessages,
+				GatewayIntentBits.GuildVoiceStates,
+                GatewayIntentBits.GuildInvites,
+                GatewayIntentBits.GuildMessageReactions,
+				GatewayIntentBits.MessageContent
 			]
 		});
 
@@ -83,6 +84,8 @@ class Client extends Discord.Client {
 				.then(() => console.log('Global slash commands registered successfully.'))
 				.catch(console.error);
 		}
+
+		this.messageCreate
 		
 		// client events
 		this.removeAllListeners();
@@ -130,4 +133,4 @@ class Client extends Discord.Client {
 	}
 }
 
-module.exports = Client;
+module.exports = Bot;

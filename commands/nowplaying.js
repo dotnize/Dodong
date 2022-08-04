@@ -1,5 +1,5 @@
 const Command = require("../structures/command.js");
-const { MessageEmbed } = require('discord.js');
+const { EmbedBuilder } = require('discord.js');
 module.exports = new Command({
 	name: "nowplaying",
     aliases: ['np'],
@@ -8,7 +8,7 @@ module.exports = new Command({
 	async run(message, args, client, slash) {
         const queue = client.player.getQueue(message.guild);
         if (!queue || !queue.playing) {
-            const embed = new MessageEmbed();
+            const embed = new EmbedBuilder();
             embed.setColor('#b84e44');
             embed.setDescription(`There's nothing currently playing in the server.`);
             return message.reply({ embeds: [embed] });

@@ -1,6 +1,6 @@
 const Command = require("../structures/command.js");
 const { QueueRepeatMode } = require('discord-player');
-const { MessageEmbed } = require('discord.js');
+const { EmbedBuilder } = require('discord.js');
 module.exports = new Command({
 	name: "loop",
     aliases: ['repeat'],
@@ -43,7 +43,7 @@ module.exports = new Command({
             slash ? message.reply({embeds: [{ description: `▶️ Autoplay has been enabled.`, color: 0x44b868}] }) : message.react("▶️");
         }
         else {
-            const embed = new MessageEmbed()
+            const embed = new EmbedBuilder()
             embed.setColor('#44b868');
             let mode;
             if(await queue.repeatMode === QueueRepeatMode.OFF) mode = "`Off`";

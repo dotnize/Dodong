@@ -1,5 +1,5 @@
 const Command = require("../structures/command.js");
-const { MessageEmbed } = require('discord.js');
+const { EmbedBuilder } = require('discord.js');
 const generatePages = require('../utils/embedPages.js');
 module.exports = new Command({
 	name: "help",
@@ -23,7 +23,7 @@ module.exports = new Command({
 				return commandInfo;
 			});
             if(commands.length) {
-				const embed = new MessageEmbed();
+				const embed = new EmbedBuilder();
 				embed.setAuthor({ name: `Commands` });
                 embed.setDescription(`${commands.join('\n')}`);
                 embed.setColor(page%2 ? '#44b868' : '#b84e44');

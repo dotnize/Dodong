@@ -1,5 +1,5 @@
 const Command = require("../structures/command.js");
-const {MessageEmbed} = require('discord.js');
+const {EmbedBuilder} = require('discord.js');
 const config = require("../config");
 
 module.exports = new Command({
@@ -8,7 +8,7 @@ module.exports = new Command({
         description: "Displays associated links",
         permission: "SEND_MESSAGES",
         async run(message, args, client, slash) {
-                const embed = new MessageEmbed();
+                const embed = new EmbedBuilder();
                 embed.setColor('#44b868');
                 embed.setDescription(`**Links:**\n
                 Want to contribute?

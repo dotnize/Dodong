@@ -1,5 +1,5 @@
 const Command = require("../structures/command.js");
-const { MessageEmbed }  = require('discord.js');
+const { EmbedBuilder }  = require('discord.js');
 const generatePages = require('../utils/embedPages.js');
 
 module.exports = new Command({
@@ -11,7 +11,7 @@ module.exports = new Command({
         const queue = client.player.getQueue(message.guild);
         if (!queue || !queue.current) {
             if(_fromButton) return;
-            const embed = new MessageEmbed();
+            const embed = new EmbedBuilder();
             embed.setTitle('Server Queue');
             embed.setColor('#b84e44');
             embed.setDescription(`No songs in the queue.`);
@@ -29,7 +29,7 @@ module.exports = new Command({
                 return `**${i + pageStart + 1}**. [${title}](${m.url}) ${m.duration} - ${m.requestedBy}`;
             });
             if(tracks.length) {
-                const embed = new MessageEmbed();
+                const embed = new EmbedBuilder();
                 embed.setDescription(`${usedby}${tracks.join('\n')}${
                     queue.tracks.length > pageEnd
                         ? `\n... ${queue.tracks.length - pageEnd} more track(s)`
@@ -46,7 +46,7 @@ module.exports = new Command({
             else  {
                 emptypage = true;
                 if(page === 1) {
-                    const embed = new MessageEmbed();
+                    const embed = new EmbedBuilder();
                     embed.setColor('#44b868');
                     embed.setDescription(`${usedby}No more songs in the queue.`);
                     const title = ['spotify-custom', 'soundcloud-custom'].includes(queue.current.source) ?

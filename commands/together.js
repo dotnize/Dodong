@@ -1,5 +1,5 @@
 const Command = require("../structures/command.js");
-const { MessageActionRow, MessageSelectMenu } = require('discord.js');
+const { ActionRowBuilder, SelectMenuBuilder } = require('discord.js');
 
 module.exports = new Command({
 	name: "together",
@@ -10,9 +10,9 @@ module.exports = new Command({
         if(!message.member.voice.channel)
 			return message.reply({ embeds: [{ description: `You must be in a voice channel.`, color: 0xb84e44 }], ephemeral: true });
 
-		const row = new MessageActionRow()
+		const row = new ActionRowBuilder()
 		.addComponents(
-			new MessageSelectMenu()
+			new SelectMenuBuilder()
 				.setCustomId('together')
 				.setPlaceholder('Choose an activity')
 				.setMinValues(1)

@@ -1,32 +1,32 @@
 const Event = require("../../structures/event.js");
-const { MessageActionRow, MessageButton } = require('discord.js');
+const { ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
 
 module.exports = new Event("trackStart", async (player, queue, track) => {
-    if(!queue.guild.me.permissionsIn(queue.metadata.channel).has(player.client.requiredTextPermissions)) {
+    if(!queue.guild.members.me.permissionsIn(queue.metadata.channel).has(player.client.requiredTextPermissions)) {
         console.log(`(${queue.guild.name}) destroying queue due to missing text channel permissions`);
         return queue.destroy();
     }
     if(queue.npmessage && queue.npmessage.editable) {
         queue.npmessage.delete().catch(error=> {});
     }
-    let row = new MessageActionRow()
+    let row = new ActionRowBuilder()
         .addComponents(
-            new MessageButton()
+            new ButtonBuilder()
                 .setCustomId('buttoncontrol_play')
                 .setLabel('Pause')
-                .setStyle('SUCCESS'),
-            new MessageButton()
+                .setStyle(ButtonStyle.Success),
+            new ButtonBuilder()
                 .setCustomId('buttoncontrol_skip')
                 .setLabel('Skip')
-                .setStyle('PRIMARY'),
-            new MessageButton()
+                .setStyle(ButtonStyle.Primary),
+            new ButtonBuilder()
                 .setCustomId('buttoncontrol_disconnect')
                 .setLabel('Disconnect')
-                .setStyle('DANGER'),
-            new MessageButton()
+                .setStyle(ButtonStyle.Danger),
+            new ButtonBuilder()
                 .setCustomId('buttoncontrol_queue')
                 .setLabel('Show queue')
-                .setStyle('SECONDARY')
+                .setStyle(ButtonStyle.Secondary)
         )
     const title = ['spotify-custom', 'soundcloud-custom'].includes(track.source) ?
         `${track.author} - ${track.title}` : `${track.title}`;

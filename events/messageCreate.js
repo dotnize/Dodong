@@ -6,7 +6,7 @@ module.exports = new Event("messageCreate", (client, message) => {
 
 	if (!message.content.startsWith(client.prefix)) return;
 
-	if(!message.guild.me.permissionsIn(message.channel).has(client.requiredTextPermissions)) return;
+	if(!message.guild.members.me.permissionsIn(message.channel).has(client.requiredTextPermissions)) return;
 
 	const args = message.content.substring(client.prefix.length).split(/ +/);
 

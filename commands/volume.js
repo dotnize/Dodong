@@ -1,5 +1,5 @@
 const Command = require("../structures/command.js");
-const { MessageEmbed } = require('discord.js');
+const { EmbedBuilder } = require('discord.js');
 const maxVolume = 100;
 
 module.exports = new Command({
@@ -13,7 +13,7 @@ module.exports = new Command({
     async run(message, args, client, slash) {
         const queue = client.player.getQueue(message.guild);
         if (!queue || !queue.playing) {
-            const embed = new MessageEmbed();
+            const embed = new EmbedBuilder();
             embed.setColor('#b84e44');
             embed.setDescription(`There's nothing currently playing in the server.`);
             return message.reply({ embeds: [embed], ephemeral: true });
@@ -22,7 +22,7 @@ module.exports = new Command({
         // returns the current volume, instructions for adjusting the volume if theres no args
         const vol = parseInt(args);
         if (!vol) {
-            const embed = new MessageEmbed();
+            const embed = new EmbedBuilder();
             embed.setColor('#44b868');
             embed.setDescription(`The volume is set on 🔊 ${queue.volume} \n*↳ Please enter between **1** and **${maxVolume}** to change the volume.*`);
             return message.reply({ embeds: [embed], ephemeral: true });
@@ -30,7 +30,7 @@ module.exports = new Command({
 
         // checks if the volume has already set on the requested value
         if (queue.volume === vol) {
-            const embed = new MessageEmbed();
+            const embed = new EmbedBuilder();
             embed.setColor('#b84e44');
             embed.setDescription(`The volume you want to change is the same as the current one. \n*↳ Please try again with a different number.*`);
             return message.reply({ embeds: [embed] });
@@ -38,7 +38,7 @@ module.exports = new Command({
 
         // checks the requested value is valid
         if (vol < 0 || vol > maxVolume) {
-            const embed = new MessageEmbed();
+            const embed = new EmbedBuilder();
             embed.setColor('#b84e44');
             embed.setDescription(`The specified number is not valid. \n*↳ Please enter between **1** and **${maxVolume}** to change the volume.*`);
             return message.reply({ embeds: [embed] });

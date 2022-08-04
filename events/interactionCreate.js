@@ -1,15 +1,15 @@
 const Event = require("../structures/event.js");
 const Queue = require("../commands/queue.js");
-const {MessageActionRow, MessageButton, MessageEmbed} = require('discord.js');
+const { ActionRowBuilder, ButtonBuilder, EmbedBuilder, InteractionType, ButtonStyle } = require('discord.js');
 const fetch = require('node-fetch');
 
 module.exports = new Event("interactionCreate", async (client, interaction) => {
 
     if(!interaction.inGuild()) return;
-	if(!interaction.guild.me.permissionsIn(interaction.channel).has(client.requiredTextPermissions)) return;
+	if(!interaction.guild.members.me.permissionsIn(interaction.channel).has(client.requiredTextPermissions)) return;
 
     // Slash commands
-    if(interaction.isApplicationCommand() && !interaction.user.bot && interaction.guild) {
+    if(interaction.type === InteractionType.ApplicationCommand && !interaction.user.bot && interaction.guild) {
         const command = client.commands.find(cmd => cmd.name.toLowerCase() == interaction.commandName);
         if (!command) return;
 
@@ -27,27 +27,27 @@ module.exports = new Event("interactionCreate", async (client, interaction) => {
         if(!queue || !queue.playing || !interaction.member.voice.channelId || (interaction.guild.me.voice.channelId && interaction.member.voice.channelId !== interaction.guild.me.voice.channelId))
             return;
         const _isPaused = queue.connection.paused;
-        const embed = new MessageEmbed();
+        const embed = new EmbedBuilder();
         switch(interaction.customId){
             case "buttoncontrol_play":
-                let row = new MessageActionRow()
+                let row = new ActionRowBuilder()
                 .addComponents(
-                    new MessageButton()
+                    new ButtonBuilder()
                         .setCustomId('buttoncontrol_play')
                         .setLabel(_isPaused ? 'Pause' : 'Resume')
-                        .setStyle('SUCCESS'),
-                    new MessageButton()
+                        .setStyle(ButtonStyle.Success),
+                    new ButtonBuilder()
                         .setCustomId('buttoncontrol_skip')
                         .setLabel('Skip')
-                        .setStyle('PRIMARY'),
-                    new MessageButton()
+                        .setStyle(ButtonStyle.Primary),
+                    new ButtonBuilder()
                         .setCustomId('buttoncontrol_disconnect')
                         .setLabel('Disconnect')
-                        .setStyle('DANGER'),
-                    new MessageButton()
+                        .setStyle(ButtonStyle.Danger),
+                    new ButtonBuilder()
                         .setCustomId('buttoncontrol_queue')
                         .setLabel('Show queue')
-                        .setStyle('SECONDARY')
+                        .setStyle(ButtonStyle.Secondary)
                 )
                 let status;
                 if(!_isPaused){

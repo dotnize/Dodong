@@ -84,8 +84,6 @@ class Bot extends Client {
 				.then(() => console.log('Global slash commands registered successfully.'))
 				.catch(console.error);
 		}
-
-		this.messageCreate
 		
 		// client events
 		this.removeAllListeners();

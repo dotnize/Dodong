@@ -1,5 +1,6 @@
 const playdl = require("play-dl");
-const { getData, getPreview, getTracks } = require('spotify-url-info');
+const fetch = require("node-fetch")
+const { getData, getPreview, getTracks } = require('spotify-url-info')(fetch);
 const Youtube = require("youtube-sr").default;
 
 /*

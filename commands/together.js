@@ -27,20 +27,8 @@ module.exports = new Command({
 						value: '755827207812677713'
 					},
 					{
-						label: 'Betrayal.io',
-						value: '773336526917861400'
-					},
-					{
-						label: 'Fishington.io',
-						value: '814288819477020702'
-					},
-					{
 						label: 'Chess In The Park',
 						value: '832012774040141894'
-					},
-					{
-						label: 'Doodle Crew',
-						value: '878067389634314250'
 					},
 					{
 						label: 'Sketch Heads',
@@ -77,6 +65,14 @@ module.exports = new Command({
 					{
 						label: 'Bobble League',
 						value: '947957217959759964'
+					},
+					{
+						label: 'Ask Away',
+						value: '976052223358406656'
+					},
+					{
+						label: 'Know What I Meme',
+						value: '950505761862189096'
 					}
 				]),
 		);

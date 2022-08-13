@@ -39,7 +39,7 @@ npm init -y && npm i --save-dev node@16 && npm config set prefix=$(pwd)/node_mod
 
 ## Manual installation
 
-1. Install [Node.js v16](https://nodejs.org/en/download)
+1. Install [Node.js](https://nodejs.org/en/download) (v16.9 or newer)
 2. Clone this repository
    ```sh
    git clone https://github.com/nizeic/Dodong.git

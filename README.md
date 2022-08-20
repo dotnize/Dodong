@@ -4,10 +4,10 @@
   </p>
   <br>
   <p>
-    <a href="https://github.com/nizeic/Dodong/commits/main"><img src="https://img.shields.io/github/last-commit/nizeic/Dodong?color=44b868&logo=GitHub&logoColor=white&style=flat-square" alt="last commit"></a> 
+    <a href="https://github.com/nizewn/Dodong/commits/main"><img src="https://img.shields.io/github/last-commit/nizewn/Dodong?color=44b868&logo=GitHub&logoColor=white&style=flat-square" alt="last commit"></a> 
     <a href="https://puersa.com/discord"><img src="https://img.shields.io/discord/706460727573217381?color=44b868&logo=discord&logoColor=white&style=flat-square" alt="discord server"></a>
-    <a href="https://www.npmjs.com/package/discord.js"><img src="https://img.shields.io/github/package-json/dependency-version/nizeic/Dodong/discord.js?color=44b868&logo=npm&style=flat-square"></a>
-    <a href="https://www.npmjs.com/package/discord-player"><img src="https://img.shields.io/github/package-json/dependency-version/nizeic/Dodong/discord-player?color=44b868&logo=npm&style=flat-square"></a>
+    <a href="https://www.npmjs.com/package/discord.js"><img src="https://img.shields.io/github/package-json/dependency-version/nizewn/Dodong/discord.js?color=44b868&logo=npm&style=flat-square"></a>
+    <a href="https://www.npmjs.com/package/discord-player"><img src="https://img.shields.io/github/package-json/dependency-version/nizewn/Dodong/discord-player?color=44b868&logo=npm&style=flat-square"></a>
   </p>
 </div>
 <br>
@@ -18,18 +18,18 @@ A music bot written using [discord.js](https://github.com/discordjs/discord.js) 
 - audio filters
 - lyrics search
 - web-based player controls (optional, [coming soon](https://github.com/JoshCunningHum/Dodong-webplayer))
-- ... and more! ([see all commands](https://github.com/nizeic/Dodong/tree/main/commands))
+- ... and more! ([see all commands](https://github.com/nizewn/Dodong/tree/main/commands))
 
 ![Screenshot of the bot in action](https://puersa.com/gallery/dodongexample.png)
 
 ## Contribute
 
-View the list of bug reports and feature requests [here](https://github.com/nizeic/Dodong/issues).
+View the list of bug reports and feature requests [here](https://github.com/nizewn/Dodong/issues).
 
 ## Deploy automatically
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/nizewn/Dodong)<br><br>
-[![Run on Repl.it](https://repl.it/badge/github/nizeic/Dodong)](https://repl.it/github/nizeic/Dodong)<br>
+[![Run on Repl.it](https://repl.it/badge/github/nizewn/Dodong)](https://repl.it/github/nizewn/Dodong)<br>
 **NOTE:** repl.it uses Node.js v12 by default which is unsupported by the bot.<br>
 To install Node.js v16, execute this script from the **Shell**:
 
@@ -42,7 +42,7 @@ npm init -y && npm i --save-dev node@16 && npm config set prefix=$(pwd)/node_mod
 1. Install [Node.js](https://nodejs.org/en/download) (v16.9 or newer)
 2. Clone this repository
    ```sh
-   git clone https://github.com/nizeic/Dodong.git
+   git clone https://github.com/nizewn/Dodong.git
    ```
 3. Install dependencies
    ```sh

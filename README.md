@@ -28,7 +28,7 @@ View the list of bug reports and feature requests [here](https://github.com/nize
 
 ## Deploy automatically
 
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)<br><br>
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/nizewn/Dodong)<br><br>
 [![Run on Repl.it](https://repl.it/badge/github/nizeic/Dodong)](https://repl.it/github/nizeic/Dodong)<br>
 **NOTE:** repl.it uses Node.js v12 by default which is unsupported by the bot.<br>
 To install Node.js v16, execute this script from the **Shell**:

@@ -1,7 +1,7 @@
 {
   "name": "dodong",
-  "homepage": "https://github.com/nizeic/Dodong#readme",
-  "bugs": "https://github.com/nizeic/Dodong/issues",
+  "homepage": "https://github.com/nizewn/Dodong#readme",
+  "bugs": "https://github.com/nizewn/Dodong/issues",
   "license": "MIT",
   "description": "A music bot written using discord.js and discord-player",
   "version": "1.0.0",
@@ -12,7 +12,7 @@
     "bot",
     "discordjs"
   ],
-  "author": "nizeic",
+  "author": "nizewn",
   "dependencies": {
     "@discord-player/extractor": "^3.0.2",
     "@discordjs/opus": "^0.8.0",
@@ -31,6 +31,6 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/nizeic/Dodong.git"
+    "url": "https://github.com/nizewn/Dodong.git"
   }
 }

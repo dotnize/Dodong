@@ -1,7 +1,7 @@
 {
     "name": "Dodong",
     "description": "A Discord music bot written using discord.js and discord-player.js",
-    "repository": "https://github.com/nizeic/Dodong",
+    "repository": "https://github.com/nizewn/Dodong",
     "keywords": ["discord", "music", "bot", "discordjs"],
     "image": "heroku/nodejs",
     "buildpacks": [

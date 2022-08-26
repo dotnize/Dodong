@@ -5,7 +5,6 @@
   <br>
   <p>
     <a href="https://github.com/nizewn/Dodong/commits/main"><img src="https://img.shields.io/github/last-commit/nizewn/Dodong?color=44b868&logo=GitHub&logoColor=white&style=flat-square" alt="last commit"></a> 
-    <a href="https://puersa.com/discord"><img src="https://img.shields.io/discord/706460727573217381?color=44b868&logo=discord&logoColor=white&style=flat-square" alt="discord server"></a>
     <a href="https://www.npmjs.com/package/discord.js"><img src="https://img.shields.io/github/package-json/dependency-version/nizewn/Dodong/discord.js?color=44b868&logo=npm&style=flat-square"></a>
     <a href="https://www.npmjs.com/package/discord-player"><img src="https://img.shields.io/github/package-json/dependency-version/nizewn/Dodong/discord-player?color=44b868&logo=npm&style=flat-square"></a>
   </p>

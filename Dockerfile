@@ -5,7 +5,7 @@ RUN rm -r Procfile LICENSE README.md
 RUN npm install --production
 
 FROM node:16-alpine
-LABEL MAINTAINER="Nizeic" DESCRIPTION="A music bot written using discord.js and discord-player"
+LABEL MAINTAINER="nizewn" DESCRIPTION="A music bot written using discord.js and discord-player"
 WORKDIR /bot
 COPY --from=BUILD /usr/lib/ /usr/lib/
 COPY --from=BUILD /lib/ /lib/

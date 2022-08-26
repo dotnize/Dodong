@@ -1,19 +1,9 @@
 const playdl = require("play-dl");
-const fetch = require("node-fetch")
+const fetch = require("node-fetch");
 const { getData, getPreview, getTracks } = require('spotify-url-info')(fetch);
 const Youtube = require("youtube-sr").default;
 
-/*
-    hello stranger,
-
-    as a result of my headaches while dealing with the discord-player extractor API,
-    what you will see here will mostly be poorly-written code.
-    this could use modularisation or some cleanup (i might do it once i have free time)
-
-    thanks :)
-
-        -nize
-*/
+// poorly written code (just like the whole project), might improve this soon
 
 module.exports = {
     important: true,

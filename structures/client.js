@@ -26,16 +26,16 @@ class Bot extends Client {
 		this.player = new Player(this);
 		this.player.use("dodong", extractor);
 		this.requiredVoicePermissions = [
-			"VIEW_CHANNEL",
-			"CONNECT",
-			"SPEAK"
+			"ViewChannel",
+			"Connect",
+			"Speak"
 		];
 		this.requiredTextPermissions = [
-			"VIEW_CHANNEL",
-			"SEND_MESSAGES",
-			"READ_MESSAGE_HISTORY",
-			"ADD_REACTIONS",
-			"EMBED_LINKS"
+			"ViewChannel",
+			"SendMessages",
+			"ReadMessageHistory",
+			"AddReactions",
+			"EmbedLinks"
 		];
 		this.prefix = process.env.PREFIX || config.prefix;
 

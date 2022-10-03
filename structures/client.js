@@ -4,7 +4,7 @@ const config = require("../config.js");
 const fs = require("fs");
 const { Lyrics } = require("@discord-player/extractor");
 const { REST } = require('@discordjs/rest');
-const { Routes } = require('discord-api-types/v9');
+const { Routes } = require('discord-api-types/v10');
 const extractor = require("../utils/extractor.js");
 const playdl = require("play-dl");
 
@@ -79,7 +79,7 @@ class Bot extends Client {
 				options: cmd.options,
 				defaultPermission: true
 			}));
-			const rest = new REST({ version: '9' }).setToken(token);
+			const rest = new REST({ version: '10' }).setToken(token);
 			await rest.put(Routes.applicationCommands(config.clientId), { body: slashCommands })
 				.then(() => console.log('Global slash commands registered successfully.'))
 				.catch(console.error);

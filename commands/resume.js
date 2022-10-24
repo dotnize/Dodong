@@ -4,7 +4,7 @@ module.exports = new Command({
 	name: "resume",
 	aliases: [],
 	description: "Resumes the queue if it is paused",
-	permission: "SEND_MESSAGES",
+	permission: "SendMessages",
 	async run(message, args, client, slash) {
         const queue = client.player.getQueue(message.guild);
         if (!queue || !queue.playing) return;

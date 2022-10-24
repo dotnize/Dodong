@@ -4,7 +4,7 @@ module.exports = new Command({
 	name: "play",
     aliases: ['p'],
 	description: "Plays the song specified",
-	permission: "SEND_MESSAGES",
+	permission: "SendMessages",
     options: [
         { description: 'URL or song name', name: 'song', required: true, type: 3 }
     ],

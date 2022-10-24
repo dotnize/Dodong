@@ -4,7 +4,7 @@ module.exports = new Command({
 	name: "lyrics",
 	aliases: ['l'],
 	description: "Displays the lyrics of the current or specified song",
-	permission: "SEND_MESSAGES",
+	permission: "SendMessages",
     options: [
         { description: 'Name of the song to search for lyrics', name: 'name', type: 3 }
     ],

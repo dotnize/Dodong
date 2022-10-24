@@ -5,7 +5,7 @@ module.exports = new Command({
 	name: "help",
 	aliases: [],
 	description: "Displays all server commands",
-	permission: "SEND_MESSAGES",
+	permission: "SendMessages",
 	async run(message, args, client, slash) {
 		const pages = [];
         let page = 1, emptypage = false, commandInfo;

@@ -4,7 +4,7 @@ module.exports = new Command({
 	name: "seek",
 	aliases: [],
 	description: "Clears the server queue",
-	permission: "SEND_MESSAGES",
+	permission: "SendMessages",
 	options: [
         { description: 'Position of current song to seek', name: 'seconds', required: true, type: 4 }
     ],

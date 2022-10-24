@@ -4,7 +4,7 @@ module.exports = new Command({
 	name: "skip",
     aliases: ['n', 'next'],
 	description: "Skips to the next song in the queue",
-	permission: "SEND_MESSAGES",
+	permission: "SendMessages",
 	async run(message, args, client, slash) {
         const queue = client.player.getQueue(message.guild);
         if (!queue || !queue.playing) return;

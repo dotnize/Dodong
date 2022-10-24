@@ -4,7 +4,7 @@ module.exports = new Command({
 	name: "insert",
     aliases: ['i', 'pn', 'playnext'],
 	description: "Inserts the song specified to the next position in the queue",
-	permission: "SEND_MESSAGES",
+	permission: "SendMessages",
     options: [
         { description: 'URL or song name', name: 'song', required: true, type: 3 }
     ],

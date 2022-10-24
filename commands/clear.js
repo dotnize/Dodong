@@ -4,7 +4,7 @@ module.exports = new Command({
 	name: "clear",
 	aliases: [],
 	description: "Clears the server queue",
-	permission: "SEND_MESSAGES",
+	permission: "SendMessages",
 	async run(message, args, client, slash) {
         const queue = client.player.getQueue(message.guild);
         if (queue) {

@@ -5,7 +5,7 @@ module.exports = new Command({
 	name: "loop",
     aliases: ['repeat'],
 	description: "Loops the server queue",
-	permission: "SEND_MESSAGES",
+	permission: "SendMessages",
     options: [
         { description: 'Loop mode to set', name: 'mode', type: 3 }
     ],

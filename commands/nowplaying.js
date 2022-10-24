@@ -4,7 +4,7 @@ module.exports = new Command({
 	name: "nowplaying",
     aliases: ['np'],
 	description: "Displays information about the song currently playing",
-	permission: "SEND_MESSAGES",
+	permission: "SendMessages",
 	async run(message, args, client, slash) {
         const queue = client.player.getQueue(message.guild);
         if (!queue || !queue.playing) {

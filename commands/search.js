@@ -4,7 +4,7 @@ module.exports = new Command({
 	name: "search",
     aliases: ['s'],
 	description: "Searches for a song",
-	permission: "SEND_MESSAGES",
+	permission: "SendMessages",
     options: [
         { description: 'Song name', name: 'song', required: true, type: 3 }
     ],

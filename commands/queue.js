@@ -6,7 +6,7 @@ module.exports = new Command({
 	name: "queue",
     aliases: ['q'],
 	description: "Displays the server queue",
-	permission: "SEND_MESSAGES",
+	permission: "SendMessages",
 	async run(message, args, client, slash, _fromButton = false) {
         const queue = client.player.getQueue(message.guild);
         if (!queue || !queue.current) {

@@ -4,7 +4,7 @@ module.exports = new Command({
 	name: "remove",
     aliases: ['r'],
 	description: "Removes a song from the queue",
-	permission: "SEND_MESSAGES",
+	permission: "SendMessages",
     options: [
         { description: 'Position of song to remove', name: 'position', required: true, type: 4 }
     ],

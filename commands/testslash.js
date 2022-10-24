@@ -7,7 +7,7 @@ module.exports = new Command({
     name: "testslash",
     aliases: [],
     description: "Register slash commands for the server.",
-    permission: "ADMINISTRATOR",
+    permission: "Administrator",
     async run(message, args, client, slash) {
         const slashCommands = client.commands.map(cmd => ({
             name: cmd.name,

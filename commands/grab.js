@@ -4,7 +4,7 @@ module.exports = new Command({
 	name: "grab",
     aliases: ['g'],
 	description: "Sends a private message to you with information about the current playing song",
-	permission: "SEND_MESSAGES",
+	permission: "SendMessages",
 	async run(message, args, client, slash) {
         const queue = client.player.getQueue(message.guild);
         if (!queue || !queue.playing) {

@@ -6,7 +6,7 @@ module.exports = new Command({
     name: "volume",
     aliases: ["vol"],
     description: "Adjusts the bot volume",
-    permission: "SEND_MESSAGES",
+    permission: "SendMessages",
     options: [
         { description: 'Volume level from 1 to 100', name: 'level', type: 4 }
     ],

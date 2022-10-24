@@ -5,7 +5,7 @@ module.exports = new Command({
 	name: "ping",
 	aliases: [],
 	description: "Shows the ping of the bot",
-	permission: "SEND_MESSAGES",
+	permission: "SendMessages",
 	async run(message, args, client, slash) {
 		const embed = new EmbedBuilder()
 			.setDescription(` :green_circle: API latency: **${client.ws.ping} ms**`).setColor('#b84e44');

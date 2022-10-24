@@ -6,7 +6,7 @@ const { prefix } = require("../config.js");
 module.exports = new Command({
   name: "filter",
   description: "View and set audio filters",
-  permission: "SEND_MESSAGES",
+  permission: "SendMessages",
   options: [
     { description: 'Name of the audio filter', name: 'name', type: 3 }
   ],

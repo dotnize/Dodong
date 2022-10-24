@@ -4,7 +4,7 @@ module.exports = new Command({
 	name: "move",
     aliases: ['m'],
 	description: "Moves a song to a different position in the queue",
-	permission: "SEND_MESSAGES",
+	permission: "SendMessages",
     options: [
         { description: 'Position of the track to move', name: 'oldposition', required: true, type: 4 },
         { description: 'New position of the track', name: 'newposition', required: true, type: 4 }

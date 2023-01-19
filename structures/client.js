@@ -38,11 +38,6 @@ class Bot extends Client {
 			"EmbedLinks"
 		];
 		this.prefix = process.env.PREFIX || config.prefix;
-
-		this.hasWebplayer = (process.env.WEBPLAYER || config.webplayer).startsWith("http");
-		if(this.hasWebplayer) {
-			this.io = require("socket.io")(process.env.PORT || 3000, { cors: { origin: "*", methods: ["GET", "POST"] }});
-		}
 	}
 
 	async init(token) {
@@ -113,21 +108,6 @@ class Bot extends Client {
 			console.log("No Genius API token provided. Lyrics feature might not work properly.");
 
 		this.login(token);
-
-		if(this.hasWebplayer) {
-			// socket-io events
-			this.io.on('connection', socket => {
-				console.log(`Socket connection detected : ${socket.id}`);
-
-				// socket event handler
-				fs.readdirSync("./events/socket_events")
-					.filter(file => file.endsWith(".js"))
-					.forEach(file => {
-						const event = require(`../events/socket_events/${file}`);
-						socket.on(event.event, event.run.bind(null, this, socket, this.io));
-					});
-			})
-		}
 	}
 }
 

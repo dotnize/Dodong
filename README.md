@@ -1,6 +1,6 @@
 <div align="center">
   <p>
-    <img src="https://puersa.com/gallery/dodongmedium.png" width="500" alt="Dodong" /></a>
+    <img src="https://i.imgur.com/un792U4.png" width="500" alt="Dodong" /></a>
   </p>
   <br>
   <p>
@@ -12,11 +12,12 @@
 <br>
 
 A music bot written using [discord.js](https://github.com/discordjs/discord.js) and [discord-player](https://github.com/Androz2091/discord-player)
+
 - YouTube, Spotify, and SoundCloud
 - support for both slash & legacy commands
 - audio filters
 - lyrics search
-- web-based player controls (optional, [coming soon](https://github.com/JoshCunningHum/Dodong-webplayer))
+- web-based player controls ([coming soon](https://github.com/JoshCunningHum/Dodong-webplayer))
 - ... and more! ([see all commands](https://github.com/nizewn/Dodong/tree/main/commands))
 
 ![Screenshot of the bot in action](https://puersa.com/gallery/dodongexample.png)
@@ -28,13 +29,7 @@ View the list of bug reports and feature requests [here](https://github.com/nize
 ## Deploy automatically
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/nizewn/Dodong)<br><br>
-[![Run on Repl.it](https://repl.it/badge/github/nizewn/Dodong)](https://repl.it/github/nizewn/Dodong)<br>
-**NOTE:** repl.it uses Node.js v12 by default which is unsupported by the bot.<br>
-To install Node.js v16, execute this script from the **Shell**:
-
-```sh
-npm init -y && npm i --save-dev node@16 && npm config set prefix=$(pwd)/node_modules/node && export PATH=$(pwd)/node_modules/node/bin:$PATH
-```
+[![Run on Repl.it](https://repl.it/badge/github/nizewn/Dodong)](https://repl.it/github/nizewn/Dodong)
 
 ## Manual installation
 
@@ -57,12 +52,15 @@ npm init -y && npm i --save-dev node@16 && npm config set prefix=$(pwd)/node_mod
    ```
 
 ## Run with Docker
+
 1. Enter your [bot token](https://discord.com/developers/applications) in `config.js`
+
    ```js
    botToken: "BOT TOKEN HERE",
    ```
 
 2. Build the Docker image
+
    ```sh
    docker build -t dodong .
    ```

@@ -1,3 +1,5 @@
+> Note: This project is no longer actively maintained.
+
 <div align="center">
   <p>
     <img src="https://i.imgur.com/un792U4.png" width="500" alt="Dodong" /></a>
